@@ -1,0 +1,26 @@
+doctype html
+html(lang="" class="layout_100")
+	head
+		link(rel="stylesheet", href="../static/index.css")
+		link(rel="stylesheet", href="../src/pages/auth/auth.css")
+		link(rel="stylesheet", href="../src/components/input/input.css")
+		link(rel="stylesheet", href="../src/components/button/button.css")
+
+	body.layout_100.layout_flex-column
+		div.auth.layout_100
+			div.auth__card.auth__card_reg
+				h1.auth__title Регистрация
+				form.auth__form 
+					div
+						each field in [{label:"Почта", type:"email", name:"email"}, {label:"Логин", type:"text", name:"login"}, {label:"Имя", type: "text", name: "first_name"}, {label:"Фамилия", type: "text", name: "second_name"}, {label:"Телефон", type: "text", name: "phone"}, {label:"Пароль", type: "password", name: "password"}, {label:"Пароль (ещё раз)", type: "password", name: "password"}]
+							input.input(
+								type=field.type
+								name=field.name
+								placeholder=field.label
+							)
+					
+					div 
+						button.button.auth__button Зарегистрироваться
+						a.auth__link(href="./login.pug") Войти
+
+

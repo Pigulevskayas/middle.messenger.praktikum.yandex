@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	  <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	  <title>Вход</title>
+	  <link rel="stylesheet" type="text/css" href="24b21208c1893f5fd07645c61e23e110">
+	  <script type="text/javascript" src="6dbf28e33150edc57656b9b9959982a2"></script>
+	</head>
+
+	<body>
+	  <div class="auth">
+	  	<div class="auth__card">
+	  		
+	  	</div>
+	  </div>
+	</body>
+
+</html>
+

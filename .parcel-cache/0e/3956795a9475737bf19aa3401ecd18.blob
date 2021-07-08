@@ -1,0 +1,10 @@
+doctype html
+html(lang="")
+  head
+
+  body
+    h1 Hello
+
+    p #{name}'s Pug source code!
+
+    script(src="./index.js")<script src="/index.pug.HASH_REF_cff9fe17ada0e79c7c562b8d3f1dc7d7.js"></script>
