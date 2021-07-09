@@ -12,8 +12,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel views/index.pug --open -p 3000",
-    "build": "parcel build views/index.pug"
+    "start": "parcel public/index.pug --open -p 3000",
+    "build": "parcel build public/index.pug"
   },
   "repository": {
     "type": "git",
