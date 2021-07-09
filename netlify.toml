@@ -7,3 +7,33 @@
 
 [build]
   publish = "public"
+
+[[redirects]]
+  from = "/index.pug"
+  to = "/index.html"
+  force = true
+
+[[redirects]]
+  from = "/profile.pug"
+  to = "/profile.html"
+  force = true
+
+[[redirects]]
+  from = "/login.pug"
+  to = "/login.html"
+  force = true
+
+[[redirects]]
+  from = "/registration.pug"
+  to = "/registration.html"
+  force = true
+
+[[redirects]]
+  from = "/error404.pug"
+  to = "/error404.html"
+  force = true
+
+[[redirects]]
+  from = "/error500.pug"
+  to = "/error500.html"
+  force = true
