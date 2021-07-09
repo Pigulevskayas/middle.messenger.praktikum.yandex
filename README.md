@@ -4,6 +4,9 @@
 Выполнена на крусе "Мидл фронтенд-разработчик" в Яндекс.Практикуме (https://praktikum.yandex.ru/)
 ------
 
+домен на Netlify: https://competent-varahamihira-4993c3.netlify.app
+------
+
 Страницы проекта:
 * Вход
 * Регистрация
