@@ -1,0 +1,37 @@
+.user-info {
+	/*display: inline-block;*/
+	&__row {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 10px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid #A6B4C2;
+		&:last-of-type {
+			margin-bottom: 0;
+			border-bottom: none;
+		}
+	}
+	&__label {
+		color: #27496D;
+		font-family: "Inter", sans-serif;
+		font-weight: 500;
+		font-size: 13px;
+		font-weight: 500;
+		line-height: 13px;
+	}
+	&__data {
+		color: #a9b6c5;
+		font-family: "Inter", sans-serif;
+		font-weight: 500;
+		font-size: 13px;
+		font-weight: 500;
+		line-height: 13px;
+		border: none;
+		text-align: right;
+		outline: none;
+		&__data:focus, &__data:focus-visible {
+			box-shadow: none;
+			outline: none;
+		}
+	}
+}

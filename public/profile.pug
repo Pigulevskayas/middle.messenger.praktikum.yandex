@@ -1,0 +1,40 @@
+doctype html
+html(lang="" class="layout_100")
+	head
+		link(rel="stylesheet", href="./static/index.css")
+		link(rel="stylesheet", href="./src/pages/profile/profile.css")
+		link(rel="stylesheet", href="./src/components/nav/nav.css")
+		link(rel="stylesheet", href="./src/components/nav-btn/nav-btn.css")
+		link(rel="stylesheet", href="./src/components/user-info/user-info.css")
+
+	body.layout_100.layout_flex-column
+		div.profile.layout_100
+			header.profile__header
+				nav.nav
+					a.nav-btn.nav-btn__back(href="./index.pug")
+					a.nav-btn.nav-btn__exit(href="./login.pug")
+			div.profile__inner
+				div.profile__top
+					div.profile__avatar
+					p.profile__name Иван
+				div.profile__card
+					div.profile__links
+						div.profile__link
+							a.nav-btn.nav-btn__edit
+						div.profile__link
+							a.nav-btn.nav-btn__password
+					div.user-info
+						each field in [{label:"Почта", type:"email", name:"email", value:"pochta@yandex.ru", readonly:"readonly"}, {label:"Логин", type:"text", name:"login", value:"ivanivanov", readonly:"readonly"}, {label:"Имя", type:"text", name:"first_name", value:"Иван", readonly:"readonly"}, {label:"Фамилия", type:"text", name:"last_name", value:"Иванов", readonly:"readonly"}, {label:"Имя в чате", type:"text", name:"username", value:"Иван", readonly:"readonly"}, {label:"Телефон", type:"text", name:"phone", value:"+7 (909) 967 30 30", readonly:"readonly"}]
+						
+							div.user-info__row
+								div.user-info__label=field.label
+								input.user-info__data(
+			  						type=field.type
+									name=field.name
+									value=field.value
+									readonly=field.readonly
+								)
+
+
+
+
