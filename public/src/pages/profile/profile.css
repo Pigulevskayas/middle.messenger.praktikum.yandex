@@ -1,31 +1,38 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;900&display=swap");
+
 .profile {
-  background: #B6E1F2;
+  background: #b6e1f2;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
+
 .profile__inner {
   max-width: 570px;
   width: 100%;
 }
+
 .profile__card {
+  width: 100%;
+  max-width: 510px;
   padding: 30px;
-  background: #FFFFFF;
-  /*width: 100%;
-  max-width: 570px;*/
+  background: #fff;
+
+  /* width: 100%;
+  max-width: 570px; */
   text-align: center;
 }
+
 .profile__header {
   width: 100%;
   max-width: 1280px;
@@ -34,33 +41,38 @@
   display: inline-block;
   padding: 20px;
 }
+
 .profile__links {
   margin-left: -10px;
   margin-right: -10px;
   margin-bottom: 21px;
   text-align: right;
 }
+
 .profile .profile__link {
   display: inline-block;
   padding: 0 10px;
 }
+
 .profile__top {
   text-align: center;
   margin-bottom: 30px;
 }
+
 .profile__avatar {
   display: inline-block;
   width: 130px;
   height: 130px;
   border-radius: 50%;
-  background: #FFE6EA url("../../../static/images/avatar_icon.svg") no-repeat center;
+  background: #ffe6ea url("../../../static/images/avatar_icon.svg") no-repeat center;
   margin-bottom: 21px;
 }
+
 .profile__name {
   font-family: "Inter", sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 16px;
   text-align: center;
-  color: #27496D;
+  color: #27496d;
 }

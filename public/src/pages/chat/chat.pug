@@ -1,0 +1,15 @@
+div.chats-layout
+	div.chats-list
+		div.chats-list__top
+			div.chats-list__edit !{edit}
+			div.search !{search}
+		div.chats-list__items !{chat_item}
+			
+	div.chat
+		if select-chat === true
+			div !{select-chat}
+		else	
+			div.chat__content !{chat_header}
+				div.chat__messages.messages !{chat_messages}
+				div.chat__new-messge !{new_message}
+

@@ -1,15 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;900&display=swap');
+
 .button {
-	background: #27496D;
-	border-radius: 8px;
-	border: none;
-	padding: 12px;
-	font-family: 'Inter', sans-serif;
-	font-weight: 500;
-	font-size: 13px;
-	line-height: 13px;
-	text-align: center;
-	color: #FFE6EA;
-	width: 100%;
-	cursor: pointer;
+  background: #27496d;
+  border-radius: 8px;
+  border: none;
+  padding: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  text-align: center;
+  color: #ffe6ea;
+  width: 100%;
+  cursor: pointer;
 }

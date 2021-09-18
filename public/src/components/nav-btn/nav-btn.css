@@ -18,3 +18,15 @@
 .nav-btn__password {
   background: #27496D url("../../../static/images/password_icon.svg") no-repeat center;
 }
+.nav-btn__edit-chat {
+  background: #27496D url("../../../static/images/user-icon.svg") no-repeat center;
+}
+.nav-btn_send {
+  background: #27496D url("../../../static/images/arrow.svg") no-repeat center;
+}
+.nav-btn_small {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+}

@@ -4,17 +4,36 @@
 	height: 34px;
 	border-radius: 17px;
 	cursor: pointer;
+
 	&__back {
 		background: #27496D url("../../../static/images/arrow_back_icon.svg") no-repeat center;
 	}
+
 	&__exit {
 		background: #27496D url('../../../static/images/exit_icon.svg') no-repeat center;
 		background-size: 24px;
 	}
+
 	&__edit {
 		background: #27496D url('../../../static/images/edit_icon.svg') no-repeat center;
 	}
+	
 	&__password {
 		background: #27496D url('../../../static/images/password_icon.svg') no-repeat center;
+	}
+
+	&__edit-chat {
+		background: #27496D url('../../../static/images/user-icon.svg') no-repeat center;
+	}
+
+	&_send {
+		background: #27496D url('../../../static/images/arrow.svg') no-repeat center;
+	}
+	
+	&_small {
+		width: 28px;
+		height: 28px;
+		border: none;
+		border-radius: 50%;
 	}
 }

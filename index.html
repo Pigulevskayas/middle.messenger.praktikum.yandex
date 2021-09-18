@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="layout_100">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Chat</title>
+    <link rel="stylesheet" type="text/css" href="public/static/index.css">
   </head>
-  <body>
-    <script src="./index.js"></script>
+  <body class="layout_100 layout_flex-column">
+    <div class="app"></div>
+    <script type="module" src="./public/src/modules/event-bus.ts"></script>
+    <script type="module" src="./index.ts"></script>
+     <!-- <script type="module" src="./public/src/modules/block.js"></script> -->
+    <!-- <script type="module" src="./public/src/components/auth-link/auth-link"></script> -->
+    <!-- <script type="module" src='./public/src/components/input/index.js'></script> -->
+    <!-- <script type="module" src='./public/src/components/button/index.js'></script> -->
+    <!-- <script type="module" src='./public/src/blocks/form.js'></script> -->
+    
   </body>
 </html>
