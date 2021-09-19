@@ -5,8 +5,6 @@ import compileTemplate from './new-message.pug';
 import InputMessage from '../../components/input-message/index.ts';
 import SendButton from '../../components/send-button/index.ts';
 
-// const pug = require('pug');
-
 export default class NewMessage extends Block {
   constructor(props: object) {
     super("div", {content: props});

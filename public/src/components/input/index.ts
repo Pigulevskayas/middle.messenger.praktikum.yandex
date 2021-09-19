@@ -2,8 +2,6 @@ import Block from '../../modules/block.ts';
 import compile from '../../modules/compile.ts';
 import compileTemplate from './input.pug';
 
-// const pug = require('pug');
-
 export default class Input extends Block {
   constructor(props: object) {
 	// dom-element button wrapper creation

@@ -7,8 +7,6 @@ import EventBus from './event-bus.ts';
 import validate from '../../../modules/validate.ts';
 import collectData from '../../../modules/collect-data.ts';
 
-// const pug = require('pug');
-
 interface LinkInt {
 	text: string, 
 	link: string,

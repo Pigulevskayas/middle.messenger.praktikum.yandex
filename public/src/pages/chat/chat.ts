@@ -10,8 +10,6 @@ import compileTemplate from './chat.pug';
 import validate from '../../modules/validate.ts';
 import collectData from '../../modules/collect-data.ts';
 
-// const pug = require('pug');
-
 interface NavButtonInt {
   type: string;
   link: string;

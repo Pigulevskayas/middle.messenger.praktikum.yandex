@@ -1,8 +1,6 @@
 import Block from '../../modules/block.ts';
 import compileTemplate from './message.pug';
 
-// const pug = require('pug');
-
 export default class Message extends Block {
   constructor(props: object) {
 	// dom-element button wrapper creation

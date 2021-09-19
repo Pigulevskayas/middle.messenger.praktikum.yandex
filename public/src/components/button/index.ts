@@ -3,8 +3,6 @@ import Block from '../../modules/block.ts';
 import compile from '../../modules/compile.ts';
 import compileTemplate from './button.pug';
 
-// const pug = require('pug');
-
 export default class Button extends Block {
   constructor(props: object) {
 	// dom-element button wrapper creation
