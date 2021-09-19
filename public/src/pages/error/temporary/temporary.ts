@@ -1,5 +1,5 @@
-import Block from '../../modules/block.ts';
-import compileTemplate from './temporary.pug';
+import Block from '../../../modules/block.ts';
+import compileTemplate from '../temporary.pug';
 
 const pug = require('pug');
 

@@ -82,7 +82,7 @@
           flex: 11;
   padding: 48px 20px 0;
 }
-.chat__new-messge {
+.chat__new-messge > div {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -94,6 +94,10 @@
       -ms-flex-pack: justify;
           justify-content: space-between;
   position: relative;
+}
+.chat__new-messge > span:first-of-type {
+  width: 100%;
+  max-width: 850px;
 }
 .chat__new-messge::before {
   content: "";

@@ -1,8 +1,8 @@
-import TemporaryPage from './public/src/pages/temporary/temporary.ts';
-import LoginPage from './public/src/pages/auth/login/login.ts';
-import RegPage from './public/src/pages/auth/registration/registration.ts';
+import TemporaryPage from './public/src/pages/error/temporary/temporary.ts';
 import Error404Page from './public/src/pages/error/error404/error404.ts';
 import Error500Page from './public/src/pages/error/error500/error500.ts';
+import LoginPage from './public/src/pages/auth/login/login.ts';
+import RegPage from './public/src/pages/auth/registration/registration.ts';
 import ProfilePage from './public/src/pages/profile/profile.ts';
 import ChatPage from './public/src/pages/chat/chat.ts';
 

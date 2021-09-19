@@ -58,11 +58,17 @@
 		padding: 48px 20px 0;
 	}
 	&__new-messge {
-		flex: 1;
-		padding: 11px 20px;
-		display: flex;
-		justify-content: space-between;
-		position: relative;
+		& > div {
+			flex: 1;
+			padding: 11px 20px;
+			display: flex;
+			justify-content: space-between;
+			position: relative;
+		}
+		& > span:first-of-type {
+			width: 100%;
+			max-width: 850px;
+		}
 		&::before {
 			content: '';
 			display: inline-block;

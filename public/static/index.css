@@ -1,12 +1,9 @@
 @import url('./normalize.css');
 @import url('../src/layout/layout.css');
 @import url('../src/pages/error/error.css');
-
 @import url('../src/components/button/button.css');
-
 @import url('../src/components/input/input.css');
 @import url('../src/pages/auth/auth.css');
-
 @import url('../src/pages/profile/profile.css');
 @import url('../src/components/nav/nav.css');
 @import url('../src/components/nav-btn/nav-btn.css');
@@ -15,7 +12,6 @@
 @import url('../src/components/nav/nav.css');
 @import url('../src/components/nav-btn/nav-btn.css');
 @import url('../src/components/user-info/user-info.css');
-
 @import url('../src/blocks/modal/modal.css');
 @import url('../src/pages/chat/chat.css');
 @import url('../src/components/chat-item/chat-item.css');
