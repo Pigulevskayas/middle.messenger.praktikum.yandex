@@ -3,7 +3,7 @@ import Block from '../../modules/block.ts';
 import compile from '../../modules/compile.ts';
 import compileTemplate from './input-message.pug';
 
-const pug = require('pug');
+// const pug = require('pug');
 
 export default class InputMessage extends Block {
   constructor(props: object) {

@@ -2,7 +2,7 @@ import Block from '../../modules/block.ts';
 import compile from '../../modules/compile.ts';
 import compileTemplate from './link.pug';
 
-const pug = require('pug');
+// const pug = require('pug');
 
 export default class Link extends Block {
   constructor(props: object) {

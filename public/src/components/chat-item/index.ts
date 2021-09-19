@@ -1,7 +1,7 @@
 import Block from '../../modules/block.ts';
 import compileTemplate from './chat-item.pug';
 
-const pug = require('pug');
+// const pug = require('pug');
 
 export default class ChatItem extends Block {
   constructor(props: object) {

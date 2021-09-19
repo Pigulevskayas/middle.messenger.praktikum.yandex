@@ -2,7 +2,7 @@ import Block from '../../../modules/block.ts';
 import compileTemplate from '../error.pug';
 import compile from '../../../modules/compile.ts';
 
-const pug = require('pug');
+// const pug = require('pug');
 
 interface ErrorInt {
 	code: string,
@@ -29,7 +29,7 @@ class Error500 extends Block {
 }
 
 
-export default Error500Page = new Error500();
+export default new Error500();
 
 
 

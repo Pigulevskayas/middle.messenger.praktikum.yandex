@@ -1,7 +1,8 @@
 import Block from '../../../modules/block.ts';
 import compileTemplate from '../temporary.pug';
+import compile from '../../../modules/compile.ts';
 
-const pug = require('pug');
+// const pug = require('pug');
 
 interface ErrorInt {
 	code: string,
@@ -15,13 +16,16 @@ class Temporary extends Block {
   }
 
   render(): string {
-  	const html = compileTemplate();
+  	const fragment = compile(compileTemplate, {});
 
-		return pug.render(html);
+		return fragment;
+  // 	const html = compileTemplate();
+
+		// return pug.render(html);
   }
 }
 
-export default TemporaryPage = new Temporary();
+export default new Temporary();
 
 
 

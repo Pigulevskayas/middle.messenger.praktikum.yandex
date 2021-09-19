@@ -9,7 +9,7 @@ import collectData from '../../modules/collect-data.ts';
 import validate from '../../modules/validate.ts';
 import collectData from '../../modules/collect-data.ts';
 
-const pug = require('pug');
+// const pug = require('pug');
 
 interface FormElementInt {
     inputEmail: Object<string>; inputPassword: Object<string>; button: object
@@ -267,7 +267,7 @@ const profileConfig = {
  
 }
 
-export default ProfilePage = new Profile(profileConfig);
+export default new Profile(profileConfig);
 
 
 

@@ -10,7 +10,7 @@ import compileTemplate from './chat.pug';
 import validate from '../../modules/validate.ts';
 import collectData from '../../modules/collect-data.ts';
 
-const pug = require('pug');
+// const pug = require('pug');
 
 interface NavButtonInt {
   type: string;
@@ -128,7 +128,7 @@ const chatConfig: chatConfigInt = {
  
 }
 
-export default ChatPage = new Chat(chatConfig);
+export default new Chat(chatConfig);
 
 
 
