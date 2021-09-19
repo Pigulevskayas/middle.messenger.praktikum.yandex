@@ -23,7 +23,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel index.html --open -p 3000 --log-level verbose",
-    "build": "parcel build public/index.pug"
+    "build": "parcel build index.html"
   },
   "repository": {
     "type": "git",
