@@ -1,6 +1,6 @@
 ## Проектная работа "Чат" 
 ------
-### PR Sprint 1 https://github.com/Pigulevskayas/middle.messenger.praktikum.yandex/pull/3
+### PR Sprint 2 https://github.com/Pigulevskayas/middle.messenger.praktikum.yandex/pull/4
 
 ### Ветка, в которой делаете задания спринта, должна называться sprint_i, где i - номер спринта. Не переименовывайте её.
 
