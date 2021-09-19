@@ -25,6 +25,12 @@
     "start": "parcel index.html --open -p 3000 --log-level verbose",
     "build": "parcel build index.html"
   },
+  "default": "/index.html",
+  "targets": {
+    "default": {
+      "publicUrl": "./"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Pigulevskayas/middle.messenger.praktikum.yandex.git"
