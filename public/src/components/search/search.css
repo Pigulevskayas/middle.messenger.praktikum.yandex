@@ -1,6 +1,7 @@
 .search {
   position: relative;
 }
+
 .search__icon {
   width: 20px;
   height: 20px;
@@ -9,16 +10,15 @@
   left: 10px;
   top: 6px;
 }
+
 .search__input {
   width: 100%;
   max-width: 290px;
   padding: 10px 6px 10px 34px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
   border-radius: 5px;
   border: none;
   background: #e8ebef;
-  color: #27496D;
+  color: #27496d;
   font-size: 12px;
   line-height: 12px;
   box-sizing: border-box;

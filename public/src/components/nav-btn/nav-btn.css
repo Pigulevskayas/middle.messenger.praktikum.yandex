@@ -5,25 +5,32 @@
   border-radius: 17px;
   cursor: pointer;
 }
+
 .nav-btn__back {
-  background: #27496D url("../../../static/images/arrow_back_icon.svg") no-repeat center;
+  background: #27496d url("../../../static/images/arrow_back_icon.svg") no-repeat center;
 }
+
 .nav-btn__exit {
-  background: #27496D url("../../../static/images/exit_icon.svg") no-repeat center;
+  background: #27496d url("../../../static/images/exit_icon.svg") no-repeat center;
   background-size: 24px;
 }
+
 .nav-btn__edit {
-  background: #27496D url("../../../static/images/edit_icon.svg") no-repeat center;
+  background: #27496d url("../../../static/images/edit_icon.svg") no-repeat center;
 }
+
 .nav-btn__password {
-  background: #27496D url("../../../static/images/password_icon.svg") no-repeat center;
+  background: #27496d url("../../../static/images/password_icon.svg") no-repeat center;
 }
+
 .nav-btn__edit-chat {
-  background: #27496D url("../../../static/images/user-icon.svg") no-repeat center;
+  background: #27496d url("../../../static/images/user-icon.svg") no-repeat center;
 }
+
 .nav-btn_send {
-  background: #27496D url("../../../static/images/arrow.svg") no-repeat center;
+  background: #27496d url("../../../static/images/arrow.svg") no-repeat center;
 }
+
 .nav-btn_small {
   width: 28px;
   height: 28px;
