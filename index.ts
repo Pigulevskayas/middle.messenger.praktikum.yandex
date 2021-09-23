@@ -9,6 +9,8 @@ import ChatPage from './src/pages/chat/chat.ts';
 let path = window.location.pathname;
 let page;
 
+console.log('path', path)
+
 function render(query: string, block: string) {
   const root = document.querySelector(query);
   root.appendChild(block.getContent());
