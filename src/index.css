@@ -1,0 +1,22 @@
+@import url('./normalize.css');
+@import url('./layout/layout.css');
+@import url('./pages/error/error.css');
+@import url('./components/button/button.css');
+@import url('./components/input/input.css');
+@import url('./pages/auth/auth.css');
+@import url('./components/nav/nav.css');
+@import url('./components/nav-btn/nav-btn.css');
+@import url('./components/user-info/user-info.css');
+@import url('./pages/profile/profile.css');
+@import url('./blocks/modal-avatar/modal-avatar.css');
+@import url('./pages/chat/chat.css');
+@import url('./components/chat-item/chat-item.css');
+@import url('./components/search/search.css');
+
+.app,
+.app > div {
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}

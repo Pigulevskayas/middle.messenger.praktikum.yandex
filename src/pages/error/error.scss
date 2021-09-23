@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;900&display=swap');
+.error {
+	background: #B6E1F2 url('../../../public/static/images/error_bg.svg') no-repeat center;
+	background-size: cover;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	&__card {
+		padding: 30px;
+		background: #FFFFFF;
+		width: 100%;
+		max-width: 325px;
+		text-align: center;
+	}
+	&__title {
+		font-family: 'Inter', sans-serif;
+		font-size: 40px;
+		font-weight: 900;
+		line-height: 40px;
+		text-align: center;
+		color: #27496D;
+		margin-bottom: 20px;
+	}
+	&__text {
+		font-family: 'Inter', sans-serif;
+		font-size: 20px;
+		font-weight: 500;
+		line-height: 20px;
+		text-align: center;
+		color: #27496D;
+		margin-bottom: 63px;
+	}
+	&__back {
+		color: #27496D;
+		font-family: 'Inter', sans-serif;
+		font-size: 11px;
+		font-weight: 500;
+		line-height: 11px;
+		cursor: pointer;
+		&:hover, &:focus, &:active {
+			text-decoration: underline;
+		}
+	}
+}
