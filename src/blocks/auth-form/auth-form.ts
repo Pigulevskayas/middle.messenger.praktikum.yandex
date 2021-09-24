@@ -17,7 +17,6 @@ interface InputInt {
 }
 
 export default class Form extends Block {
-
 	constructor(props: object) {
 		super("div", {content: props});
 	}
@@ -30,31 +29,23 @@ export default class Form extends Block {
 		formItems.formElements.map((element: object) => {
 			let component;
 			for (let key: string in element) {
-				// console.log('key', key)
 				if (key == 'button'){
 					let component: ButtonInt = new Button({
 						text: element[key]['text'],
 						events: formItems.buttonEvent
-						// events: element[key]['events']
 					});
-					// renderFields[key] = component.render();
 					renderFields[key] = component;
 				} else {
 					let component: InputInt = new Input({
 						classname: element[key]['classname'],
 						attributes: element[key]['attributes'],
 						events: formItems.inputEvent
-						// events: element[key]['events']
 					});
-					// renderFields[key] = component.render();
 					renderFields[key] = component;
 				}
 			}
 		});
 
-		// return compileTemplate(renderFields);
 		return compile(compileTemplate, renderFields);
-
 	}
-
 }

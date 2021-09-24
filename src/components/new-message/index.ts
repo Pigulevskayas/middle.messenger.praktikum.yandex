@@ -16,11 +16,6 @@ export default class NewMessage extends Block {
       classname: this.props.content.inputMessage.classname,
       attributes: this.props.content.inputMessage.attributes,
       events: this.props.content.inputEvent
-      // type: this.props.content.inputMessage.type,
-      // name: this.props.content.inputMessage.name,
-      // label: this.props.content.inputMessage.label,
-      // value: this.props.content.inputMessage.value,
-      // events: this.props.content.inputEvent
     });
 
     const button = new SendButton({
@@ -33,6 +28,5 @@ export default class NewMessage extends Block {
     });
 
     return fragment;
-  	// return compileTemplate();
   }
 }

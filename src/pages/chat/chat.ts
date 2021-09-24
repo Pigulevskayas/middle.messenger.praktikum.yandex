@@ -7,8 +7,13 @@ import ChatHeader from '../../components/chat-header/index.ts';
 import ChatMessages from '../../blocks/chat-messages/index.ts';
 import NewMessage from '../../components/new-message/index.ts';
 import compileTemplate from './chat.pug';
-import validate from '../../modules/validate.ts';
-import collectData from '../../modules/collect-data.ts';
+import inputHandler from '../../utils/form-inputs-handler.ts';
+import buttonHandler from '../../utils/form-submit-handler.ts';
+
+import '../../pages/chat/chat.css';
+import '../../components/chat-item/chat-item.css';
+import '../../components/search/search.css';
+import '../../components/form-field/form-field.css';
 
 interface NavButtonInt {
   type: string;
@@ -56,8 +61,6 @@ class Chat extends Block {
 			}
 		}
 
-		// console.log('inputEvent', content.inputEvent)
-
 		const search = new Search();
 
 		const edit: NavButtonInt = new NavButton({
@@ -90,7 +93,6 @@ class Chat extends Block {
 		});
 
 		return fragment;
-
 	}
 }
 
@@ -111,21 +113,9 @@ const chatConfig: chatConfigInt = {
   input: function(e){
     сhatState[e.target.name] = e.target.value;
   },
-  focus: function(e){
-    сhatState[e.target.name] = e.target.value;
-    validate(e.target.value, fieldName);
-  },
-  blur: function(e){
-    сhatState[e.target.name] = e.target.value;
-    validate(e.target.value, fieldName);
-  },
-  click: () => {
-  	collectData(сhatState);
-  	for (let key: string in сhatState) {
-			validate(сhatState[key], key);
-		}
-  	
-  } 
+  focus: (e) => inputHandler(e.target, сhatState),
+  blur: (e) => inputHandler(e.target, сhatState),
+  click: () => buttonHandler(сhatState)
  
 }
 

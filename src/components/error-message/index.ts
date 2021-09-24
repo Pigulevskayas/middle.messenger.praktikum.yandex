@@ -1,17 +1,15 @@
 import Block from '../../modules/block.ts';
 import compile from '../../modules/compile.ts';
-import compileTemplate from './link.pug';
+import compileTemplate from './error-message.pug';
 
-export default class Link extends Block {
+export default class ErrorMessage extends Block {
   constructor(props: object) {
-	// dom-element button wrapper creation
     super("div", {attr: props});
   }
 
   render(): DocumentFragment {
   	return compile(compileTemplate, {
-      text: this.props.attr.text,
-      link: this.props.attr.link
+      text: this.props.text
     });
   }
 }

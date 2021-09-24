@@ -4,8 +4,12 @@ import Form from '../../../blocks/auth-form/auth-form.ts';
 import Link from '../../../components/link/index.ts';
 import compileTemplate from './login.pug';
 import EventBus from './event-bus.ts';
-import validate from '../../../modules/validate.ts';
-import collectData from '../../../modules/collect-data.ts';
+import inputHandler from '../../../utils/form-inputs-handler.ts';
+import buttonHandler from '../../../utils/form-submit-handler.ts';
+
+import '../auth.css';
+import '../../../components/button/button.css';
+import '../../../components/input/input.css';
 
 interface LinkInt {
 	text: string, 
@@ -29,35 +33,12 @@ interface loginStateInt {
   password: null | string
 }
 
-// const formElements: FormElementsInt = [{
-// 		inputEmail: {
-// 			type: 'text',
-// 			name: 'email',
-// 			label: 'Почта'
-// 		}
-// 	},{
-// 		inputPassword: {
-// 			type: 'password',
-// 			name: 'password',
-// 			label: 'Пароль'
-// 		}
-// 	}, {
-// 		button: {
-// 			text: 'Сохранить',
-// 			events: {
-// 	            click: () => { console.log('clicked') }
-// 	        }
-// 		}
-// 	}
-// ];
-
 class Login extends Block {
 	constructor(props) {
-	    super('div', {config: props});
+	  super('div', {config: props});
 	}
 
-	render(): DocumentFragment {
-		
+	render(): DocumentFragment {	
 		const content = {
 			formElements: this.props.config.formElements, 
 			buttonEvent: {
@@ -77,28 +58,16 @@ class Login extends Block {
 			link: "/registration"
 		});
 
-		// let html = compileTemplate({
-		// 	form: loginForm.render(),
-		// 	link: link.render()
-		// });
-
-		// return pug.render(html);
-
 		const fragment = compile(compileTemplate,{
 			form: loginForm,
 			link: link
 		});
 
 		return fragment;
-
-		// this.root.appendChild(fragment);
-
-		// return this.root;
 	}
 }
 
 // Loginpage configuration
-
 const loginState: loginStateInt = {
   email: null,
   password: null
@@ -134,22 +103,9 @@ const LoginConfig: FormElementInt = {
   input: function(e){console.log('input')
     loginState[e.target.name] = e.target.value;
   },
-  focus: function(e){
-    console.log('focus')
-  	loginState[e.target.name] = e.target.value;
-    validate(e.target.value, fieldName);
-  },
-  blur: function(e){
-    console.log('blur')
-    loginState[e.target.name] = e.target.value;
-    validate(e.target.value, fieldName);
-  },
-  click: () => {
-  	collectData(loginState);
-  	for (let key: string in loginState) {
-  		validate(loginState[key], key);
-  	}
-  }
+  focus: (e) => inputHandler(e.target, loginState),
+  blur: (e) => inputHandler(e.target, loginState),
+  click: () => buttonHandler(loginState)
  
 }
 

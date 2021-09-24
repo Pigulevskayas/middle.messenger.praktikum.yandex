@@ -4,15 +4,18 @@ import Form from '../../blocks/profile_form/profile_form.ts';
 import NavButton from '../../components/nav-btn/index.ts';
 import Modal from '../../blocks/modal-avatar/index.ts';
 import compileTemplate from './profile.pug';
-import validate from '../../modules/validate.ts';
-import collectData from '../../modules/collect-data.ts';
-import validate from '../../modules/validate.ts';
-import collectData from '../../modules/collect-data.ts';
+import inputHandler from '../../utils/form-inputs-handler.ts';
+import buttonHandler from '../../utils/form-submit-handler.ts';
 
-// const pug = require('pug');
+import '../../components/nav/nav.css';
+import '../../components/nav-btn/nav-btn.css';
+import '../../components/user-info/user-info.css';
+import '../../pages/profile/profile.css';
+import '../../blocks/modal-avatar/modal-avatar.css';
+import '../../components/form-field/form-field.css';
 
 interface FormElementInt {
-    inputEmail: Object<string>; inputPassword: Object<string>; button: object
+  inputEmail: Object<string>; inputPassword: Object<string>; button: object
 }
 
 interface FormElementsInt extends Array<FormElementInt>{}
@@ -26,96 +29,6 @@ interface ModalInt {
 	isVisible: boolean, 
 	isError: boolean 
 }
-
-// const formElements: FormElementsInt = [
-// 	{
-// 		inputEmail: {
-// 			label:"Почта", 
-// 			type:"email", 
-// 			name:"email", 
-// 			value:"pochta@yandex.ru", 
-// 			readonly:false
-// 		}
-// 	}, {
-// 		inputLogin: {
-// 			label:"Логин", 
-// 			type:"text", 
-// 			name:"login", 
-// 			value:"ivanivanov", 
-// 			readonly:false
-// 		} 
-// 	}, {
-// 		inputName: {
-// 			label:"Имя", 
-// 			type:"text", 
-// 			name:"first_name", 
-// 			value:"Иван", 
-// 			readonly:false
-// 		}
-// 	}, {
-// 		inputLastName: {
-// 			label:"Фамилия", 
-// 			type:"text", 
-// 			name:"last_name", 
-// 			value:"Иванов", 
-// 			readonly:false
-// 		}
-// 	}, {
-// 		inputChatName: {
-// 			label: "Имя в чате", 
-// 			type: "text", 
-// 			name:"username", 
-// 			value:"Иван", 
-// 			readonly:false
-// 		}
-// 	}, {
-// 		inputPhone: {
-// 			label:"Телефон", 
-// 			type:"text", 
-// 			name:"phone", 
-// 			value:"+7 (909) 967 30 30", 
-// 			readonly:false
-// 		}
-// 	}, {
-// 		button: {
-// 			text: 'Сохранить',
-// 			events: ()	=> console.log('clicked')
-// 		}
-// 	}
-// ];
-
-// const passwordFormElements: FormElementsInt = [
-// 	{
-// 		inputOldPassword: {
-// 			label:"Старый пароль", 
-// 			type:"password", 
-// 			name:"old-password", 
-// 			value:"pochta@yandex.ru", 
-// 			readonly:false
-// 		}
-// 	}, {
-// 		inputNewPassword: {
-// 			label:"Новый пароль", 
-// 			type:"password", 
-// 			name:"new-password", 
-// 			value:"ivanivanov", 
-// 			readonly:false
-// 		}
-// 	}, {
-// 		inputReNewPassword: {
-// 			label:"Повторите новый пароль", 
-// 			type:"password", 
-// 			name:"repeat-password", 
-// 			value:"ivanivanov", 
-// 			readonly:false
-// 		}
-// 	}, {
-// 		button: {
-// 			text: 'Сохранить',
-// 			events: ()	=> console.log('clicked')
-// 		}
-// 	}
-// ];
 
 class Profile extends Block {
 	constructor(props) {
@@ -177,99 +90,80 @@ class Profile extends Block {
 		});
 
 		return fragment;
-
-		// let html = compileTemplate({
-		// 	name: 'Иван',
-		// 	userform: profileForm.render(),
-		// 	back: btnBack.render(),
-		// 	exit: btnExit.render(),
-		// 	edit: btnEdit.render(),
-		// 	password: passwordEdit.render(),
-		// 	passwordform: passwordForm.render(),
-		// 	modal: modal.render()
-		// });
-
-		// return pug.render(html);
 	}
 
 }
 
 
 const profileState = {
-  email: null,
-  login: null,
-  first_name: null,
-  last_name: null,
-  username: null,
+  email: "pochta@yandex.ru",
+  login: "ivanivanov",
+  first_name: "Иван",
+  last_name: "Иванов",
+  username: "Иван",
   password: null,
-  phone: null
+  phone: "+79099673030",
 }
 
 const profileConfig = {
   formElements: [{
-			inputEmail: {
+			email: {
 				classname: 'input',
       	attributes: {
 					placeholder:"Почта", 
 					type:"email", 
 					name:"email", 
-					value:"pochta@yandex.ru", 
-					readonly: false
+					value: profileState.email
 				}
 			}
 		}, {
-			inputLogin: {
+			login: {
 				classname: 'input',
 	      attributes: {
 					placeholder:"Логин", 
 					type:"text", 
 					name:"login", 
-					value:"ivanivanov", 
-					readonly:false
+					value: profileState.login
 				}
 			} 
 		}, {
-			inputName: {
+			first_name: {
 				classname: 'input',
 	      attributes: {
 					placeholder:"Имя", 
 					type:"text", 
 					name:"first_name", 
-					value:"Иван", 
-					readonly:false
+					value: profileState.first_name
 				}
 			}
 		}, {
-			inputLastName: {
+			last_name: {
 				classname: 'input',
 	      attributes: {
 					placeholder:"Фамилия", 
 					type:"text", 
 					name:"last_name", 
-					value:"Иванов", 
-					readonly:false
+					value: profileState.last_name
 				}
 			}
 		}, {
-			inputChatName: {
+			username: {
 				classname: 'input',
 	      attributes: {
 					placeholder: "Имя в чате", 
 					type: "text", 
 					name:"username", 
-					value:"Иван", 
-					readonly:false
+					value: profileState.username
 				}
 			}
 		}, {
-			inputPhone: {
+			phone: {
 				classname: 'input',
 	      attributes: {
 					placeholder:"Телефон", 
 					type:"text", 
 					name:"phone", 
-					value:"+7 (909) 967 30 30", 
-					readonly:false
+					value: profileState.phone
 				}
 			}
 		}, {
@@ -280,23 +174,11 @@ const profileConfig = {
 	],
 	input: function(e){
 		profileState[e.target.name] = e.target.value;
-		// validate(e.target.value, fieldName)
 	},
-	focus: function(e){
-		profileState[e.target.name] = e.target.value;
-		validate(e.target.value, fieldName);
-	},
-	blur: function(e){
-		profileState[e.target.name] = e.target.value;
-		validate(e.target.value, fieldName);
-	},
-  click: () => {
-  	collectData(profileState);
-  	for (let key: string in profileState) {
-			validate(profileState[key], key);
-		}
-  }
- 
+	focus: (e) => inputHandler(e.target, profileState),
+	blur: (e) => inputHandler(e.target, profileState),
+  click: () => buttonHandler(profileState)
+
 }
 
 export default new Profile(profileConfig);

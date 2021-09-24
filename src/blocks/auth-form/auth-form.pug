@@ -1,13 +1,35 @@
-div.auth__form 
-	div !{inputEmail}
-	div !{inputLogin}
-	div !{inputName}
-	div !{inputLastName}
-	div !{inputChatName}
-	div !{inputPhone}
-	div !{inputPassword}
-	div !{inputOldPassword}
-	div !{inputNewPassword}
-	div !{inputRePassword}
-	div !{inputReNewPassword}
+div.auth__form
+	if inputEmail 
+		div.form-field !{inputEmail}
+			div.form-field__error
+	if inputLogin 
+		div.form-field !{inputLogin}
+			div.form-field__error
+	if inputName 
+		div.form-field !{inputName}
+			div.form-field__error
+	if inputLastName 
+		div.form-field !{inputLastName}
+			div.form-field__error
+	if inputChatName 
+		div.form-field !{inputChatName}
+			div.form-field__error
+	if inputPhone 
+		div.form-field !{inputPhone}
+			div.form-field__error
+	if inputPassword 
+		div.form-field !{inputPassword}
+			div.form-field__error
+	if inputOldPassword 
+		div.form-field !{inputOldPassword}
+			div.form-field__error
+	if inputNewPassword 
+		div.form-field !{inputNewPassword}
+			div.form-field__error
+	if inputRePassword 
+		div.form-field !{inputRePassword}
+			div.form-field__error
+	if inputReNewPassword 
+		div.form-field !{inputReNewPassword}
+			div.form-field__error
 	div !{button}

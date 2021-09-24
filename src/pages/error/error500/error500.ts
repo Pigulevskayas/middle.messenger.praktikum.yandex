@@ -1,8 +1,7 @@
 import Block from '../../../modules/block.ts';
 import compileTemplate from '../error.pug';
 import compile from '../../../modules/compile.ts';
-
-// const pug = require('pug');
+import '../error.css';
 
 interface ErrorInt {
 	code: string,

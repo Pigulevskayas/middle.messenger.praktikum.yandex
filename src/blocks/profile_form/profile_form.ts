@@ -24,14 +24,12 @@ export default class ProfileForm extends Block {
 
 	render() {
 		const renderFields = {};
-
 		const formItems = this.props.content;
 
-		// console.log('formItems', formItems)
-
-		formItems.formElements.map(function(element: object){
+		formItems.formElements.map((element: object) => {
 			let component;
 			for (let key: string in element) {
+
 				if (key == 'button'){
 					let component: ButtonInt = new Button({
 						text: element[key]['text'],
@@ -49,7 +47,6 @@ export default class ProfileForm extends Block {
 			}
 		});
 
-		// return compileTemplate(renderFields);
 		return compile(compileTemplate, renderFields);
 	}
 

@@ -74,7 +74,7 @@ class HTTPTransport {
             xhr.onerror = reject(xhr.statusText);
             xhr.ontimeout = reject(xhr.statusText);
 
-            if (method === 'GET' || !data) {
+            if (method === METHODS.GET || !data) {
               xhr.send();
             } else {
               xhr.send(data);

@@ -56,21 +56,19 @@ export default class Block {
   }
 
   _componentDidMount() {
-    // console.log('_componentDidMount')
     this.componentDidMount();
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    this.eventBus().emit(Block.EVENTS.FLOW_CDU);
   }
 
 	// Может переопределять пользователь, необязательно трогать
   componentDidMount(oldProps) {}
 
   _componentDidUpdate(oldProps, newProps) {
-    // console.log('_componentDidUpdate')
     const response = this.componentDidUpdate(oldProps, newProps);
-    if(response){
-      this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-      //this.eventBus().emit('Block.EVENTS.FLOW_CDU');
+    if (!response) {
+      return;
     }
+    this._render();
   }
 
 	// Может переопределять пользователь, необязательно трогать
@@ -79,7 +77,6 @@ export default class Block {
   }
 
   setProps = nextProps => {
-    // console.log(nextProps)
     if (!nextProps) {
       return;
     }
@@ -95,7 +92,7 @@ export default class Block {
   _render() {
     this._removeEvents();
     const fragment = this.render();
-    // console.log('fragment', fragment)
+    
     // Этот небезопасный метод для упрощения логики
     // Используйте шаблонизатор из npm или напишите свой безопасный
     // Нужно не в строку компилировать (или делать это правильно),
@@ -149,6 +146,7 @@ export default class Block {
     // Можно и так передать this
     // Такой способ больше не применяется с приходом ES6+
     const self = this;
+    const prevProps = { ...props };
     
     const proxyProps = new Proxy(props, {
       get: (obj, prop) => {
@@ -164,7 +162,8 @@ export default class Block {
           throw new Error('Нет прав');
         }
         obj[prop] = value;
-        return obj;
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU, prevProps, obj);
+        return true;
       },
       deleteProperty: (obj, prop) => {
         throw new Error('Нет доступа');

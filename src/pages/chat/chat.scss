@@ -68,6 +68,7 @@
 			display: flex;
 			justify-content: space-between;
 			position: relative;
+			align-items: center;
 		}
 
 		& > span:first-of-type {
@@ -98,7 +99,7 @@
 
 	.chat__input {
 		width: 100%;
-		max-width: 850px;
+		box-sizing: border-box;
 		height: 28px;
 		border-radius: 30px;
 		border:  none;
@@ -108,10 +109,19 @@
 		color: #27496d;
 		padding-left: 20px;
 		padding-right: 20px;
+		margin: 2px 0;
 		&:placeholder {
 			color: #27496d;;
 		}
 
+	}
+
+	&__input-wpap {
+		width: 100%;
+		max-width: 850px;
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: flex-start;
 	}
 
 	.messages {

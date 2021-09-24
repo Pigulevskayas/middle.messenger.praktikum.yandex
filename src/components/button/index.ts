@@ -10,41 +10,10 @@ export default class Button extends Block {
   }
 
   render(): string {
-  	// let html = compileTemplate({
-  	// 	text: this.props.text
-  	// });
-
-  	//return html;
-		// return pug.render(html);
-
-		// var fn = compileTemplate({
-  // 		text: this.props.text
-  // 	});
-  // 	console.log('fn', fn)
-
-  // 	return fn;
-
-  	// return compileTemplate({
-  	// 	text: this.props.text
-  	// });
-
-    return compile(compileTemplate, {
+  	return compile(compileTemplate, {
       text: this.props.text,
       click: () => this.props.events.click()
     });
   }
 }
-
-// function render(query, block) {
-//   const root = document.querySelector(query);
-//   root.appendChild(block.getContent());
-// 	return root;
-// }
-
-// // const button = new Button({
-// // 	text: 'Сохранить'
-// // });
-
-// // app — root div
-// render(".app", button);
 
