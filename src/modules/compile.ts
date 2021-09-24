@@ -21,7 +21,7 @@ export default function compile(tmpl: (ctx: Record<string, any>) => string, prop
 			return;
 		}
 
-		// console.log(component.getContent())
+		console.log('component.getContent()', component.getContent())
 
 		stub.replaceWith(component.getContent());
 	});

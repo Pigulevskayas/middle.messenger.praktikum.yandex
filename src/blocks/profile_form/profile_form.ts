@@ -40,11 +40,8 @@ export default class ProfileForm extends Block {
 					renderFields[key] = component;
 				} else {
 					let component: InputInt = new Input({
-						type: element[key]['text'],
-						name: element[key]['name'],
-						label: element[key]['label'],
-						value: element[key]['value'],
-						readonly: element[key]['readonly'],
+						classname: element[key]['classname'],
+						attributes: element[key]['attributes'],
 						events: formItems.inputEvent
 					});
 					renderFields[key] = component;

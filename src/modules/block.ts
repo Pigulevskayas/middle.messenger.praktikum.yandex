@@ -45,7 +45,9 @@ export default class Block {
 
   _createResources() {
     const { tagName } = this._meta;
-    this._element = this._createDocumentElement(tagName);
+    const classname = this._meta.props?.classname;
+    const attributes = this._meta.props?.attributes;
+    this._element = this._createDocumentElement(tagName, classname, attributes);
   }
 
   init() {
@@ -63,7 +65,7 @@ export default class Block {
   componentDidMount(oldProps) {}
 
   _componentDidUpdate(oldProps, newProps) {
-    console.log('_componentDidUpdate')
+    // console.log('_componentDidUpdate')
     const response = this.componentDidUpdate(oldProps, newProps);
     if(response){
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
@@ -93,13 +95,12 @@ export default class Block {
   _render() {
     this._removeEvents();
     const fragment = this.render();
-     // console.log('fragment', fragment)
+    // console.log('fragment', fragment)
     // Этот небезопасный метод для упрощения логики
     // Используйте шаблонизатор из npm или напишите свой безопасный
     // Нужно не в строку компилировать (или делать это правильно),
     // либо сразу в DOM-элементы возвращать из compile DOM-ноду
     // this._element.innerHTML = block;
-
     if(typeof fragment === 'string'){
       this._element.innerHTML = fragment;
     } else {
@@ -174,9 +175,22 @@ export default class Block {
 
   }
 
-  _createDocumentElement(tagName) {
+  _createDocumentElement(tagName, classname = undefined, attributes = undefined) {
     // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
-    return document.createElement(tagName);
+    const resultElement = document.createElement(tagName);
+    
+    if (classname) {
+      resultElement.classList.add(classname);
+    }
+
+    for (let key: string in attributes) {
+      resultElement.setAttribute(key, attributes[key]);
+      if(key === 'value') {
+        resultElement.value = attributes.value;
+      }
+    }
+
+    return resultElement;
   }
 
 }

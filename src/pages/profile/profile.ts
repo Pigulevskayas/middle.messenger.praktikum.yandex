@@ -129,7 +129,9 @@ class Profile extends Block {
 				click: this.props.config.click
 			},
 			inputEvent: {
-				input: this.props.config.input
+				input: this.props.config.input,
+				focus: this.props.config.focus,
+        blur: this.props.config.blur
 			}
 		}
 
@@ -206,51 +208,69 @@ const profileState = {
 const profileConfig = {
   formElements: [{
 			inputEmail: {
-				label:"Почта", 
-				type:"email", 
-				name:"email", 
-				value:"pochta@yandex.ru", 
-				readonly: false
+				classname: 'input',
+      	attributes: {
+					placeholder:"Почта", 
+					type:"email", 
+					name:"email", 
+					value:"pochta@yandex.ru", 
+					readonly: false
+				}
 			}
 		}, {
 			inputLogin: {
-				label:"Логин", 
-				type:"text", 
-				name:"login", 
-				value:"ivanivanov", 
-				readonly:false
+				classname: 'input',
+	      attributes: {
+					placeholder:"Логин", 
+					type:"text", 
+					name:"login", 
+					value:"ivanivanov", 
+					readonly:false
+				}
 			} 
 		}, {
 			inputName: {
-				label:"Имя", 
-				type:"text", 
-				name:"first_name", 
-				value:"Иван", 
-				readonly:false
+				classname: 'input',
+	      attributes: {
+					placeholder:"Имя", 
+					type:"text", 
+					name:"first_name", 
+					value:"Иван", 
+					readonly:false
+				}
 			}
 		}, {
 			inputLastName: {
-				label:"Фамилия", 
-				type:"text", 
-				name:"last_name", 
-				value:"Иванов", 
-				readonly:false
+				classname: 'input',
+	      attributes: {
+					placeholder:"Фамилия", 
+					type:"text", 
+					name:"last_name", 
+					value:"Иванов", 
+					readonly:false
+				}
 			}
 		}, {
 			inputChatName: {
-				label: "Имя в чате", 
-				type: "text", 
-				name:"username", 
-				value:"Иван", 
-				readonly:false
+				classname: 'input',
+	      attributes: {
+					placeholder: "Имя в чате", 
+					type: "text", 
+					name:"username", 
+					value:"Иван", 
+					readonly:false
+				}
 			}
 		}, {
 			inputPhone: {
-				label:"Телефон", 
-				type:"text", 
-				name:"phone", 
-				value:"+7 (909) 967 30 30", 
-				readonly:false
+				classname: 'input',
+	      attributes: {
+					placeholder:"Телефон", 
+					type:"text", 
+					name:"phone", 
+					value:"+7 (909) 967 30 30", 
+					readonly:false
+				}
 			}
 		}, {
 			button: {
@@ -258,12 +278,24 @@ const profileConfig = {
 			}
 		}
 	],
-  input: function(e){
-    const fieldName = e.target.name;
-    profileState[fieldName] = e.target.value;
-    validate(e.target.value, fieldName)
-  },
-  click: () => collectData(profileState)
+	input: function(e){
+		profileState[e.target.name] = e.target.value;
+		// validate(e.target.value, fieldName)
+	},
+	focus: function(e){
+		profileState[e.target.name] = e.target.value;
+		validate(e.target.value, fieldName);
+	},
+	blur: function(e){
+		profileState[e.target.name] = e.target.value;
+		validate(e.target.value, fieldName);
+	},
+  click: () => {
+  	collectData(profileState);
+  	for (let key: string in profileState) {
+			validate(profileState[key], key);
+		}
+  }
  
 }
 

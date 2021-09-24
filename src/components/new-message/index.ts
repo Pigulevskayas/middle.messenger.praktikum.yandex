@@ -2,7 +2,7 @@ import EventBus from './event-bus.ts';
 import Block from '../../modules/block.ts';
 import compile from '../../modules/compile.ts';
 import compileTemplate from './new-message.pug';
-import InputMessage from '../../components/input-message/index.ts';
+import Input from '../../components/input/index.ts';
 import SendButton from '../../components/send-button/index.ts';
 
 export default class NewMessage extends Block {
@@ -12,14 +12,17 @@ export default class NewMessage extends Block {
 
   render(): DocumentFragment {
 
-    const input = new InputMessage({
-      type: this.props.content.inputMessage.type,
-      name: this.props.content.inputMessage.name,
-      label: this.props.content.inputMessage.label,
-      value: this.props.content.inputMessage.value,
+    const input = new Input({
+      classname: this.props.content.inputMessage.classname,
+      attributes: this.props.content.inputMessage.attributes,
       events: this.props.content.inputEvent
+      // type: this.props.content.inputMessage.type,
+      // name: this.props.content.inputMessage.name,
+      // label: this.props.content.inputMessage.label,
+      // value: this.props.content.inputMessage.value,
+      // events: this.props.content.inputEvent
     });
-    // console.log('input', this.props.content.inputEvent)
+
     const button = new SendButton({
       events: this.props.content.buttonEvent
     });

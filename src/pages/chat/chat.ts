@@ -100,19 +100,22 @@ const сhatState: сhatStateInt = {
 
 const chatConfig: chatConfigInt = {
 	inputMessage: {
-    type: 'text',
-    name: 'message',
-    label: 'Сообщение',
-    value: сhatState.message
-  },
+		classname: 'chat__input',
+		attributes: {
+			type: 'text',
+			name: 'message',
+			label: 'Сообщение',
+			value: сhatState.message
+		}
+	},
   input: function(e){
     сhatState[e.target.name] = e.target.value;
   },
-  onfocus: function(e){
+  focus: function(e){
     сhatState[e.target.name] = e.target.value;
     validate(e.target.value, fieldName);
   },
-  onblur: function(e){
+  blur: function(e){
     сhatState[e.target.name] = e.target.value;
     validate(e.target.value, fieldName);
   },

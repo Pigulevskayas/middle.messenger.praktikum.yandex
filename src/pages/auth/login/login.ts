@@ -17,8 +17,8 @@ interface FormElementInt {
     inputPassword: Object<string>;
     button: object;
     input: () => void;
-    onfocus: () => void;
-    onblur: () => void;
+    focus: () => void;
+    blur: () => void;
     click: () => void;
 }
 
@@ -64,7 +64,9 @@ class Login extends Block {
 				click: this.props.config.click
 			},
 			inputEvent: {
-				input: this.props.config.input
+				input: this.props.config.input,
+        focus: this.props.config.focus,
+        blur: this.props.config.blur
 			}
 		}
 
@@ -105,45 +107,48 @@ const loginState: loginStateInt = {
 const LoginConfig: FormElementInt = {
   formElements: [{
       inputEmail: {
-        type: 'text',
-        name: 'email',
-        label: 'Почта',
-        value: loginState.email
+        classname: 'input',
+        attributes: {
+          type: 'text',
+          name: 'email',
+          placeholder: 'Почта',
+          value: loginState.email
+        }
       }
     },{
       inputPassword: {
-        type: 'password',
-        name: 'password',
-        label: 'Пароль',
-        value: loginState.password
+        classname: 'input',
+        attributes: {
+          type: 'password',
+          name: 'password',
+          placeholder: 'Пароль',
+          value: loginState.password
+        }
       }
     }, {
       button: {
-        text: 'Сохранить',
-        // events: {
-        //   click: () => { 
-        //     console.log('clicked') 
-        //   }
-        // }
+        text: 'Сохранить'
       }
     }
   ],
-  input: function(e){
+  input: function(e){console.log('input')
     loginState[e.target.name] = e.target.value;
   },
-  onfocus: function(e){
+  focus: function(e){
+    console.log('focus')
   	loginState[e.target.name] = e.target.value;
     validate(e.target.value, fieldName);
   },
-  onblur: function(e){
+  blur: function(e){
+    console.log('blur')
     loginState[e.target.name] = e.target.value;
     validate(e.target.value, fieldName);
   },
   click: () => {
   	collectData(loginState);
   	for (let key: string in loginState) {
-		validate(loginState[key], key);
-	}
+  		validate(loginState[key], key);
+  	}
   }
  
 }

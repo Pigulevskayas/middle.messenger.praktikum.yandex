@@ -90,7 +90,9 @@ class Regisatration extends Block {
 				click: this.props.config.click
 			},
 			inputEvent: {
-				input: this.props.config.input
+				input: this.props.config.input,
+        focus: this.props.config.focus,
+        blur: this.props.config.blur
 			}
 		}
 
@@ -132,45 +134,66 @@ const regState = {
 const RegConfig: FormElementsInt = {
   	formElements: [{
 		inputEmail: {
-				label: "Почта", 
+			classname: 'input',
+      attributes: {
+				placeholder: "Почта", 
 				type: "email", 
 				name: "email"
+			}
 		}
 	}, {
 		inputLogin: {
-				label: "Логин", 
+			classname: 'input',
+      attributes: {
+				placeholder: "Логин", 
 				type: "text", 
 				name: "login"
+			}
 		}
 	}, {
 		inputName: {
-				label: "Имя", 
+			classname: 'input',
+      attributes: {
+				placeholder: "Имя", 
 				type: "text", 
 				name: "first_name"
+			}
 		}
 	}, {
 		inputLastName: {
-				label: "Фамилия", 
+			classname: 'input',
+      attributes: {
+				placeholder: "Фамилия", 
 				type: "text", 
 				name: "second_name"
+			}
 		}
 	}, {
 			inputPhone: {
-				label: "Телефон", 
-				type: "text", 
-				name: "phone"
+				classname: 'input',
+	      attributes: {
+					placeholder: "Телефон", 
+					type: "text", 
+					name: "phone"
+				}
 			}
 	}, {
 			inputPassword: {
-				label: "Пароль", 
-				type: "password", 
-				name: "password"
+				classname: 'input',
+	      attributes: {
+					placeholder: "Пароль", 
+					type: "password", 
+					name: "password"
+				}
 			}
 	}, {
 			inputRePassword: {
-				label:"Пароль (ещё раз)", 
-				type: "password", 
-				name: "repassword"
+				classname: 'input',
+	      attributes: {
+					placeholder:"Пароль (ещё раз)", 
+					type: "password", 
+					name: "repassword"
+				}
 			}
 	}, {
       	button: {
@@ -180,14 +203,14 @@ const RegConfig: FormElementsInt = {
   	input: function(e){
 	    regState[e.target.name] = e.target.value;
   	},
-  	onfocus: function(e){
+  	focus: function(e){
 	  	regState[e.target.name] = e.target.value;
 	    validate(e.target.value, fieldName);
-	},
-	onblur: function(e){
+		},
+		blur: function(e){
 	    regState[e.target.name] = e.target.value;
 	    validate(e.target.value, fieldName);
-	},
+		},
   	click: () => {
 	  	collectData(regState);
 	  	for (let key: string in regState) {
