@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;900&display=swap");
-
 .auth {
   background: #ffe6ea url("../../../public/static/images/auth_bg.svg") no-repeat center;
   background-size: cover;
@@ -28,13 +26,13 @@
 }
 
 .auth__card {
+  width: 100%;
   padding: 47px 30px 30px;
   background: #fff;
   -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
-  text-align: center;
-  width: 100%;
   max-width: 280px;
+  text-align: center;
 }
 
 .auth__card_login {

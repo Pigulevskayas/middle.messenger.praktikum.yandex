@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;900&display=swap');
+
 .auth {
-	background: #FFE6EA url('../../../public/static/images/auth_bg.svg') no-repeat center;
+	background: $pink url('../../../public/static/images/auth_bg.svg') no-repeat center;
 	background-size: cover;
 	display: flex;
 	justify-content: center;
@@ -30,7 +31,7 @@
 		font-weight: 900;
 		line-height: 20px;
 		text-align: center;
-		color: #27496D;
+		color: $dark-text;
 		margin-bottom: 40px;
 	}
 	&__button {
@@ -41,7 +42,7 @@
 		font-family: 'Inter', sans-serif;
 		font-weight: 500;
 		line-height: 11px;
-		color: #27496D;
+		color: $dark-text;
 		text-decoration: underline;
 		cursor: pointer;
 		&:hover, &:focus, &:active {
