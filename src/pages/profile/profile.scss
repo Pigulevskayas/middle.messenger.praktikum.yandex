@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;900&display=swap');
+.profile {
+	background: #B6E1F2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	&__inner {
+		max-width: 570px;
+		width: 100%;
+	}
+	&__card {
+		width: 100%;
+		max-width: 510px;
+		padding: 30px;
+		background: #FFFFFF;
+		/*width: 100%;
+		max-width: 570px;*/
+		text-align: center;
+	}
+	&__header {
+		width: 100%;
+		max-width: 1280px;
+		position: absolute;
+		top: 0;
+		display: inline-block;
+		padding: 20px;
+	}
+	&__links {
+		margin-left: -10px;
+		margin-right: -10px;
+		margin-bottom: 21px;
+		text-align: right;
+	}
+	.profile__link {
+		display: inline-block;
+		padding: 0 10px;
+	}
+	&__top {
+		text-align: center;
+		margin-bottom: 30px;
+	}
+	&__avatar {
+		display: inline-block;
+		width: 130px;
+		height: 130px;
+		border-radius: 50%;
+		background: #FFE6EA url('../../../public/static/images/avatar_icon.svg') no-repeat center;
+		margin-bottom: 21px;
+	}
+	&__name {
+		font-family: "Inter", sans-serif;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 16px;
+		text-align: center;
+		color: #27496D;
+	}
+	
+}

@@ -1,0 +1,8 @@
+extends ./error-layout.pug
+
+block content
+	div.error.layout_100
+		div.error__card
+			h1.error__title #{code}
+			p.error__text #{text}
+			a.error__back(href=link) Назад к чатам

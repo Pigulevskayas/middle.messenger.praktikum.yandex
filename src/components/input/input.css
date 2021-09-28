@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;900&display=swap');
+
+.input {
+  border: none;
+  border-bottom: 1px solid #a6b4c2;
+  margin-bottom: 7px;
+  width: 100%;
+  padding: 7px 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 13px;
+  font-weight: 500;
+  color: #27496d;
+  outline: none;
+}
+
+.input::placeholder {
+  font-family: 'Inter', sans-serif;
+  color: #a6b4c2;
+}
+
+.input_hidden {
+  display: none;
+}

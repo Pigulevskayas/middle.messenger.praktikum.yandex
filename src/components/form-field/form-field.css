@@ -1,0 +1,10 @@
+.form-field {
+  margin-bottom: 9px;
+}
+
+.form-field__error {
+  font-size: 11px;
+  line-height: 11px;
+  color: #f97c7c;
+  text-align: left;
+}

@@ -1,0 +1,39 @@
+.nav-btn {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  border-radius: 17px;
+  cursor: pointer;
+}
+
+.nav-btn__back {
+  background: #27496d url("../../../public/static/images/arrow_back_icon.svg") no-repeat center;
+}
+
+.nav-btn__exit {
+  background: #27496d url("../../../public/static/images/exit_icon.svg") no-repeat center;
+  background-size: 24px;
+}
+
+.nav-btn__edit {
+  background: #27496d url("../../../public/static/images/edit_icon.svg") no-repeat center;
+}
+
+.nav-btn__password {
+  background: #27496d url("../../../public/static/images/password_icon.svg") no-repeat center;
+}
+
+.nav-btn__edit-chat {
+  background: #27496d url("../../../public/static/images/user-icon.svg") no-repeat center;
+}
+
+.nav-btn_send {
+  background: #27496d url("../../../public/static/images/arrow.svg") no-repeat center;
+}
+
+.nav-btn_small {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+}

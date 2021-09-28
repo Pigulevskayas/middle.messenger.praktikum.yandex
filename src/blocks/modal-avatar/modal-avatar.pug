@@ -1,0 +1,13 @@
+div.modal(class=(isVisible  && 'modal_show'))
+	div.modal__content
+		h3.modal__title.modal__title_error Загрузите файл
+		input.input_hidden(
+			type="file"
+			name="avatar"
+		)
+		p.modal__status #{fileName}
+		div
+			a.modal__link(href="#") Выбрать файл на компьютере
+		div !{button}
+		p.modal__notice(class=(isError  && 'modal__notice_show')) Нужно выбрать файл
+	div.modal__fade
