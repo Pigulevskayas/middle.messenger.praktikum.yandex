@@ -48,6 +48,14 @@ class Regisatration extends Block {
 				input: this.props.config.input,
         focus: this.props.config.focus,
         blur: this.props.config.blur
+			},
+			linkEvent: {
+				click: (e) => {
+					e.preventDefault();
+					// console.log('hi', e.target.getAttribute('to'));
+					window.location = e.target.getAttribute('to')
+
+				},
 			}
 		}
 
@@ -55,7 +63,8 @@ class Regisatration extends Block {
 
 		const link: LinkInt = new Link({
 			text: 'Войти', 
-			link: "/login"
+			to: "/",
+			events: content.linkEvent
 		});
 
 		const fragment = compile(compileTemplate,{

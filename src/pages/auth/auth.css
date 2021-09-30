@@ -35,6 +35,11 @@
   text-align: center;
 }
 
+.auth__card span {
+  font-size: 11px;
+  line-height: 11px;
+}
+
 .auth__card_login {
   min-height: 450px;
 }

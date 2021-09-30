@@ -1,5 +1,6 @@
 import Block from '../../../modules/block.ts';
 import compileTemplate from '../error.pug';
+import Link from '../../../components/link/index.ts';
 import compile from '../../../modules/compile.ts';
 import '../error.css';
 
@@ -15,10 +16,21 @@ class Error404 extends Block {
   }
 
   render(): DocumentFragment {
+  	const link: LinkInt = new Link({
+			text: 'Назад к чатам',
+      to: '/chats',
+      events: {
+        click: (e) => {
+          e.preventDefault();
+          window.location = e.target.getAttribute('to')
+        },
+      }
+		});
+
   	const errorPage404: ErrorInt = {
 			code: '404',
 			text: 'Не туда попали',
-			link: '/chats'
+			link: link
 		};
 
 		const fragment = compile(compileTemplate, errorPage404);

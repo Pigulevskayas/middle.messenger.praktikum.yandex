@@ -65,7 +65,13 @@ class Chat extends Block {
 
 		const edit: NavButtonInt = new NavButton({
 			type: 'edit-chat', 
-			link: '/profile'
+			to: '/profile',
+			events: {
+        click: (e) => {
+          e.preventDefault();
+          window.location = e.target.getAttribute('to')
+        },
+      }
 		});
 
 		const chat_item: ChatItemInt = new ChatItem({
@@ -84,7 +90,7 @@ class Chat extends Block {
 		const new_message = new NewMessage(content);
 
 		const fragment = compile(compileTemplate,{
-			edit: edit.render(),
+			edit: edit,
 			search: search.render(),
 			chat_item: chat_item.render(),
 			chat_header: chat_header.render(),

@@ -1,15 +1,19 @@
+import EventBus from './event-bus.ts';
 import Block from '../../modules/block.ts';
 import compileTemplate from './nav-btn.pug';
+import compile from '../../modules/compile.ts';
 
 export default class NavButton extends Block {
   constructor(props: object) {
-    super("div", { attr: props });
+    super("div", props);
   }
 
   render(): string {
-  	return compileTemplate({
-      text: this.props.attr.type,
-  		link: this.props.attr.link
+    // console.log('props', props)
+  	return compile(compileTemplate, {
+      type: this.props.type,
+  		to: this.props.to,
+      events: () => this.props.events.click()
   	});
   }
 }

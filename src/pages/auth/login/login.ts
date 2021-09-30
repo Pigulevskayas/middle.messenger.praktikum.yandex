@@ -48,14 +48,21 @@ class Login extends Block {
 				input: this.props.config.input,
         focus: this.props.config.focus,
         blur: this.props.config.blur
-			}
+			},
+      linkEvent: {
+        click: (e) => {
+          e.preventDefault();
+          window.location = e.target.getAttribute('to')
+        },
+      }
 		}
 
 		const loginForm = new Form(content);
 
 		const link: LinkInt = new Link({
-			text: 'Нет аккаунта?', 
-			link: "/registration"
+			text: 'Нет аккаунта?',
+      to: '/registration',
+      events: content.linkEvent
 		});
 
 		const fragment = compile(compileTemplate,{

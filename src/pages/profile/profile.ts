@@ -55,22 +55,26 @@ class Profile extends Block {
 
 		const btnBack: NavButtonInt = new NavButton({
 			type: 'back', 
-			link: "/"
+			to: "/chats",
+			events: {
+        click: (e) => {
+          e.preventDefault();
+          window.location = e.target.getAttribute('to')
+        },
+      }
 		});
 
 		const btnExit: NavButtonInt = new NavButton({
 			type: 'exit', 
-			link: "/login"
+			to: "/"
 		});
 
 		const btnEdit: NavButtonInt = new NavButton({
-			type: 'edit', 
-			link: "#"
+			type: 'edit'
 		});
 
 		const passwordEdit: NavButtonInt = new NavButton({
-			type: 'password', 
-			link: "#"
+			type: 'password'
 		});
 
 		const modal: ModalInt = new Modal({
@@ -81,10 +85,10 @@ class Profile extends Block {
 		const fragment = compile(compileTemplate,{
 			name: 'Иван',
 			userform: profileForm,
-			back: btnBack.render(),
-			exit: btnExit.render(),
-			edit: btnEdit.render(),
-			password: passwordEdit.render(),
+			back: btnBack,
+			exit: btnExit,
+			edit: btnEdit,
+			password: passwordEdit,
 			// passwordform: passwordForm.render(),
 			modal: modal.render()
 		});
@@ -177,7 +181,7 @@ const profileConfig = {
 	},
 	focus: (e) => inputHandler(e.target, profileState),
 	blur: (e) => inputHandler(e.target, profileState),
-  click: () => buttonHandler(profileState)
+  	click: () => buttonHandler(profileState)
 
 }
 
