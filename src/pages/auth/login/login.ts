@@ -61,7 +61,7 @@ class Login extends Block {
 
 		const link: LinkInt = new Link({
 			text: 'Нет аккаунта?',
-      to: '/registration',
+      to: '/sign-up',
       events: content.linkEvent
 		});
 

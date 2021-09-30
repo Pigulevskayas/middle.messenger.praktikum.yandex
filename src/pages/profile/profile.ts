@@ -55,7 +55,7 @@ class Profile extends Block {
 
 		const btnBack: NavButtonInt = new NavButton({
 			type: 'back', 
-			to: "/chats",
+			to: "/messenger",
 			events: {
         click: (e) => {
           e.preventDefault();

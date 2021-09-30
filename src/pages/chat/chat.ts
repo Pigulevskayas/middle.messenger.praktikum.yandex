@@ -65,7 +65,7 @@ class Chat extends Block {
 
 		const edit: NavButtonInt = new NavButton({
 			type: 'edit-chat', 
-			to: '/profile',
+			to: '/settings',
 			events: {
         click: (e) => {
           e.preventDefault();

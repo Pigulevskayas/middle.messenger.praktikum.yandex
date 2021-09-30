@@ -10,8 +10,8 @@ import ChatPage from './src/pages/chat/chat.ts';
 const router = new Router(".app");
 
 router
-  .use("/", ChatPage)
-  .use("/registration", RegPage)
-  .use("/chats", ChatPage)
-  .use("/profile", ProfilePage)
+  .use("/", LoginPage)
+  .use("/sign-up", RegPage)
+  .use("/messenger", ChatPage)
+  .use("/settings", ProfilePage)
   .start();
