@@ -10,6 +10,9 @@ import buttonHandler from '../../../utils/form-submit-handler.ts';
 import '../auth.css';
 import '../../../components/button/button.css';
 import '../../../components/input/input.css';
+import '../../../components/form-field/form-field.css';
+
+import AuthController from '../../../controllers/auth-controller.ts';
 
 interface LinkInt {
 	text: string, 
@@ -17,37 +20,65 @@ interface LinkInt {
 }
 
 interface FormElementInt {
-    inputEmail: Object<string>; 
-    inputPassword: Object<string>;
-    button: object;
-    input: () => void;
-    focus: () => void;
-    blur: () => void;
-    click: () => void;
+  inputLogin: Object<string>; 
+  inputPassword: Object<string>;
+  button: object;
+  input: () => void;
+  focus: () => void;
+  blur: () => void;
+  click: () => void;
 }
 
 interface FormElementsInt extends Array<FormElementInt>{}
 
 interface loginStateInt {
-  email: null | string,
+  login: null | string,
   password: null | string
 }
 
-class Login extends Block {
+export default class Login extends Block {
 	constructor(props) {
-	  super('div', {config: props});
+	  super('div', props);
 	}
 
+  protected getStateFromProps() {
+    this.state = {
+      onLogin: async (data) => {
+        const res = await AuthController.login(data);
+      }
+    }
+  }
+
+  componentDidMount() {
+    // console.log('componentDidMount')
+    if (this.props.user.profile) {
+      this.props.router.go('/messenger')
+    }
+  }
+
+  componentDidUpdate() {
+    // console.log('componentDidUpdate')
+    if (this.props.user.profile) {
+      this.props.router.go('/messenger');
+    }
+
+    return true;
+  }
+
 	render(): DocumentFragment {	
+    // console.log('login', this.props)
 		const content = {
-			formElements: this.props.config.formElements, 
+			formElements: config.formElements, 
 			buttonEvent: {
-				click: this.props.config.click
+				click: () => {
+          let data = buttonHandler(loginState);
+          this.state.onLogin(data);
+        }
 			},
 			inputEvent: {
-				input: this.props.config.input,
-        focus: this.props.config.focus,
-        blur: this.props.config.blur
+				input: config.input,
+        focus: config.focus,
+        blur: config.blur
 			},
       linkEvent: {
         click: (e) => {
@@ -66,6 +97,7 @@ class Login extends Block {
 		});
 
 		const fragment = compile(compileTemplate,{
+      error: this.props.user.error?.reason,
 			form: loginForm,
 			link: link
 		});
@@ -76,19 +108,19 @@ class Login extends Block {
 
 // Loginpage configuration
 const loginState: loginStateInt = {
-  email: null,
+  login: null,
   password: null
 }
 
-const LoginConfig: FormElementInt = {
+const config: FormElementInt = {
   formElements: [{
-      inputEmail: {
+      inputLogin: {
         classname: 'input',
         attributes: {
           type: 'text',
-          name: 'email',
-          placeholder: 'Почта',
-          value: loginState.email
+          name: 'login',
+          placeholder: 'Логин',
+          value: loginState.login
         }
       }
     },{
@@ -112,11 +144,14 @@ const LoginConfig: FormElementInt = {
   },
   focus: (e) => inputHandler(e.target, loginState),
   blur: (e) => inputHandler(e.target, loginState),
-  click: () => buttonHandler(loginState)
+  click: () => {
+    let data = buttonHandler(loginState);
+    // this.state.onLogin(data);
+  }
  
 }
 
-export default new Login(LoginConfig);
+// export default new Login(config);
 
 
 

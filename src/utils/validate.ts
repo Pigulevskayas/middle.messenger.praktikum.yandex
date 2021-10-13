@@ -1,7 +1,7 @@
 const LABELS = {
 	message: "Сообщение",
 	first_name: "Имя",
-	last_name: "Фамилия",
+	second_name: "Фамилия",
 	login: "Логин",
 	email: "Почта",
 	password: "Пароль",
@@ -24,7 +24,7 @@ export default function validate(value: string, type: string): string {
 			message =''
 		}
 
-		if(type === 'first_name' || type === 'last_name') {
+		if(type === 'first_name' || type === 'second_name') {
 			regexp = /^[А-ЯA-Z][a-zа-я-]{1,20}$/g;
 			matchAll = value.matchAll(regexp);
 			matchAll = Array.from(matchAll);

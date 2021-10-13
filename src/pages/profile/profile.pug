@@ -7,7 +7,7 @@ body.layout_100.layout_flex-column
 				span !{exit}
 		div.profile__inner
 			div.profile__top
-				div.profile__avatar
+				div.profile__avatar !{avatar}
 				p.profile__name #{name}
 		div.profile__card
 			div.profile__links
@@ -15,7 +15,8 @@ body.layout_100.layout_flex-column
 					span !{edit}
 				div.profile__link
 					span !{password}
-			div.user-info !{userform} 
-			div.user-info !{passwordform}
+			div.profile__close !{close}
+			div.user-info.user-info_data !{userform} 
+			div.user-info.user-info_password.user-info_hidden !{passwordform}
 	
 

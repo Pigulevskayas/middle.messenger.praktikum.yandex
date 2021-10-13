@@ -1,0 +1,26 @@
+-function prettyDate(dateString){
+	-var date = new Date(dateString);
+	-var d = date.getDate();
+	-var monthNames = [ "Янв", "Феб", "Мар", "Апр", "Мая", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек" ];
+	-var m = monthNames[date.getMonth()];
+	-var y = date.getFullYear();
+	-return d+' '+m+' '+y;
+-}
+
+if userChats.length > 0
+	each val, key in userChats
+		div(class=selectedChat == userChats[key]['id'] ? 'chat-item_active chat-item' : 'chat-item' chat-id=userChats[key]['id'])
+			div.chat-item__icon.user-img
+			div.chat-item__data
+				div.chat-item__name !{userChats[key]['title']}
+				if userChats[key]['last_message']
+					div.chat-item__text !{userChats[key]['last_message']['content']}
+				else
+					div.chat-item__text Нет сообщений
+			if userChats[key]['last_message']
+				div.chat-item__notifications
+					div.chat-item__time #{prettyDate(userChats[key]['last_message']['time'])}
+					if userChats[key]['unread_count'] > 0
+						div.chat-item__new #{userChats[key]['unread_count']}
+else
+	span.chats-list__empty Здесь ничего не происходит...

@@ -1,5 +1,6 @@
 .modal {
   position: absolute;
+  z-index: 2;
   width: 100%;
   height: 100%;
   -webkit-box-align: center;
@@ -34,6 +35,7 @@
   z-index: 1;
   padding: 40px 30px;
   text-align: center;
+  position: relative;
 }
 
 .modal__title {
@@ -63,6 +65,7 @@
   font-size: 14px;
   line-height: 16px;
   color: #8d8d8d;
+  margin-bottom: 61px;
 }
 
 .modal__link {
@@ -73,6 +76,25 @@
   text-decoration-line: underline;
   color: #27496d;
   display: inline-block;
-  max-width: 122px;
+  /*max-width: 122px;*/
   margin-bottom: 45px;
+}
+
+.modal__close {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 15px;
+  right: 15px;
+}
+
+.modal__close-btn {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: url('../../../public/static/images/close.svg') no-repeat center;
+}
+
+.modal__input {
+  margin-bottom: 26px;
 }

@@ -9,7 +9,8 @@ export default class Link extends Block {
     super("span", props);
   }
 
-  render(): string {
+  render(): DocumentFragment {
+    
     return compile(compileTemplate, {
       text: this.props.text,
       to: this.props.to,

@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;900&display=swap');
 
 .input {
+  background: transparent;
   border: none;
   border-bottom: 1px solid #a6b4c2;
   margin-bottom: 7px;

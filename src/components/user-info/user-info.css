@@ -2,6 +2,14 @@
   /* display: inline-block; */
 }
 
+.user-info_password .profile__submit_hidden {
+  display: block;
+}
+
+.user-info_hidden {
+  display: none;
+}
+
 .user-info__row {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -38,8 +46,8 @@
   outline: none;
 }
 
-.user-info__data__data:focus,
-.user-info__data__data:focus-visible {
+.user-info__data:focus,
+.user-info__data:focus-visible {
   -webkit-box-shadow: none;
   box-shadow: none;
   outline: none;

@@ -1,3 +1,5 @@
+import Block from './Block';
+
 function isEqual(lhs, rhs) {
   return lhs === rhs;
 }
@@ -25,7 +27,8 @@ class Route {
 
     leave() {
         if (this._block) {
-            this._block.hide();
+            this._block.getContent().remove();
+            // this._block.hide();
         }
     }
 
@@ -35,13 +38,13 @@ class Route {
 
     render() {
         if (!this._block) {
-            // this._block = new this._blockClass();
-            this._block = this._blockClass;
+            this._block = new this._blockClass();
+            // this._block = this._blockClass;
             render(this._props.rootQuery, this._block);
             return;
         }
 
-        this._block.show();
+        // this._block.show();
     }
 }
 
@@ -106,4 +109,15 @@ export default class Router {
         return this.routes.find(route => route.match(pathname));
     }
 }
+
+export function withRouter(Component: typeof Block) {
+  return class WithRouter extends Component {
+    constructor(props: any) {
+      const router = new Router()
+
+      super({...props, router: router});
+    }
+  }
+}
+
 

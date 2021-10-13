@@ -10,6 +10,9 @@ import buttonHandler from '../../../utils/form-submit-handler.ts';
 import '../auth.css';
 import '../../../components/button/button.css';
 import '../../../components/input/input.css';
+import '../../../components/form-field/form-field.css';
+
+import AuthController from '../../../controllers/auth-controller.ts';
 
 interface LinkInt {
 	text: string, 
@@ -33,28 +36,54 @@ interface FormElementInt {
 
 interface FormElementsInt extends Array<FormElementInt>{}
 
-class Regisatration extends Block {
+export default class Regisatration extends Block {
 	constructor(props) {
-	  super('div', {config: props});
+	  super('div', props);
 	}
 
+	protected getStateFromProps() {
+    this.state = {
+      onRegister: async (data) => {
+        const res = await AuthController.registration(data);
+      }
+    }
+  }
+
+  componentDidMount() {
+    // console.log('componentDidMount')
+    if (this.props.user.profile) {
+      this.props.router.go('/messenger')
+    }
+  }
+
+  componentDidUpdate() {
+    // console.log('componentDidUpdate')
+    if (this.props.user.profile) {
+      this.props.router.go('/messenger');
+    }
+
+    return true;
+  }
+
 	render(): DocumentFragment {
+		console.log('registration', this.registration)
 		const content = {
-			formElements: this.props.config.formElements, 
+			formElements: config.formElements, 
 			buttonEvent: {
-				click: this.props.config.click
+				click: () => {
+          let data = buttonHandler(regState);
+          this.state.onRegister(data);
+        }
 			},
 			inputEvent: {
-				input: this.props.config.input,
-        focus: this.props.config.focus,
-        blur: this.props.config.blur
+				input: config.input,
+        focus: config.focus,
+        blur: config.blur
 			},
 			linkEvent: {
 				click: (e) => {
 					e.preventDefault();
-					// console.log('hi', e.target.getAttribute('to'));
 					window.location = e.target.getAttribute('to')
-
 				},
 			}
 		}
@@ -67,7 +96,8 @@ class Regisatration extends Block {
 			events: content.linkEvent
 		});
 
-		const fragment = compile(compileTemplate,{
+		const fragment = compile(compileTemplate, {
+			error: this.props.user.error?.reason,
 			form: regForm,
 			link: link
 		});
@@ -82,13 +112,13 @@ const regState = {
   email: null,
   password: null,
   first_name: null,
-  last_name: null,
+  second_name: null,
   phone: null,
   password: null,
   repassword: null
 }
 
-const RegConfig: FormElementsInt = {
+const config: FormElementsInt = {
   	formElements: [{
 		inputEmail: {
 			classname: 'input',
@@ -122,7 +152,7 @@ const RegConfig: FormElementsInt = {
       attributes: {
 				placeholder: "Фамилия", 
 				type: "text", 
-				name: "last_name"
+				name: "second_name"
 			}
 		}
 	}, {
@@ -162,8 +192,10 @@ const RegConfig: FormElementsInt = {
   	},
   	focus: (e) => inputHandler(e.target, regState),
 	  blur: (e) => inputHandler(e.target, regState),
-	  click: () => buttonHandler(regState)
+	  click: () => {
+	  	let data = buttonHandler(regState);
+	  }
 
 }
 
-export default new Regisatration(RegConfig);
+// export default new Regisatration(RegConfig);

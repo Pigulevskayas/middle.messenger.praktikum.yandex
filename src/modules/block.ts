@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid/non-secure';
 import EventBus from './event-bus.ts';
 
 
-export default class Block {
+export default class Block<P = any> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -14,6 +14,9 @@ export default class Block {
 
   _element = null;
   _meta = null;
+
+  protected state: any = {};
+  protected refs: {[key: string]: HTMLElement} = {};
 
   /** JSDoc
    * @param {string} tagName
@@ -28,19 +31,22 @@ export default class Block {
       props
     };
 
+    this.getStateFromProps(props);
+
     this.props = this._makePropsProxy(props);
+    this.state = this._makePropsProxy(this.state);
 
     this.eventBus = () => eventBus;
 
     this._registerEvents(eventBus);
-    eventBus.emit(Block.EVENTS.INIT);
+    eventBus.emit(Block.EVENTS.INIT, this.props);
   }
 
   _registerEvents(eventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
   _createResources() {
@@ -50,20 +56,26 @@ export default class Block {
     this._element = this._createDocumentElement(tagName, classname, attributes);
   }
 
-  init() {
-    this._createResources();
-    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+  protected getStateFromProps(props: any): void {
+    this.state = {};
   }
 
-  _componentDidMount() {
-    this.componentDidMount();
-    this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+  init() {
+    this._createResources();
+    this.eventBus().emit(Block.EVENTS.FLOW_RENDER, this.props);
+    // this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+  }
+
+  _componentDidMount(props: P) {
+    this.componentDidMount(props);
+    // this.eventBus().emit(Block.EVENTS.FLOW_CDU);
   }
 
 	// Может переопределять пользователь, необязательно трогать
-  componentDidMount(oldProps) {}
+  componentDidMount(props: P) {}
 
-  _componentDidUpdate(oldProps, newProps) {
+  _componentDidUpdate(oldProps: P, newProps: P) {
+    
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -72,7 +84,7 @@ export default class Block {
   }
 
 	// Может переопределять пользователь, необязательно трогать
-  componentDidUpdate(oldProps, newProps) {
+  componentDidUpdate(oldProps: P, newProps: P) {
     return true;
   }
 
@@ -82,7 +94,15 @@ export default class Block {
     }
 
     Object.assign(this.props, nextProps);
-    this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+    // this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+  };
+
+  setState = (nextState: any) => {
+    if (!nextState) {
+      return;
+    }
+
+    Object.assign(this.state, nextState);
   };
 
   get element() {
@@ -92,7 +112,6 @@ export default class Block {
   _render() {
     this._removeEvents();
     const fragment = this.render();
-    
     // Этот небезопасный метод для упрощения логики
     // Используйте шаблонизатор из npm или напишите свой безопасный
     // Нужно не в строку компилировать (или делать это правильно),
@@ -107,46 +126,30 @@ export default class Block {
     }
   }
 
-  _removeEvents(): void {
-    if (!this.element) return;
-
-    const {events = {}} = this.props;
-
-    for (const [event, listener] of Object.entries(
-      events as Record<string, EventListener>
-    )) {
-      this.element.removeEventListener(event, listener);
-    }
-  }
-
-  _addEvents(): void {
-    if (!this.element) {
-      throw new Error('No element');
-    }
-
-    const {events = {}} = this.props;
-
-    for (const [event, listener] of Object.entries(
-      events as Record<string, EventListener>
-    )) {
-      this.element.addEventListener(event, listener);
-    }
-  }
-
-	// Может переопределять пользователь, необязательно трогать
+  // Может переопределять пользователь, необязательно трогать
   render(): DocumentFragment {
+    alert('lala')
     return new DocumentFragment();
   }
 
   getContent() {
+    // if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+
+      setTimeout(() => {
+        // if (this.element?.parentNode?.nodeType !==  Node.DOCUMENT_FRAGMENT_NODE ) {
+          this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+        // }
+      }, 100)
+    // } 
+
     return this.element;
   }
 
-  _makePropsProxy(props) {
+  _makePropsProxy(props: any): any {
     // Можно и так передать this
     // Такой способ больше не применяется с приходом ES6+
     const self = this;
-    const prevProps = { ...props };
+    // const prevProps = { ...props };
     
     const proxyProps = new Proxy(props, {
       get: (obj, prop) => {
@@ -162,7 +165,7 @@ export default class Block {
           throw new Error('Нет прав');
         }
         obj[prop] = value;
-        this.eventBus().emit(Block.EVENTS.FLOW_CDU, prevProps, obj);
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU, {...obj}, obj);
         return true;
       },
       deleteProperty: (obj, prop) => {
@@ -190,6 +193,32 @@ export default class Block {
     }
 
     return resultElement;
+  }
+
+  _removeEvents(): void {
+    if (!this.element) return;
+
+    const {events = {}} = this.props;
+
+    for (const [event, listener] of Object.entries(
+      events as Record<string, EventListener>
+    )) {
+      this.element.removeEventListener(event, listener);
+    }
+  }
+
+  _addEvents(): void {
+    if (!this.element) {
+      throw new Error('No element');
+    }
+
+    const {events = {}} = this.props;
+
+    for (const [event, listener] of Object.entries(
+      events as Record<string, EventListener>
+    )) {
+      this.element.addEventListener(event, listener);
+    }
   }
 
 }

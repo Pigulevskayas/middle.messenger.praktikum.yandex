@@ -8,6 +8,7 @@
   -ms-flex-align: center;
   align-items: center;
   position: relative;
+  cursor: pointer;
 }
 
 .chat-item_active::after {
@@ -28,6 +29,10 @@
   border-radius: 50%;
   background: #efefef;
   margin-right: 10px;
+}
+
+.chat-item__data {
+  width: 100%;
 }
 
 .chat-item__name {
@@ -59,12 +64,14 @@
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  align-items: end;
 }
 
 .chat-item__time {
   font-size: 9px;
   line-height: 13px;
   color: #999;
+  white-space: nowrap;
 }
 
 .chat-item__new {
@@ -86,4 +93,5 @@
   font-size: 11px;
   line-height: 12px;
   color: #ffe6ea;
+  align-self: flex-end;
 }

@@ -1,5 +1,11 @@
 div.chat__header
-	div.chat-user
-		div.user-img
-		div #{username}
-	button.dropdown__toggle
+	div.chat__header-user
+		div.chat__header-img
+		div.chat__header-name #{username}
+	div.dropdown 
+		div !{toggler}
+		div.dropdown__menu
+			ul.dropdown__list
+				li !{addUserLink}
+				li !{deleteUserLink}
+				li !{deleteChatLink}

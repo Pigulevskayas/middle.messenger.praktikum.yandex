@@ -1,15 +1,20 @@
 div.chats-layout
+	div !{modalDelete}
+	div !{modalAdd}
+	div !{modalAddChat}
 	div.chats-list
 		div.chats-list__top
-			div.chats-list__edit !{edit}
+			div.chats-list__edit !{addChat} !{edit}
 			div.search !{search}
-		div.chats-list__items !{chat_item}
-			
+		div.chats-list__items
+			if userLink
+				div !{userLink}
+			else 
+				div !{chat_list}
 	div.chat
-		if select-chat === true
-			div !{select-chat}
-		else	
-			div.chat__content !{chat_header}
-				div.chat__messages.messages !{chat_messages}
-				div.chat__new-messge !{new_message}
+		div(class=messages ? 'chat_empty chat_hide' : 'chat_empty')
+			p Выберите чат чтобы отправить сообщение
+		div(class=messages ? 'chat__content' : 'chat__content chat_hide') !{chat_header}
+			div.chat__messages.messages !{chat_messages}
+			div.chat__new-messge !{new_message}
 

@@ -26,7 +26,15 @@
 		background: #27496D url('../../../public/static/images/user-icon.svg') no-repeat center;
 	}
 
+	&__close {
+  		background: #27496d url("../../../public/static/images/close-icon.svg") no-repeat center;
+	}
+
 	&_send {
+		background: #27496D url('../../../public/static/images/arrow.svg') no-repeat center;
+	}
+
+	&__toggler {
 		background: #27496D url('../../../public/static/images/arrow.svg') no-repeat center;
 	}
 	

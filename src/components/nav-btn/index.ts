@@ -1,7 +1,7 @@
 import EventBus from './event-bus.ts';
 import Block from '../../modules/block.ts';
-import compileTemplate from './nav-btn.pug';
 import compile from '../../modules/compile.ts';
+import compileTemplate from './nav-btn.pug';
 
 export default class NavButton extends Block {
   constructor(props: object) {

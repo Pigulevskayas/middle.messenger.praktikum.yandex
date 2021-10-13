@@ -1,9 +1,14 @@
 import Block from '../../modules/block.ts';
 import compile from '../../modules/compile.ts';
 import NavButton from '../../components/nav-btn/index.ts';
+import Modal from '../../blocks/modal-user/index.ts';
+import Input from '../../components/input/index.ts';
 import Search from '../../components/search/index.ts';
-import ChatItem from '../../components/chat-item/index.ts';
+import Chatslist from '../../blocks/chats-list/index.ts';
+// import ChatItem from '../../components/chat-item/index.ts';
 import ChatHeader from '../../components/chat-header/index.ts';
+import Link from '../../components/link/index.ts';
+import DropdownLink from '../../components/dropdown-link/index.ts';
 import ChatMessages from '../../blocks/chat-messages/index.ts';
 import NewMessage from '../../components/new-message/index.ts';
 import compileTemplate from './chat.pug';
@@ -15,17 +20,21 @@ import '../../components/chat-item/chat-item.css';
 import '../../components/search/search.css';
 import '../../components/form-field/form-field.css';
 
+import ProfileController from '../../controllers/profile-controller.ts';
+import ChatsController from '../../controllers/chat-controller.ts';
+
+
 interface NavButtonInt {
   type: string;
   link: string;
 }
 
-interface ChatItemInt {
-	username: string,
-	quote: string,
-	time: string,
-	count: number
-}
+// interface ChatItemInt {
+// 	username: string,
+// 	quote: string,
+// 	time: string,
+// 	count: number
+// }
 
 interface ChatHeaderInt {
 	username: string
@@ -39,29 +48,254 @@ interface chatConfigInt {
   click: () => void;
 }
 
-interface сhatStateInt {
+interface messageValueInt {
   message: null | string;
 }
 
-class Chat extends Block {
+interface searchValueInt {
+	login: null | string;
+}
+
+
+const messageValue: messageValueInt = {
+  message: null
+}
+
+const searchValue: searchValueInt = {
+  login: null
+}
+
+let chatsResponses = {
+	userChats: [],
+	searchResult: null
+};
+
+const newChatData = {
+	title: null
+}
+
+let chatData = {
+	users: [],
+  chatId: null
+}
+
+let webSocket;
+let userId;
+
+let selectedChat = {
+	id: null,
+	title: null
+};
+
+
+export default class Chat extends Block {
 	constructor(props) {
-	  super('div', {config: props});
+	  super('div', props);
 	}
 
-	render(): DocumentFragment {
+	protected getStateFromProps() {
+    this.state = {
+    	onCreate: async (data) => {
+    		const response = await ChatsController.create(data);
+    		try {
+    			if(response) {
+    				chatData.chatId = response.id;
+    				const modal = document.querySelector('.modal.modal_show');
+    				modal.classList.remove('modal_show');
+    				const title = document.querySelector('.chat__header-name');
+    				title.textContent = data.title;
+    			}
+    		} catch(e) {
+    			console.log(e)
+    		}
+    	},
+    	onDelete: async (data)	=> await ChatsController.deleteChat(data),
+    	onToken: async (chatId, userId) => {
+    		if(webSocket) {
+    			webSocket.close(1000, "работа закончена");
+    			webSocket = undefined;
+    		}
+    		const socket = await ChatsController.token(chatId, userId);
+    		try {
+	    		if(socket) {
+						webSocket = socket;
+	    		}
+	    	} catch(e) {
+    			console.log(e)
+    		}
+    	},
+    	onSend: async (message: string) => {
+    		await ChatsController.send(webSocket, message)
+    	},
+    	onGetChats: async (data) => {
+    		const chats = await ChatsController.chats(data);
+    		try {
+    			if (chats) {
+    				chatsResponses.userChats = chats;
+    			}
+    		}
+    	},
+    	onSearch: async () => {
+    		if(searchValue.login.length > 0){
+					const result = await ProfileController.search(searchValue);
+					if (result) {
+						chatsResponses.searchResult = result;
+					}
+    		}
+      },
+      onGetUserId: async (login) => {
+      	const result = await ProfileController.searchUserId({login: login});
+      	// console.log('onGetUserId',result)
+      	try {
+      		chatData.users.push(result);
+      		// console.log('chatData',chatData)
+      	} catch(e) {
+      		console.log(e)
+      	}
+      },
+     	onAddUser: async () => {
+     		// console.log('onAddUser', chatData);
+     		const response = await ChatsController.add(chatData);
+     		if(response === 'OK'){
+     			const modal = document.querySelector('.modal.modal_show');
+    			modal.classList.remove('modal_show');
+     		}
+     		chatData.chatId = null;
+     		chatData.users = [];
+     	},
+     	onDeleteUser: async () => {
+     		// console.log('onDeleteUser', chatData);
+     		const response = await ChatsController.delete(chatData);
+     		if(response === 'OK'){
+     			const modal = document.querySelector('.modal.modal_show');
+    			modal.classList.remove('modal_show');
+     		}
+     		chatData.chatId = null;
+     		chatData.users = [];
+     	}
+    }
+  }
+
+  newChatOnSearch = (target)	=> {
+  	const chatTitle = document.querySelector('.chat__header-name');
+    chatTitle.textContent = target.textContent;
+
+  	const emptyContent = document.querySelector('.chat_empty');
+    emptyContent.classList.add('chat_hide');
+
+    const chatContent = document.querySelector('.chat__content');
+    chatContent.classList.remove('chat_hide');
+
+    this.state.onCreate({
+    	title: target.textContent
+    });
+  }
+
+  newChat = (title)	=>	{
+  	const emptyContent = document.querySelector('.chat_empty');
+    emptyContent.classList.add('chat_hide');
+
+    const chatContent = document.querySelector('.chat__content');
+    chatContent.classList.remove('chat_hide');
+
+    this.state.onCreate(newChatData);
+  }
+
+  newChatData = (val)	=>	{
+  	newChatData.title = val;
+  }
+
+  usersInChat = (val)	=> {
+  	if(val.length > 0) {
+  		this.state.onGetUserId(val);
+  	} else {
+  		alert('заполните поле');
+  	}
+  }
+
+  openChat = (target) => {
+  	let chatId;
+  	if(target.classList.contains('chat-item')) {
+  		chatId = target.getAttribute('chat-id');
+  	} else {
+  		chatId = target.closest('.chat-item').getAttribute('chat-id');
+  	}
+  	chatData.chatId = chatId;
+  	const chatTitle = document.querySelector(`.chat-item[chat-id="${chatId}"] .chat-item__name`).textContent;
+
+  	selectedChat.id = chatId;
+    selectedChat.title = chatTitle;
+    this.state.onToken(chatId, this.props.user.id);
+  }
+
+  componentDidMount() {
+  	userId = this.props.user.id;
+  	const data = {
+  		user: this.props.user.id
+  	}
+
+  	if (this.props.user) {
+  		this.state.onGetChats(data);
+  	}
+  }
+
+  // componentDidUpdate() {
+  //   // console.log('componentDidUpdate', this.props)
+  //   // if (this.props.user.length) {
+  //   //   chatsResponses.searchResult = this.props.user;
+  //   // }
+
+  //   return true;
+  // }
+
+	render(): DocumentFragment {		
+		const config: chatConfigInt = {
+			inputMessage: {
+				classname: 'chat__input',
+				attributes: {
+					type: 'text',
+					name: 'message',
+					label: 'Сообщение',
+					value: messageValue.message
+				}
+			},
+		  input: function(e){
+		    messageValue[e.target.name] = e.target.value;
+		  },
+		  focus: (e) => inputHandler(e.target, messageValue),
+		  blur: (e) => inputHandler(e.target, messageValue),
+		  click: () => {
+		  	buttonHandler(messageValue);
+		  	this.state.onSend(messageValue.message);
+		  	messageValue = null;
+		  }
+		}
+
+
 		const content = {
-			inputMessage: this.props.config.inputMessage,
+			inputMessage: config.inputMessage,
 			buttonEvent: {
-				click: this.props.config.click
+				click: config.click
 			},
 			inputEvent: {
-				input: this.props.config.input,
-				blur: this.props.config.blur,
-				focus: this.props.config.focus
+				input: config.input,
+				blur: config.blur,
+				focus: config.focus
 			}
 		}
 
-		const search = new Search();
+		const search = new Search({
+			classname: 'search__input',
+			attributes: {
+				label: 'Поиск',
+				type: 'text',
+				name: 'login'
+			},
+			events: {
+				input: (e) => searchValue.login = e.target.value,
+				change: (e) => this.state.onSearch()
+			}
+		});
 
 		const edit: NavButtonInt = new NavButton({
 			type: 'edit-chat', 
@@ -74,58 +308,146 @@ class Chat extends Block {
       }
 		});
 
-		const chat_item: ChatItemInt = new ChatItem({
-				username: 'Вася',
-		    quote: 'Друзья, у меня для вас особенный выпуск новостей!...',
-		    time: '15:12',
-		    count: 2
+		const addChat: NavButtonInt = new NavButton({
+			type: 'add-chat', 
+			// to: '/settings',
+			events: {
+        click: (e) => {
+          e.preventDefault();
+          const modalAdd = document.getElementById('add-chat');
+	        modalAdd.classList.add('modal_show');
+        },
+      }
+		});
+
+		const userLink = this.props.user[0] ? new Link({
+			text: this.props.user[0]['display_name'] ? 
+				`${this.props.user[0]['display_name']}` :
+				`${this.props.user[0]['first_name']} ${this.props.user[0]['second_name']}` ,
+      to: this.props.user[0]['id'],
+      events: {
+      	click: (e) => {
+      		e.preventDefault();
+					const modalAdd = document.getElementById('add-chat');
+		      modalAdd.classList.add('modal_show');
+      		// this.newChatOnSearch(e.target);
+      	}
+      }
+		}) : null;
+
+		const chatsList = new Chatslist({
+			userChats: this.props.chats,
+			selectedChat: selectedChat.id,
+			events: {
+      	click: (e) => this.openChat(e.target)
+			}
+		});
+
+		const addUserLink = new DropdownLink({
+			type: 'add',
+			text: 'Добавить пользователя',
+			events: {
+				click: (e) => {
+	        e.preventDefault();
+	        const modalAdd = document.getElementById('add-user')
+	        modalAdd.classList.add('modal_show');
+	      }
+	    }
+		});
+
+		const deleteUserLink = new DropdownLink({
+			type: 'delete',
+			text: 'Удалить пользователя',
+			events: {
+				click: (e) => {
+	        e.preventDefault();
+	        const modalDelete = document.getElementById('delete-user')
+	        modalDelete.classList.add('modal_show');
+	      }
+	    }
+		});	
+
+		const deleteChatLink = new DropdownLink({
+			type: 'delete',
+			text: 'Удалить чат',
+			events: {
+				click: (e) => {
+	        e.preventDefault();
+	        const chatId = document.querySelector('.chat-item_active').getAttribute('chat-id');
+	        this.state.onDelete({
+	        	chatId: chatId
+	        });
+	      }
+	    }
+		});
+
+		const modalDelete: ModalInt = new Modal({
+			id: "delete-user",
+			modalTitle: "Удалить пользователя",
+			btnText: "Удалить",
+			isVisible: false, 
+			isError: false,
+			inputName: "login",
+			inputLabel: "Логин",
+			inputEvent: this.usersInChat,
+			buttonEvent: this.state.onDeleteUser
+		});
+
+		const modalAdd: ModalInt = new Modal({
+			id: "add-user",
+			modalTitle: "Добавить пользователя",
+			btnText: "Добавить",
+			isVisible: false, 
+			isError: false ,
+			inputName: "login",
+			inputLabel: "Логин",
+			inputEvent: this.usersInChat,
+			buttonEvent: this.state.onAddUser
+		});
+
+		const modalAddChat: ModalInt = new Modal({
+			id: "add-chat",
+			modalTitle: "Новый чат",
+			btnText: "Создать",
+			isVisible: false, 
+			isError: false,
+			inputName: "title",
+			inputLabel: "Название чата",
+			inputEvent: this.newChatData,
+			buttonEvent: this.newChat
 		});
 
 		const chat_header: ChatHeaderInt = new ChatHeader({
-			username: 'Вася'
+			username: selectedChat.title,
+			toggler: edit,
+			addUserLink: addUserLink,
+			deleteUserLink: deleteUserLink,
+			deleteChatLink: deleteChatLink
 		});
 
-		const chat_messages = new ChatMessages();
+		const chat_messages = new ChatMessages({
+			oldMessages: this.props.messages, 
+			userId: userId
+		});
 
 		const new_message = new NewMessage(content);
 
 		const fragment = compile(compileTemplate,{
+			selectChat: true,
+			modalAddChat: modalAddChat,
+			modalDelete: modalDelete,
+			modalAdd: modalAdd,
+			addChat: addChat,
 			edit: edit,
-			search: search.render(),
-			chat_item: chat_item.render(),
-			chat_header: chat_header.render(),
-			chat_messages: chat_messages.render(),
-			new_message: new_message
+			search: search,
+			userLink: userLink,
+			chat_list: chatsList,
+			chat_header: chat_header,
+			chat_messages: chat_messages,
+			new_message: new_message,
+			messages: this.props.messages.messages ? true : false
 		});
 
 		return fragment;
 	}
 }
-
-const сhatState: сhatStateInt = {
-  message: null
-}
-
-const chatConfig: chatConfigInt = {
-	inputMessage: {
-		classname: 'chat__input',
-		attributes: {
-			type: 'text',
-			name: 'message',
-			label: 'Сообщение',
-			value: сhatState.message
-		}
-	},
-  input: function(e){
-    сhatState[e.target.name] = e.target.value;
-  },
-  focus: (e) => inputHandler(e.target, сhatState),
-  blur: (e) => inputHandler(e.target, сhatState),
-  click: () => buttonHandler(сhatState)
- 
-}
-
-export default new Chat(chatConfig);
-
-
-
