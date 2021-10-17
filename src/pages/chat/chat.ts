@@ -319,7 +319,10 @@ export default class Chat extends Block {
 			},
 			events: {
 				input: (e) => searchValue.login = e.target.value,
-				change: (e) => this.state.onSearch()
+				change: (e) => this.state.onSearch(),
+				// blur: () => {
+			 //  	buttonHandler(e.target.value);
+			 //  }
 			}
 		});
 
