@@ -26,8 +26,8 @@ export default class ChatsAPI extends BaseAPI {
 	create(data: newChatData): Promise<void> {
 		return this.http.post('', { 
         	headers: {
-        		'content-type': 'application/json',
-        		'credentials': 'include',
+        		// 'content-type': 'application/json',
+        		// 'credentials': 'include',
   				'mode': 'cors',
         	},
         	data: data
@@ -37,8 +37,8 @@ export default class ChatsAPI extends BaseAPI {
 	deleteChat(data: сhatData): Promise<void> {
 		return this.http.delete('', { 
         	headers: {
-        		'content-type': 'application/json',
-        		'credentials': 'include',
+        		// 'content-type': 'application/json',
+        		// 'credentials': 'include',
   				'mode': 'cors',
         	},
         	data: data
@@ -48,8 +48,8 @@ export default class ChatsAPI extends BaseAPI {
 	addUsers(data: usersChatData): Promise<void> {
 		return this.http.put('/users', { 
         	headers: {
-        		'content-type': 'application/json',
-        		'credentials': 'include',
+        		// 'content-type': 'application/json',
+        		// 'credentials': 'include',
   				'mode': 'cors',
         	},
         	data: data
@@ -59,8 +59,8 @@ export default class ChatsAPI extends BaseAPI {
 	deleteUsers(data: usersChatData): Promise<void> {
 		return this.http.delete('/users', { 
         	headers: {
-        		'content-type': 'application/json',
-        		'credentials': 'include',
+        		// 'content-type': 'application/json',
+        		// 'credentials': 'include',
   				'mode': 'cors',
         	},
         	data: data
@@ -75,8 +75,8 @@ export default class ChatsAPI extends BaseAPI {
 		console.log('api chat id', chatId)
 		return this.http.post(`/token/${chatId}`, { 
         	headers: {
-        		'content-type': 'application/json',
-        		'credentials': 'include',
+        		// 'content-type': 'application/json',
+        		// 'credentials': 'include',
   				'mode': 'cors',
         	}
         });

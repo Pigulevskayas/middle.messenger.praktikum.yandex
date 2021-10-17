@@ -14,7 +14,7 @@ class ChatsController {
 
 	async create(data: newChatData): Promise<UserData | void> {
 		try {
-			const newChat = await this.api.create(data);
+			const newChat = await this.api.create(JSON.stringify(data));
 			// store.dispatch(setChats(newChat));
 			// console.log('newChat', newChat)
 			return newChat;
@@ -26,10 +26,7 @@ class ChatsController {
 
 	async deleteChat(data: сhatData): Promise<UserData | void> {
 		try {
-			const response = await this.api.deleteChat(data);
-			// store.dispatch(setChats(newChat));
-			// console.log('delete chat response', response)
-			
+			const response = await this.api.deleteChat(JSON.stringify(data));
 		} catch(e) {
 			console.log(e);
 			store.dispatch(setError(e as { reason: string }));
@@ -38,17 +35,8 @@ class ChatsController {
 
 	async add(data: usersChatData): Promise<UserData | void> {
 		try {
-			const result = await this.api.addUsers(data);
-			
-			try {
-				if(result){
-					// console.log('result', result);
-					store.dispatch(setUser(result));
-				}
-			} catch(e) {
-				store.dispatch(setError(e as { reason: string }));
-			}
-			
+			const response = await this.api.addUsers(JSON.stringify(data));
+			return response;
 		} catch(e) {
 			console.log(e);
 			store.dispatch(setError(e as { reason: string }));
@@ -57,8 +45,8 @@ class ChatsController {
 
 	async delete(data: usersChatData) {
 	    try {
-	      	await this.api.deleteUsers(data);
-	      	await this.getUserData();
+	      	const response = await this.api.deleteUsers(JSON.stringify(data));
+	      	return response;
 	    } catch (e) {
 	    	console.log(e)
 	      	store.dispatch(setError(e as { reason: string }));
@@ -78,11 +66,11 @@ class ChatsController {
 	    }
 	}
 
-	async token(chatId, userId): Promise<UserData | void> {
+	async token(chatId: string, userId: string): Promise<UserData | void> {
 	    try {
 	      	const tokenResponse = await this.api.token(chatId);
 	      	// store.dispatch(setChats(chats));
-			console.log('token', tokenResponse.token)
+			// console.log('token', tokenResponse.token)
 			const socket = websocketConnection(userId, chatId, tokenResponse.token);
 			socket.onopen = async (event) => {
 				socket.send(JSON.stringify({
@@ -101,7 +89,7 @@ class ChatsController {
 	    }
 	}
 
-	async send(webSocket, message): Promise<UserData | void> {
+	async send(webSocket: object, message: string): Promise<UserData | void> {
 	    try {
 	      	await webSocket.send(JSON.stringify({
     			content: message,

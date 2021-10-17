@@ -4,16 +4,10 @@ import { Action } from '../store/store.ts';
 const SET_ERROR = 'chats/SET_ERROR';
 const SET_MESSAGES = 'chats/SET_MESSAGES';
 
-
-
 export const setMessages = (messages) => ({
   type: SET_MESSAGES,
   payload: messages,
 });
-
-// export const deleteUser = () => ({
-//   type: DELETE_USER,
-// });
 
 export const setError = (error: { reason: string }) => ({
   type: SET_ERROR,

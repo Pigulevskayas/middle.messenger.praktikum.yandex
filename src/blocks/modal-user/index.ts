@@ -45,7 +45,7 @@ export default class Modal extends Block {
 		// 		change: (e) => this.changeAvatar(e.target.value)
 		// 	},
 		// });
-		
+
 		const input = new Input({
 			classname: 'input',
 			attributes: {
@@ -83,7 +83,7 @@ export default class Modal extends Block {
 			close: close,
 			input: input,
 			button: button,
-			// isVisible: this.props.options.isVisible,
+			isVisible: this.props.isVisible,
 			// isError: this.props.options.isError,
 			// fileName: this.props.options.fileName
 		});

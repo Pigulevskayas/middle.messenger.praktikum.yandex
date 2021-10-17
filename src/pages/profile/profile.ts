@@ -20,22 +20,46 @@ import ProfileController from '../../controllers/profile-controller.ts';
 
 
 interface FormElementInt {
-  inputEmail: Object<string>; inputPassword: Object<string>; button: object
+  email?: Object<string>;
+  login?: Object<string>;
+  first_name?: Object<string>;
+  second_name?: Object<string>;
+  display_name?: Object<string>;
+  phone?: Object<string>;
+  oldPassword?: Object<string>; 
+  newPassword?: Object<string>; 
+  repeatNewPassword?: Object<string>; 
+  button: object;
 }
 
 interface FormElementsInt extends Array<FormElementInt>{}
 
 interface NavButtonInt {
   type: string;
-  link: string;
+  to: string;
+	events: object;
 }
 
-interface ModalInt {
-	isVisible: boolean, 
-	isError: boolean 
+interface AvatarInt {
+	imgurl: string | null;
 }
 
-const profileValues = {
+// interface ModalInt {
+// 	isVisible: boolean, 
+// 	isError: boolean 
+// }
+
+interface profileValuesInt {
+	email: string | null;
+  login: string | null;
+  first_name: string | null;
+  second_name: string | null;
+  display_name: string | null;
+  password: string | null;
+  phone: string | null;
+}
+
+const profileValues: profileValuesInt = {
   email: null,
   login: null,
   first_name: null,
@@ -44,9 +68,6 @@ const profileValues = {
   password: null,
   phone: null,
 }
-
-
-
 
 export default class Profile extends Block {
 	constructor(props) {
@@ -68,9 +89,9 @@ export default class Profile extends Block {
     }
   }
 
-  editUserForm = () => {
+  editUserForm = (): void => {
   	let inputs = document.querySelectorAll('.user-info_data .input');
-    inputs.forEach((input) => {
+    inputs.forEach((input: HTMLElement): void => {
     	input.removeAttribute('disabled');
     });
 
@@ -84,7 +105,7 @@ export default class Profile extends Block {
     submit.classList.remove('profile__submit_hidden');
   }
 
-  editPasswordForm = () => {
+  editPasswordForm = (): void => {
   	let nav = document.querySelector('.profile__links');
     nav.classList.add('profile__links_hidden');
 
@@ -98,9 +119,9 @@ export default class Profile extends Block {
   	passwordForm.classList.remove('user-info_hidden');
   }
 
-  closeEdit = ()	=> {
+  closeEdit = (): void	=> {
   	let inputs = document.querySelectorAll('.user-info_data .input');
-    inputs.forEach((input) => {
+    inputs.forEach((input: HTMLElement): void => {
     	input.setAttribute('disabled', 'disabled');
     });
 
@@ -122,16 +143,15 @@ export default class Profile extends Block {
     }
   }
 
-  showModal = ()	=> {
+  showModal = (): void	=> {
   	let modal = document.querySelector('.modal');
   	modal.classList.add('modal_show');
   }
 
-  componentDidMount() {
-    console.log('componentDidMount profile', this.props.user);
+  componentDidMount(): void {
     if (this.props.user) {
     	let inputs = document.querySelectorAll('.user-info_data .input');
-    	inputs.forEach((input) => {
+    	inputs.forEach((input: HTMLElement):void => {
     		input.setAttribute('disabled', 'disabled');
     	});
 
@@ -144,14 +164,19 @@ export default class Profile extends Block {
       profileValues.phone = userObj.phone;
 
       
-      setTimeout(function(){
-      	// const img = document.querySelector('.test-avatar');
-      	const cont = document.querySelector('.profile__top');
-      	console.log('aaaa', cont)
-      	// cont.append(img);
-      }, 3000)
+      // setTimeout(function(){
+      // 	// const img = document.querySelector('.test-avatar');
+      // 	const cont = document.querySelector('.profile__top'): HTMLElement;
+      // 	console.log('aaaa', cont)
+      // 	// cont.append(img);
+      // }, 3000)
     }
-    // console.log('profileValues', profileValues)
+  }
+
+  componentDidUpdate() {
+    if (!this.props.user.profile) {
+      this.props.router.go('/');
+    }
   }
 
 	render(): DocumentFragment {
@@ -231,7 +256,7 @@ export default class Profile extends Block {
 
 		const configPassword = {
 		  formElements: [{
-					email: {
+					oldPassword: {
 						classname: 'input',
 		      	attributes: {
 							placeholder: "Старый пароль", 
@@ -241,7 +266,7 @@ export default class Profile extends Block {
 						}
 					}
 				}, {
-					login: {
+					newPassword: {
 						classname: 'input',
 			      attributes: {
 							placeholder: "Новый пароль", 
@@ -251,7 +276,7 @@ export default class Profile extends Block {
 						}
 					} 
 				}, {
-					first_name: {
+					repeatNewPassword: {
 						classname: 'input',
 			      attributes: {
 							placeholder: "Повторите новый пароль", 
@@ -278,7 +303,6 @@ export default class Profile extends Block {
 			buttonEvent: {
 				click: () => {
           let data = buttonHandler(profileValues);
-          console.log('click data', data)
           this.state.onProfile(data);
         }
 			},
@@ -324,6 +348,7 @@ export default class Profile extends Block {
 
 		const btnExit: NavButtonInt = new NavButton({
 			type: 'exit', 
+			to: "/",
 			events: {
         click: (e) => {
         	e.preventDefault();
@@ -362,18 +387,10 @@ export default class Profile extends Block {
 			}
 		});
 
-		const modal: ModalInt = new Modal({
-			isVisible: false, 
-			isError: false 
-		});
+		const modal: ModalInt = new Modal();
 
-		const avatar = new Avatar({
+		const avatar: AvatarInt = new Avatar({
 			imgurl: this.props.user.avatar ? this.props.user.avatar : null,
-			// attributes: {
-			// 	src: this.props.user.avatar ? `https://ya-praktikum.tech/api/v2/resources${this.props.user.avatar}` : "test.png",
-			// 	crossorigin: "use-credentials"
-			// },
-			// classname: 'avatar',
 			events: {
 				click: (e)	=> {
 					this.showModal();
@@ -381,7 +398,7 @@ export default class Profile extends Block {
 			}
 		});
 
-		const fragment = compile(compileTemplate,{
+		const fragment = compile(compileTemplate, {
 			avatar: avatar,
 			name: this.props.user.first_name,
 			userform: profileForm,
@@ -399,4 +416,4 @@ export default class Profile extends Block {
 
 }
 
-// export default new Profile(config);
+

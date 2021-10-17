@@ -12,30 +12,28 @@ class ProfileController {
 
 	async profile(data: ProfileData): Promise<UserData | void> {
 		try {
-			const result = await this.api.profile(data);
-
+			const result = await this.api.profile(JSON.stringify(data));
 			try {
 				if(result){
-					console.log('result', result);
+					// console.log('result', result);
 					store.dispatch(setUser(result));
 				}
 			} catch(e) {
 				store.dispatch(setError(e as { reason: string }));
 			}
-			
 		} catch(e) {
-			console.log(e);
+			// console.log(e);
 			store.dispatch(setError(e as { reason: string }));
 		}
 	}
 
 	async password(data: PasswordData): Promise<UserData | void> {
 		try {
-			const result = await this.api.password(data);
+			const result = await this.api.password(JSON.stringify(data));
 			
 			try {
 				if(result){
-					console.log('result', result);
+					// console.log('result', result);
 					store.dispatch(setUser(result));
 				}
 			} catch(e) {
@@ -48,12 +46,12 @@ class ProfileController {
 		}
 	}
 
-	async avatar(data) {
+	async avatar(data: any) {
 		try {
 			const result = await this.api.avatar(data);
 			try {
 				if(result){
-					console.log('result', result);
+					// console.log('result', result);
 					store.dispatch(setUser(result));
 				}
 			} catch(e) {
@@ -68,7 +66,7 @@ class ProfileController {
 
 	async search(data: SearchData) {
 	    try {
-	      const result = await this.api.search(data);
+	      const result = await this.api.search(JSON.stringify(data));
 	      store.dispatch(setUser(result));
 	      return result;
 	    } catch (e) {
@@ -78,10 +76,9 @@ class ProfileController {
 	    }
 	}
 
-
 	async searchUserId(data: SearchData) {
 	    try {
-	      const result = await this.api.search(data);
+	      const result = await this.api.search(JSON.stringify(data));
 	      console.log('searchUserId result', result)
 	      return result[0]['id'];
 	    } catch (e) {
@@ -91,22 +88,10 @@ class ProfileController {
 	    }
 	}
 
-	// async logout() {
-	//     try {
-	//       await this.api.logout();
-
-	//       store.dispatch(deleteUser());
-	//     } catch (e) {
-	//       store.dispatch(setError(e as { reason: string }));
-	//     }
-	// }
-
 	async getUserData(): Promise<UserData | void> {
 	    try {
 	      const user = await this.api.read();
-
 	      store.dispatch(setUser(user));
-
 	      return user;
 	    } catch (e) {
 	      store.dispatch(deleteUser());

@@ -5,7 +5,6 @@ import Modal from '../../blocks/modal-user/index.ts';
 import Input from '../../components/input/index.ts';
 import Search from '../../components/search/index.ts';
 import Chatslist from '../../blocks/chats-list/index.ts';
-// import ChatItem from '../../components/chat-item/index.ts';
 import ChatHeader from '../../components/chat-header/index.ts';
 import Link from '../../components/link/index.ts';
 import DropdownLink from '../../components/dropdown-link/index.ts';
@@ -28,13 +27,6 @@ interface NavButtonInt {
   type: string;
   link: string;
 }
-
-// interface ChatItemInt {
-// 	username: string,
-// 	quote: string,
-// 	time: string,
-// 	count: number
-// }
 
 interface ChatHeaderInt {
 	username: string
@@ -65,10 +57,10 @@ const searchValue: searchValueInt = {
   login: null
 }
 
-let chatsResponses = {
-	userChats: [],
-	searchResult: null
-};
+// let chatsResponses = {
+// 	userChats: [],
+// 	searchResult: null
+// };
 
 const newChatData = {
 	title: null
@@ -95,21 +87,36 @@ export default class Chat extends Block {
 
 	protected getStateFromProps() {
     this.state = {
+    	chat_visible: false,
+    	modal_add: false,
+    	modal_delete: false,
+    	modal_add_chat: false,
     	onCreate: async (data) => {
     		const response = await ChatsController.create(data);
     		try {
     			if(response) {
+    				this.state.onGetChats({
+						  user: this.props.user.id
+						});
     				chatData.chatId = response.id;
-    				const modal = document.querySelector('.modal.modal_show');
-    				modal.classList.remove('modal_show');
-    				const title = document.querySelector('.chat__header-name');
-    				title.textContent = data.title;
+    				this.state.modal_add_chat = false;
+    				this.showChat(data.title);
     			}
     		} catch(e) {
     			console.log(e)
     		}
     	},
-    	onDelete: async (data)	=> await ChatsController.deleteChat(data),
+    	onDelete: async (data)	=> { 
+    		const response = await ChatsController.deleteChat(data);
+    		try {
+					this.state.onGetChats({
+					  user: this.props.user.id
+					});
+					this.hideChat();
+    		} catch(e) {
+    			console.log(e);
+    		}
+    	},
     	onToken: async (chatId, userId) => {
     		if(webSocket) {
     			webSocket.close(1000, "работа закончена");
@@ -129,18 +136,18 @@ export default class Chat extends Block {
     	},
     	onGetChats: async (data) => {
     		const chats = await ChatsController.chats(data);
-    		try {
-    			if (chats) {
-    				chatsResponses.userChats = chats;
-    			}
-    		}
+    		// try {
+    		// 	if (chats) {
+    		// 		chatsResponses.userChats = chats;
+    		// 	}
+    		// }
     	},
     	onSearch: async () => {
     		if(searchValue.login.length > 0){
 					const result = await ProfileController.search(searchValue);
-					if (result) {
-						chatsResponses.searchResult = result;
-					}
+					// if (result) {
+					// 	chatsResponses.searchResult = result;
+					// }
     		}
       },
       onGetUserId: async (login) => {
@@ -154,24 +161,25 @@ export default class Chat extends Block {
       	}
       },
      	onAddUser: async () => {
-     		// console.log('onAddUser', chatData);
      		const response = await ChatsController.add(chatData);
-     		if(response === 'OK'){
-     			const modal = document.querySelector('.modal.modal_show');
-    			modal.classList.remove('modal_show');
+     		try{
+     			this.state.modal_add = false;
+    			chatData.chatId = null;
+     			chatData.users = [];
+     		} catch(e) {
+     			console.log(e)
      		}
-     		chatData.chatId = null;
-     		chatData.users = [];
      	},
      	onDeleteUser: async () => {
-     		// console.log('onDeleteUser', chatData);
      		const response = await ChatsController.delete(chatData);
-     		if(response === 'OK'){
+     		try{
      			const modal = document.querySelector('.modal.modal_show');
     			modal.classList.remove('modal_show');
+    			chatData.chatId = null;
+     			chatData.users = [];
+     		} catch(e) {
+     			console.log(e)
      		}
-     		chatData.chatId = null;
-     		chatData.users = [];
      	}
     }
   }
@@ -221,11 +229,30 @@ export default class Chat extends Block {
   		chatId = target.closest('.chat-item').getAttribute('chat-id');
   	}
   	chatData.chatId = chatId;
+  	
+
+
   	const chatTitle = document.querySelector(`.chat-item[chat-id="${chatId}"] .chat-item__name`).textContent;
 
   	selectedChat.id = chatId;
     selectedChat.title = chatTitle;
+    
+  	this.showChat(chatTitle);
     this.state.onToken(chatId, this.props.user.id);
+  }
+
+  showModal = (type)	=> {
+  	this.state[type] = true;
+  }
+
+  showChat = (title)	=> {
+  	this.state.chat_visible = true;
+  	const titleBlock = document.querySelector('.chat__header-name');
+    titleBlock.textContent = title;
+  }
+
+  hideChat = ()	=> {
+  	this.state.chat_visible = false;
   }
 
   componentDidMount() {
@@ -267,7 +294,6 @@ export default class Chat extends Block {
 		  click: () => {
 		  	buttonHandler(messageValue);
 		  	this.state.onSend(messageValue.message);
-		  	messageValue = null;
 		  }
 		}
 
@@ -339,7 +365,10 @@ export default class Chat extends Block {
 			userChats: this.props.chats,
 			selectedChat: selectedChat.id,
 			events: {
-      	click: (e) => this.openChat(e.target)
+      	click: (e) => { 
+      		this.openChat(e.target);
+      		// this.showChat();
+      	}
 			}
 		});
 
@@ -349,8 +378,7 @@ export default class Chat extends Block {
 			events: {
 				click: (e) => {
 	        e.preventDefault();
-	        const modalAdd = document.getElementById('add-user')
-	        modalAdd.classList.add('modal_show');
+	        this.showModal('modal_add');
 	      }
 	    }
 		});
@@ -361,8 +389,7 @@ export default class Chat extends Block {
 			events: {
 				click: (e) => {
 	        e.preventDefault();
-	        const modalDelete = document.getElementById('delete-user')
-	        modalDelete.classList.add('modal_show');
+	        this.showModal('modal_delete');
 	      }
 	    }
 		});	
@@ -382,10 +409,11 @@ export default class Chat extends Block {
 		});
 
 		const modalDelete: ModalInt = new Modal({
+			isVisible: this.state.modal_delete,
 			id: "delete-user",
 			modalTitle: "Удалить пользователя",
 			btnText: "Удалить",
-			isVisible: false, 
+			isVisible: this.state.modal_delete, 
 			isError: false,
 			inputName: "login",
 			inputLabel: "Логин",
@@ -394,10 +422,11 @@ export default class Chat extends Block {
 		});
 
 		const modalAdd: ModalInt = new Modal({
+			isVisible: this.state.modal_add,
 			id: "add-user",
 			modalTitle: "Добавить пользователя",
 			btnText: "Добавить",
-			isVisible: false, 
+			isVisible: this.state.modal_add, 
 			isError: false ,
 			inputName: "login",
 			inputLabel: "Логин",
@@ -406,10 +435,11 @@ export default class Chat extends Block {
 		});
 
 		const modalAddChat: ModalInt = new Modal({
+			isVisible: this.state.modal_add_chat,
 			id: "add-chat",
 			modalTitle: "Новый чат",
 			btnText: "Создать",
-			isVisible: false, 
+			isVisible: this.state.modal_add_chat, 
 			isError: false,
 			inputName: "title",
 			inputLabel: "Название чата",
@@ -422,7 +452,7 @@ export default class Chat extends Block {
 			toggler: edit,
 			addUserLink: addUserLink,
 			deleteUserLink: deleteUserLink,
-			deleteChatLink: deleteChatLink
+			deleteChatLink: deleteChatLink,
 		});
 
 		const chat_messages = new ChatMessages({
@@ -432,8 +462,8 @@ export default class Chat extends Block {
 
 		const new_message = new NewMessage(content);
 
-		const fragment = compile(compileTemplate,{
-			selectChat: true,
+		const fragment = compile(compileTemplate, {
+			chatVisible: this.state.chat_visible,
 			modalAddChat: modalAddChat,
 			modalDelete: modalDelete,
 			modalAdd: modalAdd,
@@ -445,7 +475,7 @@ export default class Chat extends Block {
 			chat_header: chat_header,
 			chat_messages: chat_messages,
 			new_message: new_message,
-			messages: this.props.messages.messages ? true : false
+			// messages: this.props.messages.messages ? true : false
 		});
 
 		return fragment;

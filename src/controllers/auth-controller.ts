@@ -12,7 +12,7 @@ class AuthController {
 
 	async registration(data: RegData) {
 		try {
-			await this.api.registration(data);
+			await this.api.registration(JSON.stringify(data));
 			await this.getUserData();
 		} catch(e) {
 			console.log(e)
@@ -22,7 +22,7 @@ class AuthController {
 
 	async login(data: LoginData) {
 	    try {
-	      await this.api.login(data);
+	      await this.api.login(JSON.stringify(data));
 	      await this.getUserData();
 	    } catch (e) {
 	    	console.log(e)
@@ -34,7 +34,6 @@ class AuthController {
 	async logout() {
 	    try {
 	      await this.api.logout();
-
 	      store.dispatch(deleteUser());
 	    } catch (e) {
 	      store.dispatch(setError(e as { reason: string }));
@@ -44,9 +43,7 @@ class AuthController {
 	async getUserData(): Promise<UserData | void> {
 	    try {
 	      const user = await this.api.read();
-
 	      store.dispatch(setUser(user));
-
 	      return user;
 	    } catch (e) {
 	      store.dispatch(deleteUser());

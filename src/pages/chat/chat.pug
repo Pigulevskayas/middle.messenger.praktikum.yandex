@@ -12,9 +12,9 @@ div.chats-layout
 			else 
 				div !{chat_list}
 	div.chat
-		div(class=messages ? 'chat_empty chat_hide' : 'chat_empty')
-			p Выберите чат чтобы отправить сообщение
-		div(class=messages ? 'chat__content' : 'chat__content chat_hide') !{chat_header}
+		div(class=chatVisible ? 'chat_empty chat_hide' : 'chat_empty')
+			p Выберите чат чтобы отправить сообщение #{chatVisible}
+		div(class=chatVisible ? 'chat__content' : 'chat__content chat_hide') !{chat_header}
 			div.chat__messages.messages !{chat_messages}
 			div.chat__new-messge !{new_message}
 

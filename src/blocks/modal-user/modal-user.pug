@@ -1,4 +1,4 @@
-div.modal(id=id)
+div(id=id class=isVisible ? 'modal modal_show' : 'modal')
 	div.modal__content
 		div.modal__close !{close}
 		h3.modal__title #{modalTitle}

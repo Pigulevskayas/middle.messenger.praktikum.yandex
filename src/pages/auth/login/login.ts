@@ -15,8 +15,9 @@ import '../../../components/form-field/form-field.css';
 import AuthController from '../../../controllers/auth-controller.ts';
 
 interface LinkInt {
-	text: string, 
-	link: string,
+	text: string; 
+	to: string;
+  events: object;
 }
 
 interface FormElementInt {
@@ -32,78 +33,8 @@ interface FormElementInt {
 interface FormElementsInt extends Array<FormElementInt>{}
 
 interface loginStateInt {
-  login: null | string,
-  password: null | string
-}
-
-export default class Login extends Block {
-	constructor(props) {
-	  super('div', props);
-	}
-
-  protected getStateFromProps() {
-    this.state = {
-      onLogin: async (data) => {
-        const res = await AuthController.login(data);
-      }
-    }
-  }
-
-  componentDidMount() {
-    // console.log('componentDidMount')
-    if (this.props.user.profile) {
-      this.props.router.go('/messenger')
-    }
-  }
-
-  componentDidUpdate() {
-    // console.log('componentDidUpdate')
-    if (this.props.user.profile) {
-      this.props.router.go('/messenger');
-    }
-
-    return true;
-  }
-
-	render(): DocumentFragment {	
-    // console.log('login', this.props)
-		const content = {
-			formElements: config.formElements, 
-			buttonEvent: {
-				click: () => {
-          let data = buttonHandler(loginState);
-          this.state.onLogin(data);
-        }
-			},
-			inputEvent: {
-				input: config.input,
-        focus: config.focus,
-        blur: config.blur
-			},
-      linkEvent: {
-        click: (e) => {
-          e.preventDefault();
-          window.location = e.target.getAttribute('to')
-        },
-      }
-		}
-
-		const loginForm = new Form(content);
-
-		const link: LinkInt = new Link({
-			text: 'Нет аккаунта?',
-      to: '/sign-up',
-      events: content.linkEvent
-		});
-
-		const fragment = compile(compileTemplate,{
-      error: this.props.user.error?.reason,
-			form: loginForm,
-			link: link
-		});
-
-		return fragment;
-	}
+  login: null | string;
+  password: null | string;
 }
 
 // Loginpage configuration
@@ -147,11 +78,72 @@ const config: FormElementInt = {
   click: () => {
     let data = buttonHandler(loginState);
     // this.state.onLogin(data);
-  }
- 
+  } 
 }
 
-// export default new Login(config);
+export default class Login extends Block {
+	constructor(props: object) {
+	  super('div', props);
+	}
 
+  protected getStateFromProps() {
+    this.state = {
+      onLogin: async (data) => {
+        const res = await AuthController.login(data);
+      }
+    }
+  }
 
+  componentDidMount(): void {
+    if (this.props.user.profile) {
+      this.props.router.go('/messenger')
+    }
+  }
 
+  componentDidUpdate() {
+    if (this.props.user.profile) {
+      this.props.router.go('/messenger');
+    }
+
+    return true;
+  }
+
+	render(): DocumentFragment {
+		const content = {
+			formElements: config.formElements, 
+			buttonEvent: {
+				click: () => {
+          let data = buttonHandler(loginState);
+          this.state.onLogin(data);
+        }
+			},
+			inputEvent: {
+				input: config.input,
+        focus: config.focus,
+        blur: config.blur
+			},
+      linkEvent: {
+        click: (e) => {
+          e.preventDefault();
+          window.location = e.target.getAttribute('to')
+        },
+      }
+		}
+
+		const loginForm = new Form(content);
+
+		const link: LinkInt = new Link({
+			text: 'Нет аккаунта?',
+      to: '/sign-up',
+      events: content.linkEvent
+		});
+
+		const fragment = compile(compileTemplate, {
+      error: this.props.user.error?.reason,
+			form: loginForm,
+			link: link
+		});
+
+		return fragment;
+	}
+}

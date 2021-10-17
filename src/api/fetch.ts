@@ -5,27 +5,24 @@ const METHODS = {
   DELETE: 'DELETE'
 };
 
-const URL = 'https://ya-praktikum.tech/api/v2'
+const URL = 'https://ya-praktikum.tech/api/v2';
+
+export type RequestOptions = {
+  method?: string;
+  data?: any;
+  headers?: Record<string, string>;
+  timeout?: number;
+  withCredentials?: boolean;
+};
 
 /**
 	* Функцию реализовывать здесь необязательно, но может помочь не плодить логику у GET-метода
 	* На входе: объект. Пример: {a: 1, b: 2, c: {d: 123}, k: [1, 2, 3]}
 	* На выходе: строка. Пример: ?a=1&b=2&c=[object Object]&k=1,2,3
 */
-function queryStringify(data: object):string {
-	// Можно делать трансформацию GET-параметров в отдельной функции
-  let transformed = '?';
-  let i = 1;
-  for (key in data){
-    if(Array.isArray(data[key])){
-      transformed = i < Object.keys(data).length ? `${transformed}${key}=${data[key].join(',')}&` : `${transformed}${key}=${data[key].join(',')}`;
-    } else {
-      transformed = i < Object.keys(data).length ? `${transformed}${key}=${data[key]}&` : `${transformed}${key}=${data[key]}`;
-    }
-    i++;
-  }
-
-  return transformed;
+function queryStringify(data: Record<string, any>) {
+  const queryKeys = Object.keys(data);
+  return queryKeys.reduce((acc, key, index) => `${acc}${key}=${data[key]}${index < queryKeys.length - 1 ? '&' : ''}`, '?');
 }
 
 export default class HTTPTransport {
@@ -35,35 +32,65 @@ export default class HTTPTransport {
     this.endpoint = `${URL}${endpoint}`;
   }
 
-	get = (path: string, options: object = {}) => {
-    let strdata = queryStringify(options.data);
-
+	get = (path: string, options: RequestOptions = {}) => {
+    let strdata = options?.data?.length > 0 ? queryStringify(options.data) : '';
 		let newUrl = `${path}${strdata}`;
-		return this.request(`${this.endpoint}${newUrl}`, {...options, method: METHODS.GET }, options.timeout);
+		return this.request(`${this.endpoint}${newUrl}`, {
+      ...options, 
+      method: METHODS.GET, 
+      headers: { 
+        'content-type': 'application/json', 
+        'credentials': 'include', 
+        ...options?.headers 
+      }
+    }, options.timeout);
 	};
 
 	// PUT, POST, DELETE
-  post = (path: string, options: object = {}) => {	 
-		return this.request(`${this.endpoint}${path}`, {...options, method: METHODS.POST}, options.timeout);
+  post = (path: string, options: RequestOptions = {}) => {	 
+		return this.request(`${this.endpoint}${path}`, {
+      ...options, 
+      method: METHODS.POST,
+      headers: { 
+        'content-type': 'application/json', 
+        'credentials': 'include', 
+        ...options?.headers 
+      }
+    }, options.timeout);
 	};
 
-  put = (path: string, options: object = {}) => {	 
-		return this.request(`${this.endpoint}${path}`, {...options, method: METHODS.PUT}, options.timeout);
+  put = (path: string, options: RequestOptions = {}) => {	 
+		return this.request(`${this.endpoint}${path}`, {
+      ...options, 
+      method: METHODS.PUT,
+      headers: { 
+        'content-type': 'application/json', 
+        'credentials': 'include',
+        ...options?.headers 
+      }
+    }, options.timeout);
 	};
 
-  delete = (path: string, options: object = {}) => {	 
-		return this.request(`${this.endpoint}${path}`, {...options, method: METHODS.DELETE}, options.timeout);
+  delete = (path: string, options: RequestOptions = {}) => {	 
+		return this.request(`${this.endpoint}${path}`, {
+      ...options, 
+      method: METHODS.DELETE,
+      headers: { 
+        'content-type': 'application/json', 
+        'credentials': 'include', 
+        ...options?.headers 
+      }
+    }, options.timeout);
 	};
 
-	// options:
-	// headers — obj
-	// data — obj
-	request = (url: string, options: object, timeout: number = 5000) => {
-    const {method, data, headers} = options;
-    // console.log('fetch data', data)
+
+	request = (url: string, options: Record<string, any>, timeout: number = 5000) => {
+    const { method, data, headers } = options;
+    
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
+      xhr.timeout = timeout;
       xhr.open(options.method, url);
       xhr.responseType = 'json';
       xhr.withCredentials = true
@@ -78,7 +105,7 @@ export default class HTTPTransport {
         xhr.send();
       } else {
         // console.log('data', data)
-        xhr.send(JSON.stringify(data));
+        xhr.send(data);
       }
 
       xhr.onload = function() {

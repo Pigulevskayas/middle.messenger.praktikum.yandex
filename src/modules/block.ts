@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { nanoid } from 'nanoid/non-secure';
 import EventBus from './event-bus.ts';
 
@@ -128,7 +129,6 @@ export default class Block<P = any> {
 
   // Может переопределять пользователь, необязательно трогать
   render(): DocumentFragment {
-    alert('lala')
     return new DocumentFragment();
   }
 
@@ -153,17 +153,17 @@ export default class Block<P = any> {
     
     const proxyProps = new Proxy(props, {
       get: (obj, prop) => {
-        if(prop.startsWith('_')){     
-          throw new Error('Нет прав');
-        }
+        // if(prop?.startsWith('_')){     
+        //   throw new Error('Нет прав');
+        // }
         
         const value = obj[prop];
         return typeof value === 'function' ? value.bind(obj) : value;
       },
       set: (obj, prop, value) => {
-        if(typeof prop === 'string' && prop.startsWith('_')){
-          throw new Error('Нет прав');
-        }
+        // if(typeof prop === 'string' && prop?.startsWith('_')){
+        //   throw new Error('Нет прав');
+        // }
         obj[prop] = value;
         this.eventBus().emit(Block.EVENTS.FLOW_CDU, {...obj}, obj);
         return true;

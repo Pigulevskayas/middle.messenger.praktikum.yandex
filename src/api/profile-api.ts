@@ -26,8 +26,8 @@ export default class ProfileAPI extends BaseAPI {
 	profile(data: ProfileData): Promise<void> {
 		return this.http.put('/profile', { 
         	headers: {
-        		'content-type': 'application/json',
-        		'credentials': 'include',
+        		// 'content-type': 'application/json',
+        		// 'credentials': 'include',
   				'mode': 'cors',
         	},
         	data: data
@@ -41,8 +41,8 @@ export default class ProfileAPI extends BaseAPI {
 	password(data: PasswordData): Promise<void> {
 		return this.http.put('/password', { 
         	headers: {
-        		'content-type': 'application/json',
-        		'credentials': 'include',
+        		// 'content-type': 'application/json',
+        		// 'credentials': 'include',
   				'mode': 'cors',
         	},
         	data: data
@@ -52,7 +52,7 @@ export default class ProfileAPI extends BaseAPI {
 	avatar(data) {
 		return this.http.put('/profile/avatar', { 
         	headers: {
-        		'credentials': 'include',
+        		// 'credentials': 'include',
   				'mode': 'cors',
         	},
         	data: data
@@ -62,8 +62,8 @@ export default class ProfileAPI extends BaseAPI {
 	search(data: SearchData) {
 		return this.http.post('/search', { 
         	headers: {
-        		'content-type': 'application/json',
-        		'credentials': 'include',
+        		// 'content-type': 'application/json',
+        		// 'credentials': 'include',
   				'mode': 'cors',
         	},
         	data: data
