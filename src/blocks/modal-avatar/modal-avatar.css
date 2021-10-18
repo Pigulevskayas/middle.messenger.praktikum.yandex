@@ -76,7 +76,8 @@
   text-decoration-line: underline;
   color: #27496d;
   display: inline-block;
-  /*max-width: 122px;*/
+
+  /* max-width: 122px; */
   margin-bottom: 45px;
   cursor: pointer;
 }

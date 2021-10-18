@@ -87,7 +87,7 @@
   font-weight: 600;
   font-size: 13px;
   line-height: 13px;
-  color: #27496D;
+  color: #27496d;
 }
 
 .chat__content {
@@ -264,8 +264,8 @@
 
 .chat .dropdown__menu {
   display: none;
-  background: #E9EDF0;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+  background: #e9edf0;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
   border-radius: 12px;
   padding: 15px;
   position: absolute;
@@ -289,7 +289,7 @@
 .chat .dropdown__link {
   font-size: 12px;
   line-height: 14px;
-  color: #27496D;
+  color: #27496d;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -322,4 +322,3 @@
   background: #27496d url('../../../public/static/images/close-icon.svg') no-repeat center;
   background-size: 11px;
 }
-

@@ -36,11 +36,11 @@
 }
 
 .nav-btn__toggler {
-  background: #27496D url('../../../public/static/images/dropdown-icon.svg') no-repeat center;
+  background: #27496d url('../../../public/static/images/dropdown-icon.svg') no-repeat center;
 }
 
 .nav-btn__add-chat {
-  background: #27496D url('../../../public/static/images/chat-icon.svg') no-repeat center;
+  background: #27496d url('../../../public/static/images/chat-icon.svg') no-repeat center;
   margin-right: 5px;
 }
 
