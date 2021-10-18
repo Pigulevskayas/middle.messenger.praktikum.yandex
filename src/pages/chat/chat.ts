@@ -88,9 +88,6 @@ export default class Chat extends Block {
 	protected getStateFromProps() {
     this.state = {
     	chat_visible: false,
-    	modal_add: false,
-    	modal_delete: false,
-    	modal_add_chat: false,
     	onCreate: async (data) => {
     		const response = await ChatsController.create(data);
     		try {
@@ -99,7 +96,8 @@ export default class Chat extends Block {
 						  user: this.props.user.id
 						});
     				chatData.chatId = response.id;
-    				this.state.modal_add_chat = false;
+    				const modal = document.querySelector('.modal.modal_show');
+	  				modal.classList.remove('modal_show');
     				this.showChat(data.title);
     			}
     		} catch(e) {
@@ -136,26 +134,16 @@ export default class Chat extends Block {
     	},
     	onGetChats: async (data) => {
     		const chats = await ChatsController.chats(data);
-    		// try {
-    		// 	if (chats) {
-    		// 		chatsResponses.userChats = chats;
-    		// 	}
-    		// }
     	},
     	onSearch: async () => {
     		if(searchValue.login.length > 0){
 					const result = await ProfileController.search(searchValue);
-					// if (result) {
-					// 	chatsResponses.searchResult = result;
-					// }
     		}
       },
       onGetUserId: async (login) => {
       	const result = await ProfileController.searchUserId({login: login});
-      	// console.log('onGetUserId',result)
       	try {
       		chatData.users.push(result);
-      		// console.log('chatData',chatData)
       	} catch(e) {
       		console.log(e)
       	}
@@ -163,7 +151,8 @@ export default class Chat extends Block {
      	onAddUser: async () => {
      		const response = await ChatsController.add(chatData);
      		try{
-     			this.state.modal_add = false;
+     			const modal = document.querySelector('.modal.modal_show');
+	  			modal.classList.remove('modal_show');
     			chatData.chatId = null;
      			chatData.users = [];
      		} catch(e) {
@@ -230,8 +219,6 @@ export default class Chat extends Block {
   	}
   	chatData.chatId = chatId;
   	
-
-
   	const chatTitle = document.querySelector(`.chat-item[chat-id="${chatId}"] .chat-item__name`).textContent;
 
   	selectedChat.id = chatId;
@@ -242,7 +229,9 @@ export default class Chat extends Block {
   }
 
   showModal = (type)	=> {
-  	this.state[type] = true;
+  	// this.state[type] = true;
+  	const modal = document.getElementById(type);
+	  modal.classList.add('modal_show');
   }
 
   showChat = (title)	=> {
@@ -266,16 +255,8 @@ export default class Chat extends Block {
   	}
   }
 
-  // componentDidUpdate() {
-  //   // console.log('componentDidUpdate', this.props)
-  //   // if (this.props.user.length) {
-  //   //   chatsResponses.searchResult = this.props.user;
-  //   // }
-
-  //   return true;
-  // }
-
-	render(): DocumentFragment {		
+	render(): DocumentFragment {	
+		console.log('this.props.messages', this.props.messages)	
 		const config: chatConfigInt = {
 			inputMessage: {
 				classname: 'chat__input',
@@ -343,8 +324,9 @@ export default class Chat extends Block {
 			events: {
         click: (e) => {
           e.preventDefault();
-          const modalAdd = document.getElementById('add-chat');
-	        modalAdd.classList.add('modal_show');
+          this.showModal('add-chat');
+         //  const modalAdd = document.getElementById('add-chat');
+	        // modalAdd.classList.add('modal_show');
         },
       }
 		});
@@ -413,7 +395,7 @@ export default class Chat extends Block {
 
 		const modalDelete: ModalInt = new Modal({
 			isVisible: this.state.modal_delete,
-			id: "delete-user",
+			id: "modal_delete",
 			modalTitle: "Удалить пользователя",
 			btnText: "Удалить",
 			isVisible: this.state.modal_delete, 
@@ -426,7 +408,7 @@ export default class Chat extends Block {
 
 		const modalAdd: ModalInt = new Modal({
 			isVisible: this.state.modal_add,
-			id: "add-user",
+			id: "modal_add",
 			modalTitle: "Добавить пользователя",
 			btnText: "Добавить",
 			isVisible: this.state.modal_add, 

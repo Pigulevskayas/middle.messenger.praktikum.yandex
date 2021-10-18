@@ -18,7 +18,6 @@ export function connect(stateToProps: (state: any) => any, Component: typeof Blo
 
     componentDidMount(props: any) {
       super.componentDidMount(props);
-      console.log('changed')
       store.on('changed', () => {
         this.setProps({
           ...this.props,

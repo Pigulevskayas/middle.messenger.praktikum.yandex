@@ -9,16 +9,15 @@ interface ErrorInt {
 	text: string
 }
 
-class Error500 extends Block {
+export default class Error500 extends Block {
   constructor(props: object) {
-	// dom-element button wrapper creation
     super("div", props);
   }
 
   render(): string {
   	const link: LinkInt = new Link({
 			text: 'Назад к чатам',
-      to: '/chats',
+      to: '/messenger',
       events: {
         click: (e) => {
           e.preventDefault();
@@ -38,11 +37,3 @@ class Error500 extends Block {
 		return fragment;
   }
 }
-
-
-export default new Error500();
-
-
-
-
-

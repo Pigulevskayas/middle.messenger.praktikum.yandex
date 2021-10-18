@@ -11,20 +11,7 @@ import ChatsController from '../../controllers/profile-controller.ts';
 export default class Modal extends Block {
 	constructor(props) {
 	    super("div", props);
-	   	// this.options = this.props.options;
 	}
-
-	// changeAvatar = (value)	=> {
-	// 	let emptyFile = document.querySelector('.modal__notice');
-	// 	if(value){
-	// 		let inputLabel = document.querySelector('.modal__link');
-	// 		// let statusDiv = document.querySelector('.modal__status');
-	// 		inputLabel.textContent = value;
-	// 		emptyFile.style.display = 'none';
-	// 	} else {
-	// 		emptyFile.style.display = 'block';
-	// 	}
-	// }
 
 	closeModal = ()	=> {
 		let modals = document.querySelectorAll('.modal');
@@ -34,17 +21,6 @@ export default class Modal extends Block {
 	}
 
 	render() {
-		// const input = new Input({
-		// 	classname: 'input_hidden',
-		// 	attributes: {
-		// 		type: "file",
-		// 		name: "avatar",
-		// 		id: "avatar"
-		// 	},
-		// 	events: {
-		// 		change: (e) => this.changeAvatar(e.target.value)
-		// 	},
-		// });
 
 		const input = new Input({
 			classname: 'input',
@@ -52,19 +28,16 @@ export default class Modal extends Block {
 				type: 'text',
 				name: this.props.inputName,
 				placeholder: this.props.inputLabel,
-				// value: ''
 			},
 			events: {
 				blur: (e) => this.props.inputEvent(e.target.value)
 			}
-			// events: this.props.content.inputEvent
 		});
 
 		const button = new Button({
 			text: this.props.btnText,
 			events: {
 				click: () => this.props.buttonEvent()
-				// click: () => this.state.onAvatar()
 			}
 		});
 
@@ -83,9 +56,7 @@ export default class Modal extends Block {
 			close: close,
 			input: input,
 			button: button,
-			isVisible: this.props.isVisible,
-			// isError: this.props.options.isError,
-			// fileName: this.props.options.fileName
+			isVisible: this.props.isVisible
 		});
 
 		return fragment;

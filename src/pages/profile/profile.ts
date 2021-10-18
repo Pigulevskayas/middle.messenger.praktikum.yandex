@@ -149,13 +149,13 @@ export default class Profile extends Block {
   }
 
   componentDidMount(): void {
-    if (this.props.user) {
+    if (this.props.user.profile) {
     	let inputs = document.querySelectorAll('.user-info_data .input');
     	inputs.forEach((input: HTMLElement):void => {
     		input.setAttribute('disabled', 'disabled');
     	});
 
-    	let userObj = this.props.user;
+    	let userObj = this.props.user.profile;
       profileValues.email = userObj.email;
       profileValues.first_name = userObj.first_name;
       profileValues.second_name = userObj.second_name;
@@ -163,20 +163,19 @@ export default class Profile extends Block {
       profileValues.login = userObj.login;
       profileValues.phone = userObj.phone;
 
-      
-      // setTimeout(function(){
-      // 	// const img = document.querySelector('.test-avatar');
-      // 	const cont = document.querySelector('.profile__top'): HTMLElement;
-      // 	console.log('aaaa', cont)
-      // 	// cont.append(img);
-      // }, 3000)
     }
   }
 
   componentDidUpdate() {
-    if (!this.props.user.profile) {
+    if (!this.props.user.profile && !this.props.user.error) {
       this.props.router.go('/');
     }
+
+    if (this.props.user.error === 500) {
+      this.props.router.go('/error');
+    }
+
+    return true;
   }
 
 	render(): DocumentFragment {
@@ -188,7 +187,7 @@ export default class Profile extends Block {
 							placeholder: "Почта", 
 							type: "email", 
 							name: "email", 
-							value: this.props.user.email
+							value: this.props.user.profile.email
 						}
 					}
 				}, {
@@ -198,7 +197,7 @@ export default class Profile extends Block {
 							placeholder: "Логин", 
 							type: "text", 
 							name: "login", 
-							value: this.props.user.login
+							value: this.props.user.profile.login
 						}
 					} 
 				}, {
@@ -208,7 +207,7 @@ export default class Profile extends Block {
 							placeholder: "Имя", 
 							type: "text", 
 							name: "first_name", 
-							value: this.props.user.first_name
+							value: this.props.user.profile.first_name
 						}
 					}
 				}, {
@@ -218,7 +217,7 @@ export default class Profile extends Block {
 							placeholder: "Фамилия", 
 							type: "text", 
 							name: "second_name", 
-							value: this.props.user.second_name
+							value: this.props.user.profile.second_name
 						}
 					}
 				}, {
@@ -228,7 +227,7 @@ export default class Profile extends Block {
 							placeholder: "Имя в чате", 
 							type: "text", 
 							name: "display_name", 
-							value: this.props.user.display_name ? this.props.user.display_name : ''
+							value: this.props.user.profile.display_name ? this.props.user.profile.display_name : ''
 						}
 					}
 				}, {
@@ -238,7 +237,7 @@ export default class Profile extends Block {
 							placeholder: "Телефон", 
 							type: "text", 
 							name: "phone", 
-							value: this.props.user.phone
+							value: this.props.user.profile.phone
 						}
 					}
 				}, {
@@ -318,7 +317,6 @@ export default class Profile extends Block {
 		  buttonEvent: {
 				click: () => {
           let data = buttonHandler(profileValues);
-          console.log('click data', data)
           this.state.onPassword(data);
         }
 			},
@@ -390,7 +388,7 @@ export default class Profile extends Block {
 		const modal: ModalInt = new Modal();
 
 		const avatar: AvatarInt = new Avatar({
-			imgurl: this.props.user.avatar ? this.props.user.avatar : null,
+			imgurl: this.props.user.profile.avatar ? this.props.user.profile.avatar : null,
 			events: {
 				click: (e)	=> {
 					this.showModal();
@@ -400,7 +398,7 @@ export default class Profile extends Block {
 
 		const fragment = compile(compileTemplate, {
 			avatar: avatar,
-			name: this.props.user.first_name,
+			name: this.props.user.profile.first_name,
 			userform: profileForm,
 			back: btnBack,
 			exit: btnExit,

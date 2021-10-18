@@ -13,16 +13,8 @@ class ProfileController {
 	async profile(data: ProfileData): Promise<UserData | void> {
 		try {
 			const result = await this.api.profile(JSON.stringify(data));
-			try {
-				if(result){
-					// console.log('result', result);
-					store.dispatch(setUser(result));
-				}
-			} catch(e) {
-				store.dispatch(setError(e as { reason: string }));
-			}
+			store.dispatch(setUser(result));
 		} catch(e) {
-			// console.log(e);
 			store.dispatch(setError(e as { reason: string }));
 		}
 	}
@@ -30,16 +22,9 @@ class ProfileController {
 	async password(data: PasswordData): Promise<UserData | void> {
 		try {
 			const result = await this.api.password(JSON.stringify(data));
-			
-			try {
-				if(result){
-					// console.log('result', result);
-					store.dispatch(setUser(result));
-				}
-			} catch(e) {
-				store.dispatch(setError(e as { reason: string }));
+			if(result){
+				store.dispatch(setUser(result));
 			}
-			
 		} catch(e) {
 			console.log(e);
 			store.dispatch(setError(e as { reason: string }));
@@ -49,18 +34,10 @@ class ProfileController {
 	async avatar(data: any) {
 		try {
 			const result = await this.api.avatar(data);
-			try {
-				if(result){
-					// console.log('result', result);
-					store.dispatch(setUser(result));
-				}
-			} catch(e) {
-				store.dispatch(setError(e as { reason: string }));
-			}
-			
+			store.dispatch(setUser(result));
 		} catch(e) {
 			console.log(e);
-			store.dispatch(setError(e as { reason: string }));
+			store.dispatch(setError(e));
 		}
 	}
 

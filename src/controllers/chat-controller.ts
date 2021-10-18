@@ -50,7 +50,6 @@ class ChatsController {
 	    } catch (e) {
 	    	console.log(e)
 	      	store.dispatch(setError(e as { reason: string }));
-	      	// console.log(store.getState())
 	    }
 	}
 
@@ -58,18 +57,15 @@ class ChatsController {
 	    try {
 	      	const chats = await this.api.chats(params);
 	      	store.dispatch(setChats(chats));
-			// console.log('chats', chats)
 	      	return chats;
 	    } catch (e) {
-	    	console.log('e', e)
-	      // store.dispatch(deleteUser());
+	    	console.log('e', e);
 	    }
 	}
 
 	async token(chatId: string, userId: string): Promise<UserData | void> {
 	    try {
 	      	const tokenResponse = await this.api.token(chatId);
-	      	// store.dispatch(setChats(chats));
 			// console.log('token', tokenResponse.token)
 			const socket = websocketConnection(userId, chatId, tokenResponse.token);
 			socket.onopen = async (event) => {
@@ -80,7 +76,10 @@ class ChatsController {
 			};
 
 			socket.onmessage = function(event){
-				store.dispatch(setMessages(JSON.parse(event.data)));
+				const data = JSON.parse(event.data);
+				if(data.type !== 'user connected'){
+					store.dispatch(setMessages(data));
+				}
 			}
 
 	      	return socket;
@@ -99,8 +98,8 @@ class ChatsController {
 				content: '0',
 				type: 'get old',
 			}));
-			socket.onmessage = function(event){
-				if(JSON.parse(event.data).isArray()) {
+			webSocket.onmessage = function(event){
+				if(Array.isArray(JSON.parse(event.data))) {
 					store.dispatch(setMessages(JSON.parse(event.data)));
 				}
 			}

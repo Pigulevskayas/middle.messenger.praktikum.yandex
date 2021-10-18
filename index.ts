@@ -12,11 +12,13 @@ import ChatPage from './src/pages/chat';
 AuthController.getUserData()
   .then(() => {
     const router = new Router();
-    console.log('router.routes', router.routes)
+
     router
       .use("/", LoginPage)
       .use("/sign-up", RegPage)
       .use("/messenger", ChatPage)
       .use("/settings", ProfilePage)
+      .use("/error-404", Error404Page)
+      .use("/error", Error500Page)
       .start();
   });

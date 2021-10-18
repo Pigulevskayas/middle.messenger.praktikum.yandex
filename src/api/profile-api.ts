@@ -52,6 +52,7 @@ export default class ProfileAPI extends BaseAPI {
 	avatar(data) {
 		return this.http.put('/profile/avatar', { 
         	headers: {
+        		'content-type': 'multipart/form-data',
         		// 'credentials': 'include',
   				'mode': 'cors',
         	},

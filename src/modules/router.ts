@@ -83,6 +83,8 @@ export default class Router {
     _onRoute(pathname: string) {
         const route = this.getRoute(pathname);
         if (!route) {
+            const error = this.getRoute("/error-404");
+            error.render(error, pathname);
             return;
         }
 
@@ -118,6 +120,7 @@ export function withRouter(Component: typeof Block) {
       const router = new Router();
 
       super({...props, router: router});
+
     }
   }
 }

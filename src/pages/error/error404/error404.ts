@@ -9,7 +9,7 @@ interface ErrorInt {
 	text: string
 }
 
-class Error404 extends Block {
+export default class Error404 extends Block {
   constructor(props: object) {
 	// dom-element button wrapper creation
     super("div", props);
@@ -18,7 +18,7 @@ class Error404 extends Block {
   render(): DocumentFragment {
   	const link: LinkInt = new Link({
 			text: 'Назад к чатам',
-      to: '/chats',
+      to: '/messenger',
       events: {
         click: (e) => {
           e.preventDefault();
@@ -40,13 +40,3 @@ class Error404 extends Block {
 		// return pug.render(html);
   }
 }
-
-export default new Error404();
-
-
-
-
-
-
-
-

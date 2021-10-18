@@ -66,11 +66,11 @@ const config: FormElementInt = {
       }
     }, {
       button: {
-        text: 'Сохранить'
+        text: 'Вход'
       }
     }
   ],
-  input: function(e){console.log('input')
+  input: function(e){
     loginState[e.target.name] = e.target.value;
   },
   focus: (e) => inputHandler(e.target, loginState),

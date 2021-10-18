@@ -97,23 +97,25 @@ export default class HTTPTransport {
 
       if(headers) {
         Object.keys(headers).forEach(key => {
-          xhr.setRequestHeader(key, headers[key]);
+          if(headers[key] !== 'multipart/form-data')
+            xhr.setRequestHeader(key, headers[key]);
         });
       }
 
       if (method === METHODS.GET || !data) {
         xhr.send();
       } else {
-        // console.log('data', data)
         xhr.send(data);
       }
 
       xhr.onload = function() {
         if (xhr.status != 200) {
-          // console.log(xhr.response);
-          reject(xhr.response)
+          if(xhr.status == 500){
+            reject(xhr.status);
+          } else {
+            reject(xhr.response);
+          }
         } else {
-          // console.log(xhr.response);
           resolve(xhr.response);
         }
       };
