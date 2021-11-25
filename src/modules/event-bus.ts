@@ -1,3 +1,4 @@
+// @ts-nocheck
 export default class EventBus {
     constructor() {
         this.listeners = {};
@@ -23,7 +24,8 @@ export default class EventBus {
 
     emit(event, ...args) {
         if (!this.listeners[event]) {
-          throw new Error(`Нет события: ${event}`);
+            return;
+          // throw new Error(`Нет события: ${event}`);
         }
 
         this.listeners[event].forEach(function(listener) {

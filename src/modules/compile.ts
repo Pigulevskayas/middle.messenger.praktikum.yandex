@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Block from './block.ts';
 
 export default function compile(tmpl: (ctx: Record<string, any>) => string, props: Record<string, any>): DocumentFragment {

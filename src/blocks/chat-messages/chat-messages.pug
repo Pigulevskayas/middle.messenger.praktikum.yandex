@@ -1,18 +1,22 @@
-div.messages__date 19 июня
-	div.messages__row !{message}
-//- 
-	div.message.message_response
-		div.message__text 
-			p Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.
+-function prettyDate(dateString){
+	-var date = new Date(dateString);
+	-var d = date.getDate();
+	-var monthNames = [ "Янв", "Феб", "Мар", "Апр", "Мая", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек" ];
+	-var m = monthNames[date.getMonth()];
+	-var y = date.getFullYear();
+	-return d+' '+m+' '+y;
+-}
 
-			p Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.
-						
-		div.message__time 12:10
-//- 	
-	div.message-img
-		img(src="" alt=" ")
-		div.message__time.message__time_bg 12:15
-//- 
-	div.message
-		div.message__text Круто!
-		div.message__time.message__time_read 12:35
+-function prettyTime(dateString){
+	-var date = new Date(dateString);
+	-var h = date.getHours();
+	-var m = date.getMinutes();
+	-return h+':'+m;
+-}
+
+// div.messages__date 19 июня
+each val, key in message
+	div(class=userId === message[key]['user_id'] ? 'message__row' : 'message__row message__row_response')
+		div(class=userId === message[key]['user_id'] ? 'message' : 'message message_response')
+			div.message__text #{message[key]['content']}
+			div.message__time.message__time_read #{prettyDate(message[key]['time'])} #{prettyTime(message[key]['time'])}

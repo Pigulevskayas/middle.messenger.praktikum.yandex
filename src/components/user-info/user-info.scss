@@ -28,9 +28,15 @@
 		border: none;
 		text-align: right;
 		outline: none;
-		&__data:focus, &__data:focus-visible {
+		&:focus, &:focus-visible {
 			box-shadow: none;
 			outline: none;
 		}
+	}
+	&_hidden {
+		display: none;
+	}
+	&_password .profile__submit_hidden {
+		display: block;
 	}
 }

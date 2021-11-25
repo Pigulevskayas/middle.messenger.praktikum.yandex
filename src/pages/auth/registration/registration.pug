@@ -1,5 +1,7 @@
 div.auth.layout_100
 	div.auth__card.auth__card_reg
 		h1.auth__title Регистрация
+		if error
+			div.auth__error Error: !{error}
 		div !{form}
 		div !{link}

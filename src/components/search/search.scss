@@ -1,6 +1,8 @@
 .search {
 	position: relative;
-	&__icon {
+	&::before {
+		display: inline-block;
+  		content: '';
 		width: 20px;
 		height: 20px;
 		background: url('../../../public/static/images/search.svg') no-repeat center;
@@ -19,5 +21,17 @@
 		font-size: 12px;
 		line-height: 12px;
 		box-sizing: border-box;
+		&:focus {
+			outline: none;
+		}
+	}
+	&__result {
+	  	width: 100%;
+	  	font-size: 13px;
+	  	font-weight: 600;
+	  	line-height: 13px;
+	  	color: #27496d;
+	  	text-decoration: none;
+	  	display: inline-block;
 	}
 }

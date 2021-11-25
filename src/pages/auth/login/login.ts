@@ -10,78 +10,48 @@ import buttonHandler from '../../../utils/form-submit-handler.ts';
 import '../auth.css';
 import '../../../components/button/button.css';
 import '../../../components/input/input.css';
+import '../../../components/form-field/form-field.css';
+
+import AuthController from '../../../controllers/auth-controller.ts';
 
 interface LinkInt {
-	text: string, 
-	link: string,
+	text: string; 
+	to: string;
+  events: object;
 }
 
 interface FormElementInt {
-    inputEmail: Object<string>; 
-    inputPassword: Object<string>;
-    button: object;
-    input: () => void;
-    focus: () => void;
-    blur: () => void;
-    click: () => void;
+  inputLogin: Object<string>; 
+  inputPassword: Object<string>;
+  button: object;
+  input: () => void;
+  focus: () => void;
+  blur: () => void;
+  click: () => void;
 }
 
 interface FormElementsInt extends Array<FormElementInt>{}
 
 interface loginStateInt {
-  email: null | string,
-  password: null | string
-}
-
-class Login extends Block {
-	constructor(props) {
-	  super('div', {config: props});
-	}
-
-	render(): DocumentFragment {	
-		const content = {
-			formElements: this.props.config.formElements, 
-			buttonEvent: {
-				click: this.props.config.click
-			},
-			inputEvent: {
-				input: this.props.config.input,
-        focus: this.props.config.focus,
-        blur: this.props.config.blur
-			}
-		}
-
-		const loginForm = new Form(content);
-
-		const link: LinkInt = new Link({
-			text: 'Нет аккаунта?', 
-			link: "/registration"
-		});
-
-		const fragment = compile(compileTemplate,{
-			form: loginForm,
-			link: link
-		});
-
-		return fragment;
-	}
+  login: null | string;
+  password: null | string;
 }
 
 // Loginpage configuration
 const loginState: loginStateInt = {
-  email: null,
+  login: null,
   password: null
 }
 
-const LoginConfig: FormElementInt = {
+const config: FormElementInt = {
   formElements: [{
-      inputEmail: {
+      inputLogin: {
         classname: 'input',
         attributes: {
           type: 'text',
-          name: 'email',
-          placeholder: 'Почта',
-          value: loginState.email
+          name: 'login',
+          placeholder: 'Логин',
+          value: loginState.login
         }
       }
     },{
@@ -96,20 +66,84 @@ const LoginConfig: FormElementInt = {
       }
     }, {
       button: {
-        text: 'Сохранить'
+        text: 'Вход'
       }
     }
   ],
-  input: function(e){console.log('input')
+  input: function(e){
     loginState[e.target.name] = e.target.value;
   },
   focus: (e) => inputHandler(e.target, loginState),
   blur: (e) => inputHandler(e.target, loginState),
-  click: () => buttonHandler(loginState)
- 
+  click: () => {
+    let data = buttonHandler(loginState);
+    // this.state.onLogin(data);
+  } 
 }
 
-export default new Login(LoginConfig);
+export default class Login extends Block {
+	constructor(props: object) {
+	  super('div', props);
+	}
 
+  protected getStateFromProps() {
+    this.state = {
+      onLogin: async (data) => {
+        const res = await AuthController.login(data);
+      }
+    }
+  }
 
+  componentDidMount(): void {
+    if (this.props.user.profile) {
+      this.props.router.go('/messenger')
+    }
+  }
 
+  componentDidUpdate() {
+    if (this.props.user.profile) {
+      this.props.router.go('/messenger');
+    }
+
+    return true;
+  }
+
+	render(): DocumentFragment {
+		const content = {
+			formElements: config.formElements, 
+			buttonEvent: {
+				click: () => {
+          let data = buttonHandler(loginState);
+          this.state.onLogin(data);
+        }
+			},
+			inputEvent: {
+				input: config.input,
+        focus: config.focus,
+        blur: config.blur
+			},
+      linkEvent: {
+        click: (e) => {
+          e.preventDefault();
+          window.location = e.target.getAttribute('to')
+        },
+      }
+		}
+
+		const loginForm = new Form(content);
+
+		const link: LinkInt = new Link({
+			text: 'Нет аккаунта?',
+      to: '/sign-up',
+      events: content.linkEvent
+		});
+
+		const fragment = compile(compileTemplate, {
+      error: this.props.user.error?.reason,
+			form: loginForm,
+			link: link
+		});
+
+		return fragment;
+	}
+}

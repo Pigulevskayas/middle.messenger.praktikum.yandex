@@ -10,10 +10,24 @@ import buttonHandler from '../../../utils/form-submit-handler.ts';
 import '../auth.css';
 import '../../../components/button/button.css';
 import '../../../components/input/input.css';
+import '../../../components/form-field/form-field.css';
+
+import AuthController from '../../../controllers/auth-controller.ts';
+
+interface regStateInt {
+  email:  null | string;
+  password: null | string;
+  first_name: null | string;
+  second_name: null | string;
+  phone: null | string;
+  password: null | string;
+  repassword: null | string;
+}
 
 interface LinkInt {
-	text: string, 
-	link: string
+	text: string; 
+	to: string;
+  events: object;
 }
 
 interface FormElementInt {
@@ -33,54 +47,18 @@ interface FormElementInt {
 
 interface FormElementsInt extends Array<FormElementInt>{}
 
-class Regisatration extends Block {
-	constructor(props) {
-	  super('div', {config: props});
-	}
-
-	render(): DocumentFragment {
-		const content = {
-			formElements: this.props.config.formElements, 
-			buttonEvent: {
-				click: this.props.config.click
-			},
-			inputEvent: {
-				input: this.props.config.input,
-        focus: this.props.config.focus,
-        blur: this.props.config.blur
-			}
-		}
-
-		const regForm = new Form(content);
-
-		const link: LinkInt = new Link({
-			text: 'Войти', 
-			link: "/login"
-		});
-
-		const fragment = compile(compileTemplate,{
-			form: regForm,
-			link: link
-		});
-
-		return fragment;
-	}
-
-}
-
-
-const regState = {
+const regState: regStateInt = {
   email: null,
   password: null,
   first_name: null,
-  last_name: null,
+  second_name: null,
   phone: null,
   password: null,
   repassword: null
 }
 
-const RegConfig: FormElementsInt = {
-  	formElements: [{
+const config: FormElementsInt = {
+  formElements: [{
 		inputEmail: {
 			classname: 'input',
       attributes: {
@@ -113,7 +91,7 @@ const RegConfig: FormElementsInt = {
       attributes: {
 				placeholder: "Фамилия", 
 				type: "text", 
-				name: "last_name"
+				name: "second_name"
 			}
 		}
 	}, {
@@ -147,14 +125,87 @@ const RegConfig: FormElementsInt = {
       	button: {
 	        text: 'Зарегистрироваться'
       	}
-    }],
+  }],
   	input: function(e){
 	    regState[e.target.name] = e.target.value;
-  	},
+  },
   	focus: (e) => inputHandler(e.target, regState),
 	  blur: (e) => inputHandler(e.target, regState),
-	  click: () => buttonHandler(regState)
+	  click: () => {
+	  	let data = buttonHandler(regState);
+	}
+}
+
+export default class Regisatration extends Block {
+	constructor(props) {
+	  super('div', props);
+	}
+
+	protected getStateFromProps() {
+    this.state = {
+      onRegister: async (data) => {
+        const res = await AuthController.registration(data);
+      }
+    }
+  }
+
+  componentDidMount() {
+    // console.log('componentDidMount')
+    if (this.props.user.profile) {
+      this.props.router.go('/messenger')
+    }
+  }
+
+  componentDidUpdate() {
+    // console.log('componentDidUpdate')
+    if (this.props.user.profile) {
+      this.props.router.go('/messenger');
+    }
+
+    return true;
+  }
+
+	render(): DocumentFragment {
+		console.log('registration', this.registration)
+		const content = {
+			formElements: config.formElements, 
+			buttonEvent: {
+				click: () => {
+          let data = buttonHandler(regState);
+          this.state.onRegister(data);
+        }
+			},
+			inputEvent: {
+				input: config.input,
+        focus: config.focus,
+        blur: config.blur
+			},
+			linkEvent: {
+				click: (e) => {
+					e.preventDefault();
+					window.location = e.target.getAttribute('to')
+				},
+			}
+		}
+
+		const regForm = new Form(content);
+
+		const link: LinkInt = new Link({
+			text: 'Войти', 
+			to: "/",
+			events: content.linkEvent
+		});
+
+		const fragment = compile(compileTemplate, {
+			error: this.props.user.error?.reason,
+			form: regForm,
+			link: link
+		});
+
+		return fragment;
+	}
 
 }
 
-export default new Regisatration(RegConfig);
+
+

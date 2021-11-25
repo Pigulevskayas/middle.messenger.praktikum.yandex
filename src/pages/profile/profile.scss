@@ -8,6 +8,8 @@
 	&__inner {
 		max-width: 570px;
 		width: 100%;
+		position: relative;
+		z-index: 1;
 	}
 	&__card {
 		width: 100%;
@@ -31,10 +33,17 @@
 		margin-right: -10px;
 		margin-bottom: 21px;
 		text-align: right;
+		&_hidden {
+			display: none;
+		}
 	}
-	.profile__link {
+	&__link {
 		display: inline-block;
 		padding: 0 10px;
+	}
+	&__close {
+		display: none;
+		text-align: right;
 	}
 	&__top {
 		text-align: center;
@@ -47,6 +56,27 @@
 		border-radius: 50%;
 		background: #FFE6EA url('../../../public/static/images/avatar_icon.svg') no-repeat center;
 		margin-bottom: 21px;
+		overflow: hidden;
+		cursor: pointer;
+		& > div {
+			height: 100%;
+			&:hover::before {
+				content: 'Поменять аватар';
+				color: #ffe6ea;
+				background: #27496d;
+				opacity: 0.4;
+				display: inline-flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+	.avatar {
+		width: 100%;
+		height: auto;
 	}
 	&__name {
 		font-family: "Inter", sans-serif;
@@ -55,6 +85,9 @@
 		line-height: 16px;
 		text-align: center;
 		color: #27496D;
+	}
+	&__submit_hidden {
+		display: none;
 	}
 	
 }

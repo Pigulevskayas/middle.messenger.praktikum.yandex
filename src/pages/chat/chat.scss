@@ -16,6 +16,15 @@
 	&__edit {
 		text-align: right;
 		margin-bottom: 6px;
+		display: flex;
+		justify-content: flex-end;
+		max-height: 34px;
+	}
+
+	&__empty {
+		color: #889baf;
+		font-size: 12px;
+		line-height: 15px;
 	}
 
 }
@@ -23,6 +32,7 @@
 .chat {
 	background: #ffffff;
 	width: 100%;
+	height: 100vh;
 
 	&_empty {
 		font-size: 12px;
@@ -39,6 +49,10 @@
 		}
 	}
 
+	&_hide {
+		display: none;
+	}
+
 	&__header {
 		background: #c5e2f0;
 		padding: 10px 20px;
@@ -46,6 +60,12 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		&-name {
+			font-weight: 600;
+			font-size: 13px;
+			line-height: 13px;
+			color: #27496D;
+		}
 	}
 
 	&__content {
@@ -53,12 +73,19 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-
+		&_show {
+			display: flex;
+		}
+		&.chat_hide {
+			display: none;
+		}
 	}
 
 	&__messages {
 		flex: 11;
 		padding: 48px 20px 0;
+		height: calc(100% - 165px);
+  		overflow: auto;
 	}
 
 	&__new-messge {
@@ -150,6 +177,13 @@
 		background:  #c5e2f0;
 		border-radius: 10px 10px 0 10px;
 
+		&__row {
+			text-align: right;
+			&_response {
+				text-align: left;
+			}
+		}
+
 		&__time {
 			color: #889baf;
 			font-size: 9px;
@@ -171,6 +205,10 @@
 
 	}
 
+	.dropdown {
+		position: relative;
+	}
+
 	.dropdown__toggle {
 		width: 34px;
 		height: 34px;
@@ -178,6 +216,63 @@
 		border:  none;
 		color: #ffe6ea;
 		background: #27496d url('../../../public/static/images/dropdown-icon.svg') no-repeat center;
+	}
+
+	.dropdown__menu {
+		display: none;
+		background: #E9EDF0;
+		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+		border-radius: 12px;
+		padding: 15px;
+		position: absolute;
+		right: 0;
+		top: 100%;
+		margin-top: 20px;
+		min-width: 210px;
+		box-sizing: border-box;
+		&_show {
+		  display: inline-block;
+		}
+	}
+
+	.dropdown__list {
+		padding-left: 0;
+		list-style-type: none;
+		margin: 0;
+	}
+
+	.dropdown__list li {
+		margin-bottom: 16px;
+	}
+
+	.dropdown__list li:last-of-type {
+		margin-bottom: 0;
+	}
+
+	.dropdown__link {
+		font-size: 12px;
+		line-height: 14px;
+		color: #27496D;
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+		&::before {
+			content: '';
+			display: inline-block;
+			width: 22px;
+			height: 22px;
+			border-radius: 50%;
+			margin-right: 15px;
+		}
+		&_add::before {
+			background: #27496d url('../../../public/static/images/close-icon.svg') no-repeat center;
+			background-size: 11px;
+			transform: rotate(45deg);
+		}
+		&_delete::before {
+			background: #27496d url('../../../public/static/images/close-icon.svg') no-repeat center;
+			background-size: 11px;
+		}
 	}
 	
 }
