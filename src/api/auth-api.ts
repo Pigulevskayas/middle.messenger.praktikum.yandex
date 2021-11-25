@@ -24,23 +24,19 @@ export default class AuthAPI extends BaseAPI {
 	login(data: LoginData): Promise<void> {
 		return this.http.post('/signin', { 
         	headers: {
-        		// 'content-type': 'application/json',
-        		// 'credentials': 'include',
   				'mode': 'cors',
         	},
         	data: data
-        })
+        });
 	}
 
 	registration(data: RegData): Promise<void> {
 		return this.http.post('/signup', { 
         	headers: {
-        		// 'content-type': 'application/json',
-        		// 'credentials': 'include',
   				'mode': 'cors',
         	},
         	data: data
-        })
+        });
 	}
 
 	logout(): Promise<void> {

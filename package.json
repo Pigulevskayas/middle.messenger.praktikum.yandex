@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "------",
   "dependencies": {
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.27.1",
     "nanoid": "^3.1.25"
   },
   "devDependencies": {
@@ -15,6 +17,7 @@
     "chai": "^4.3.4",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.25.3",
     "express": "^4.17.1",
     "ignore-styles": "^5.0.1",
     "jsdom": "^18.0.0",
@@ -32,7 +35,8 @@
   "scripts": {
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --require ts-node/register --require ignore-styles 'src/**/*.spec.ts'",
     "start": "parcel index.html --open -p 3000 --log-level verbose",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html",
+    "linter": "node_modules/.bin/eslint . --ext js,ts"
   },
   "default": "dist/index.html",
   "targets": {

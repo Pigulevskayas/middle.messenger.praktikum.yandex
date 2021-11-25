@@ -105,7 +105,11 @@ export default class HTTPTransport {
       if (method === METHODS.GET || !data) {
         xhr.send();
       } else {
-        xhr.send(data);
+        if(headers['content-type'] !== 'multipart/form-data'){
+          xhr.send(JSON.stringify(data));
+        } else {
+          xhr.send(data);
+        }
       }
 
       xhr.onload = function() {

@@ -1,7 +1,7 @@
 import BaseAPI from './base-api.ts';
 
 export interface newChatData {
-	title: string
+	title: string;
 }
 
 export interface usersChatData {

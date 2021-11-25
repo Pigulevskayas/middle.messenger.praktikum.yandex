@@ -76,7 +76,6 @@ export default class Block<P = any> {
   componentDidMount(props: P) {}
 
   _componentDidUpdate(oldProps: P, newProps: P) {
-    
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;

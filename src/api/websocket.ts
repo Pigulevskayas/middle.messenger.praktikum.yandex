@@ -2,10 +2,6 @@ let socket;
 let oldMessages;
 
 export default function websocketConnection(userId, chatId, token) {
-	// if (socket) {
-	//     return socket;
-	// }
-
 	socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`);
 
 	socket.addEventListener('open', () => {
@@ -29,5 +25,4 @@ export default function websocketConnection(userId, chatId, token) {
 	});
 
 	return socket;
-
 }

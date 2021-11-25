@@ -14,41 +14,35 @@ class ChatsController {
 
 	async create(data: newChatData): Promise<UserData | void> {
 		try {
-			const newChat = await this.api.create(JSON.stringify(data));
-			// store.dispatch(setChats(newChat));
-			// console.log('newChat', newChat)
+			const newChat = await this.api.create(data);
 			return newChat;
 		} catch(e) {
-			console.log(e);
 			store.dispatch(setError(e as { reason: string }));
 		}
 	}
 
 	async deleteChat(data: сhatData): Promise<UserData | void> {
 		try {
-			const response = await this.api.deleteChat(JSON.stringify(data));
+			const response = await this.api.deleteChat(data);
 		} catch(e) {
-			console.log(e);
 			store.dispatch(setError(e as { reason: string }));
 		}
 	}
 
 	async add(data: usersChatData): Promise<UserData | void> {
 		try {
-			const response = await this.api.addUsers(JSON.stringify(data));
+			const response = await this.api.addUsers(data);
 			return response;
 		} catch(e) {
-			console.log(e);
 			store.dispatch(setError(e as { reason: string }));
 		}
 	}
 
 	async delete(data: usersChatData) {
 	    try {
-	      	const response = await this.api.deleteUsers(JSON.stringify(data));
+	      	const response = await this.api.deleteUsers(data);
 	      	return response;
 	    } catch (e) {
-	    	console.log(e)
 	      	store.dispatch(setError(e as { reason: string }));
 	    }
 	}
@@ -66,7 +60,6 @@ class ChatsController {
 	async token(chatId: string, userId: string): Promise<UserData | void> {
 	    try {
 	      	const tokenResponse = await this.api.token(chatId);
-			// console.log('token', tokenResponse.token)
 			const socket = websocketConnection(userId, chatId, tokenResponse.token);
 			socket.onopen = async (event) => {
 				socket.send(JSON.stringify({
