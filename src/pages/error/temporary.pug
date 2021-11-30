@@ -1,9 +1,0 @@
-extends ../error/error-layout.pug
-block content
-	div.error.layout_100
-		div.error__card
-			h1.error__title Старт
-
-			each link in [{ label: 'Профиль', link: '/profile' }, { label: 'Чаты', link: '/chats' }, {label: 'Вход', link: '/login'}, {label: 'Регистрация', link: '/registration'}, {label: 'Страница 404', link: '/error404'}, {label: 'Страница 500', link: '/error500' }]
-				div
-					a.error__back(href=link.link)=link.label

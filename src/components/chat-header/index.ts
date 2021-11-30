@@ -1,7 +1,7 @@
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import compileTemplate from './chat-header.pug';
-import NavButton from '../../components/nav-btn/index.ts';
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+const compileTemplate  = require('./chat-header.pug');
+import NavButton from '../../components/nav-btn/index';
 
 export default class ChatHeader extends Block {
   constructor(props: object) {
@@ -13,7 +13,7 @@ export default class ChatHeader extends Block {
     const toggler: NavButtonInt = new NavButton({
       type: 'toggler',
       events: {
-        click: (e) => {
+        click: (e: any) => {
           e.preventDefault();
           const dropdown = document.querySelector('.dropdown__menu');
           dropdown.classList.toggle('dropdown__menu_show');

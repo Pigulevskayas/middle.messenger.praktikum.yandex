@@ -1,5 +1,4 @@
-import EventBus from '../modules/event-bus.ts';
-import Block from '../modules/block.ts';
+import EventBus from '../modules/event-bus';
 
 export interface Action {
   type: string;
@@ -33,7 +32,8 @@ export default class Store extends EventBus {
   }
 
   private combineReducers(reducers: Indexed): Reducer {
-    return (state: any, action: Action) => {
+    // return (state: any, action: Action) => {
+    return (action: Action) => {
       const newState: Indexed = {};
 
       Object.entries(reducers).forEach(([key, reducer]) => {

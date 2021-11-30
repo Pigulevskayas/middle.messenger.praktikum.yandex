@@ -1,7 +1,6 @@
-import EventBus from './event-bus.ts';
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import compileTemplate from './avatar.pug';
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+const compileTemplate  = require('./avatar.pug');
 
 export default class Avatar extends Block {
   constructor(props: object) {

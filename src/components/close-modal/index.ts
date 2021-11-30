@@ -1,7 +1,6 @@
-import EventBus from './event-bus.ts';
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import compileTemplate from './close-modal.pug';
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+const compileTemplate  = require('./close-modal.pug');
 
 export default class CloseModal extends Block {
   constructor(props: object) {

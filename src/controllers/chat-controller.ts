@@ -1,9 +1,10 @@
-import ChatsAPI from '../api/chats-api.ts';
-import { usersIdData, newChatData, usersChatData, сhatData } from '../api/chats-api.ts';
-import { store } from '../store/index.ts';
-import { setChats, deleteUser, setError } from '../store/chats.ts';
-import { setMessages } from '../store/messages.ts';
-import websocketConnection from '../api/websocket.ts';
+import ChatsAPI from '../api/chats-api';
+import { usersIdData, newChatData, usersChatData, сhatData } from '../api/chats-api';
+import UserData from '../api/auth-api';
+import { store } from '../store/index';
+import { setChats, setError } from '../store/chats';
+import { setMessages } from '../store/messages';
+import websocketConnection from '../api/websocket';
 
 class ChatsController {
 	private api: ChatsAPI;
@@ -47,7 +48,7 @@ class ChatsController {
 	    }
 	}
 
-	async chats(params: usersIdData): Promise<UserData | void> {
+	async chats(params: any): Promise<UserData | void> {
 	    try {
 	      	const chats = await this.api.chats(params);
 	      	store.dispatch(setChats(chats));
@@ -61,14 +62,14 @@ class ChatsController {
 	    try {
 	      	const tokenResponse = await this.api.token(chatId);
 			const socket = websocketConnection(userId, chatId, tokenResponse.token);
-			socket.onopen = async (event) => {
+			socket.onopen = async () => {
 				socket.send(JSON.stringify({
 					content: '0',
 					type: 'get old',
 				}));			
 			};
 
-			socket.onmessage = function(event){
+			socket.onmessage = function(event: any){
 				const data = JSON.parse(event.data);
 				if(data.type !== 'user connected'){
 					store.dispatch(setMessages(data));
@@ -91,7 +92,7 @@ class ChatsController {
 				content: '0',
 				type: 'get old',
 			}));
-			webSocket.onmessage = function(event){
+			webSocket.onmessage = function(event: any){
 				if(Array.isArray(JSON.parse(event.data))) {
 					store.dispatch(setMessages(JSON.parse(event.data)));
 				}

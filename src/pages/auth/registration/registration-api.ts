@@ -1,5 +1,5 @@
-// import HTTPTransport from '../../../modules/fetch.ts';
-import BaseAPI from '../../../api/base-api.ts';
+// import HTTPTransport from '../../../modules/fetch';
+import BaseAPI from '../../../api/base-api';
 
 // const host = 'https://ya-praktikum.tech';
 
@@ -24,20 +24,10 @@ export default class RegAPI extends BaseAPI {
   				'mode': 'cors',
         	},
         	data: data
-        	// {
-        	// 	first_name: "Рикардо",
-        	// 	second_name: "Фокача",
-        	// 	login: "r.fokacha",
-        	// 	email: "r.fokacha@rdr2.com",
-        	// 	phone: "+71234567892",
-        	// 	password: "p@ssw0rd",
-        	// }
-        }).then(res => {
+        }).then(res: any => {
         	result = res; 
         	console.log('final result', result); 
         	return result;
         });
-
     }
-
 }

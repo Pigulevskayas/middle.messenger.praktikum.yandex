@@ -1,20 +1,31 @@
-import BaseAPI from './base-api.ts';
+import BaseAPI from './base-api';
 
 export interface LoginData {
     login: string; 
     password: string;
 }
 
-export interface RegData {
-    first_name: string;
+// export interface RegData {
+//     first_name: string;
+//     second_name: string;
+//     login: string;
+//     email: string;
+//     phone: string;
+//     password: string;
+// }
+
+export interface UserData {
+	first_name: string;
     second_name: string;
     login: string;
     email: string;
     phone: string;
     password: string;
+    avatar: string;
+    display_name: string;
 }
 
-export type UserData = Omit<RegData, 'password'> & { avatar: string; display_name: string }
+export type RegData = Omit<UserData, 'avatar' | 'display_name'>
 
 export default class AuthAPI extends BaseAPI {
 	constructor(){
@@ -47,7 +58,8 @@ export default class AuthAPI extends BaseAPI {
 		return this.http.get('/user');
 	}
 
-	delete: undefined;
-	create: undefined;
-	update: undefined;
+	// delete: undefined;
+	// create: undefined;
+	// update: undefined;
+	// request: undefined;
 }

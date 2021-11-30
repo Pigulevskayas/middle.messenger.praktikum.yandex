@@ -1,7 +1,8 @@
-import ProfileAPI from '../api/profile-api.ts';
-import { ProfileData, SearchData, PasswordData } from '../api/profile-api.ts';
-import { store } from '../store/index.ts';
-import { setUser, deleteUser, setError } from '../store/user.ts';
+import ProfileAPI from '../api/profile-api';
+import { ProfileData, SearchData, PasswordData } from '../api/profile-api';
+import UserData from '../api/auth-api';
+import { store } from '../store/index';
+import { setUser, deleteUser, setError } from '../store/user';
 
 class ProfileController {
 	private api: ProfileAPI;

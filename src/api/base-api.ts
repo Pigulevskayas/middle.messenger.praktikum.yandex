@@ -1,4 +1,4 @@
-import HTTPTransport from './fetch.ts';
+import HTTPTransport from './fetch';
 
 export default abstract class BaseAPI {
 	protected http: HTTPTransport;
@@ -7,11 +7,11 @@ export default abstract class BaseAPI {
 		this.http = new HTTPTransport(endpoint);
 	}
 
-	public abstract create?(data: unknown): Promise<unknown>;
+	// public abstract create?(data: unknown): Promise<unknown>;
 
-	public abstract request?(identifier?: string): Promise<unknown>;
+	// public abstract request?(identifier?: string): Promise<unknown>;
 
-	public abstract update?(identifier?: string, data: unknown): Promise<unknown>;
+	// public abstract update?(data: unknown, identifier?: string): Promise<unknown>;
 
-	public abstract delete?(identifier?: string): Promise<unknown>;
+	// public abstract delete?(identifier?: string): Promise<unknown>;
 }

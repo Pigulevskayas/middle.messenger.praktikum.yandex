@@ -1,6 +1,6 @@
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import compileTemplate from './error-message.pug';
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+const compileTemplate  = require('./error-message.pug');
 
 export default class ErrorMessage extends Block {
   constructor(props: object) {

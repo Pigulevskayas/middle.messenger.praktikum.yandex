@@ -1,8 +1,8 @@
-import user from './user.ts';
-import chats from './chats.ts';
-import messages from './messages.ts';
-import Store from '../utils/store.ts';
-import Block from '../modules/Block.ts';
+import user from './user';
+import chats from './chats';
+import messages from './messages';
+import Store from '../utils/store';
+import Block from '../modules/Block';
 
 export const store = new Store({
   user,

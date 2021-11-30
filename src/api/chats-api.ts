@@ -1,4 +1,5 @@
-import BaseAPI from './base-api.ts';
+import BaseAPI from './base-api';
+import UserData from './auth-api';
 
 export interface newChatData {
 	title: string;
@@ -55,7 +56,7 @@ export default class ChatsAPI extends BaseAPI {
         });
 	}
 
-	chats(params): Promise<UserData> {
+	chats(params: any): Promise<UserData> {
 		return this.http.get('', params);
 	}
 
@@ -68,6 +69,8 @@ export default class ChatsAPI extends BaseAPI {
 	}
 
 
-	create: undefined;
-	update: undefined;
+	// delete: undefined;
+	// create: undefined;
+	// update: undefined;
+	// request: undefined;
 }

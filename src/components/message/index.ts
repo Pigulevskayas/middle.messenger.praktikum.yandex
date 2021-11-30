@@ -1,5 +1,5 @@
-import Block from '../../modules/block.ts';
-import compileTemplate from './message.pug';
+import Block from '../../modules/block';
+const compileTemplate  = require('./message.pug');
 
 export default class Message extends Block {
   constructor(props: object) {

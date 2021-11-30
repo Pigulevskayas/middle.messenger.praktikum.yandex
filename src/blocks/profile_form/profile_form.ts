@@ -1,9 +1,8 @@
-import EventBus from './event-bus.ts';
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import Input from '../../components/input/index.ts';
-import Button from '../../components/button/index.ts';
-import compileTemplate from './profile_form.pug';
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+import Input from '../../components/input/index';
+import Button from '../../components/button/index';
+const compileTemplate  = require('./profile_form.pug');
 
 interface ButtonInt {
 	text: string,
@@ -17,7 +16,6 @@ interface InputInt {
 }
 
 export default class ProfileForm extends Block {
-
 	constructor(props: object) {
 	    super("div", {content: props});
 	}
@@ -25,11 +23,10 @@ export default class ProfileForm extends Block {
 	render() {
 		const renderFields = {};
 		const formItems = this.props.content;
-
 		formItems.formElements.map((element: object) => {
-			let component;
-			for (let key: string in element) {
-
+			// let component;
+			let key:string;
+			for (key in element) {
 				if (key == 'button'){
 					let component: ButtonInt = new Button({
 						text: element[key]['text'],
@@ -39,15 +36,13 @@ export default class ProfileForm extends Block {
 				} else {
 					let component: InputInt = new Input({
 						classname: element[key]['classname'],
-						attributes: element[key]['attributes'],
+						attrubutes: element[key]['attributes'],
 						events: formItems.inputEvent
 					});
 					renderFields[key] = component;
 				}
 			}
 		});
-
 		return compile(compileTemplate, renderFields);
 	}
-
 }

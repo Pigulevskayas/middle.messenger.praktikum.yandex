@@ -1,18 +1,17 @@
-import Block from '../../../modules/block.ts';
-import compile from '../../../modules/compile.ts';
-import Form from '../../../blocks/auth-form/auth-form.ts';
-import Link from '../../../components/link/index.ts';
-import compileTemplate from './login.pug';
-import EventBus from './event-bus.ts';
-import inputHandler from '../../../utils/form-inputs-handler.ts';
-import buttonHandler from '../../../utils/form-submit-handler.ts';
+import Block from '../../../modules/block';
+import compile from '../../../modules/compile';
+import Form from '../../../blocks/auth-form/auth-form';
+import Link from '../../../components/link/index';
+const compileTemplate  = require('./login.pug');
+import inputHandler from '../../../utils/form-inputs-handler';
+import buttonHandler from '../../../utils/form-submit-handler';
 
 import '../auth.css';
 import '../../../components/button/button.css';
 import '../../../components/input/input.css';
 import '../../../components/form-field/form-field.css';
 
-import AuthController from '../../../controllers/auth-controller.ts';
+import AuthController from '../../../controllers/auth-controller';
 
 interface LinkInt {
 	text: string; 
@@ -20,17 +19,17 @@ interface LinkInt {
   events: object;
 }
 
-interface FormElementInt {
-  inputLogin: Object<string>; 
-  inputPassword: Object<string>;
-  button: object;
-  input: () => void;
-  focus: () => void;
-  blur: () => void;
-  click: () => void;
-}
+// interface FormElementInt {
+//   inputLogin: Object<string>; 
+//   inputPassword: Object<string>;
+//   button: object;
+//   input: () => void;
+//   focus: () => void;
+//   blur: () => void;
+//   click: () => void;
+// }
 
-interface FormElementsInt extends Array<FormElementInt>{}
+// interface FormElementsInt extends Array<FormElementInt>{}
 
 interface loginStateInt {
   login: null | string;
@@ -70,13 +69,13 @@ const config: FormElementInt = {
       }
     }
   ],
-  input: function(e){
+  input: function(e: any){
     loginState[e.target.name] = e.target.value;
   },
-  focus: (e) => inputHandler(e.target, loginState),
-  blur: (e) => inputHandler(e.target, loginState),
+  focus: (e: any) => inputHandler(e.target, loginState),
+  blur: (e: any) => inputHandler(e.target, loginState),
   click: () => {
-    let data = buttonHandler(loginState);
+    // let data = buttonHandler(loginState);
     // this.state.onLogin(data);
   } 
 }
@@ -123,7 +122,7 @@ export default class Login extends Block {
         blur: config.blur
 			},
       linkEvent: {
-        click: (e) => {
+        click: (e: any) => {
           e.preventDefault();
           window.location = e.target.getAttribute('to')
         },
@@ -139,7 +138,7 @@ export default class Login extends Block {
 		});
 
 		const fragment = compile(compileTemplate, {
-      error: this.props.user.error?.reason,
+      error: this.props.user?.error?.reason,
 			form: loginForm,
 			link: link
 		});

@@ -1,12 +1,7 @@
-import Block from '../../modules/block.ts';
-import Message from '../../components/message/index.ts';
-import compileTemplate from './chat-messages.pug';
-import compile from '../../modules/compile.ts';
-
-interface MessageInt {
-  text: string;
-  time: string;
-}
+import Block from '../../modules/block';
+// import Message from '../../components/message/index';
+const compileTemplate  = require('./chat-messages.pug');
+// import compile from '../../modules/compile';
 
 export default class ChatMessages extends Block {
 
@@ -17,7 +12,8 @@ export default class ChatMessages extends Block {
 
   render():string {
     let oldMessages = [];
-    for (let key: string in this.props.oldMessages.messages) {
+    let key: string;
+    for (key in this.props.oldMessages.messages) {
       oldMessages.push(this.props.oldMessages.messages[key]);
     }
 

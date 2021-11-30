@@ -1,5 +1,5 @@
-import { Action } from '../store/store.ts';
-import { UserData } from '../api/auth-api.ts';
+import { Action } from '../utils/store';
+import { UserData } from '../api/auth-api';
 
 const SET_USER = 'user/SET';
 const DELETE_USER = 'user/DELETE';

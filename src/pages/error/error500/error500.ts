@@ -1,12 +1,13 @@
-import Block from '../../../modules/block.ts';
-import compileTemplate from '../error.pug';
-import Link from '../../../components/link/index.ts';
-import compile from '../../../modules/compile.ts';
+import Block from '../../../modules/block';
+const compileTemplate  = require('../error.pug');
+import Link from '../../../components/link/index';
+import compile from '../../../modules/compile';
 import '../error.css';
 
 interface ErrorInt {
-	code: string,
-	text: string
+	code: string;
+	text: string;
+	link: any;
 }
 
 export default class Error500 extends Block {
@@ -14,12 +15,12 @@ export default class Error500 extends Block {
     super("div", props);
   }
 
-  render(): string {
-  	const link: LinkInt = new Link({
+  render(): DocumentFragment {
+  	const link: DocumentFragment = new Link({
 			text: 'Назад к чатам',
       to: '/messenger',
       events: {
-        click: (e) => {
+        click: (e: any) => {
           e.preventDefault();
           window.location = e.target.getAttribute('to')
         },

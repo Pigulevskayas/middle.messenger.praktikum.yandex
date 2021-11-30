@@ -1,13 +1,11 @@
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import Input from '../../components/input/index.ts';
-import Button from '../../components/button/index.ts';
-import CloseModal from '../../components/close-modal/index.ts';
-import compileTemplate from './modal-avatar.pug';
-
-import AuthController from '../../controllers/auth-controller.ts';
-import ProfileController from '../../controllers/profile-controller.ts';
-
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+import Input from '../../components/input/index';
+import Button from '../../components/button/index';
+import CloseModal from '../../components/close-modal/index';
+const compileTemplate  = require('./modal-avatar.pug');
+import AuthController from '../../controllers/auth-controller';
+import ProfileController from '../../controllers/profile-controller';
 
 export default class Modal extends Block {
 	constructor(props) {
@@ -17,24 +15,23 @@ export default class Modal extends Block {
 	protected getStateFromProps() {
 	    this.state = {
 	    	onAvatar: async () => {
-	    		let file = document.querySelector('input[name="avatar"]');
-	    		console.log('file', file)
+	    		let file: HTMLInputElement = document.querySelector('input[name="avatar"]')!;
 	    		if(file.files[0]) {
 	    			let data = new FormData();
 	    			data.append('avatar', file.files[0]);
 		        	await ProfileController.avatar(data);
 	    		} else {
-	    			let emptyFile = document.querySelector('.modal__notice');
+	    			let emptyFile: HTMLElement = document.querySelector('.modal__notice')!;
 	    			emptyFile.style.display = 'block';
 	    		}
 		    }
 	    }
 	}
 
-	changeAvatar = (fileName)	=> {
-		let emptyFile = document.querySelector('.modal__notice');
+	changeAvatar = (fileName: string)	=> {
+		let emptyFile: HTMLElement = document.querySelector('.modal__notice')!;
 		if(fileName){
-			let inputLabel = document.querySelector('.modal__link');
+			let inputLabel: HTMLElement = document.querySelector('.modal__link')!;
 			inputLabel.textContent = fileName;
 			emptyFile.style.display = 'none';
 		} else {
@@ -43,7 +40,7 @@ export default class Modal extends Block {
 	}
 
 	closeModal = ()	=> {
-		let modal = document.querySelector('.modal');
+		let modal: HTMLElement = document.querySelector('.modal')!;
 		modal.classList.remove('modal_show');
 	}
 
@@ -56,7 +53,7 @@ export default class Modal extends Block {
 				id: "avatar"
 			},
 			events: {
-				change: (e) => this.changeAvatar(e.target.files[0]['name'])
+				change: (e: any) => this.changeAvatar(e.target.files[0]['name'])
 			},
 		});
 
@@ -69,7 +66,7 @@ export default class Modal extends Block {
 
 		const close = new CloseModal({
 			events: {
-				click: (e) => {
+				click: (e: any) => {
           			e.preventDefault();
 					this.closeModal();
 				}

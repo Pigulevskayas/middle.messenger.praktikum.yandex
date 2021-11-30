@@ -1,4 +1,4 @@
-import Block from '../../modules/block.ts';
+import Block from '../../modules/block';
 
 export default class Search extends Block {
   constructor(props: {

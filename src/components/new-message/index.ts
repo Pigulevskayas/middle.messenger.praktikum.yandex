@@ -1,9 +1,8 @@
-import EventBus from './event-bus.ts';
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import compileTemplate from './new-message.pug';
-import Input from '../../components/input/index.ts';
-import SendButton from '../../components/send-button/index.ts';
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+const compileTemplate  = require('./new-message.pug');
+import Input from '../../components/input/index';
+import SendButton from '../../components/send-button/index';
 
 export default class NewMessage extends Block {
   constructor(props: object) {
@@ -11,10 +10,9 @@ export default class NewMessage extends Block {
   }
 
   render(): DocumentFragment {
-
     const input = new Input({
       classname: this.props.content.inputMessage.classname,
-      attributes: this.props.content.inputMessage.attributes,
+      attrubutes: this.props.content.inputMessage.attributes,
       events: this.props.content.inputEvent
     });
 

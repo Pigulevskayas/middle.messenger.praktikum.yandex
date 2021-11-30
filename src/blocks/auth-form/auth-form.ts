@@ -1,9 +1,9 @@
-import EventBus from './event-bus.ts';
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import Input from '../../components/input/index.ts';
-import Button from '../../components/button/index.ts';
-import compileTemplate from './auth-form.pug';
+// @ts-ignore
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+import Input from '../../components/input/index';
+import Button from '../../components/button/index';
+const compileTemplate  = require('./auth-form.pug');
 
 interface ButtonInt {
 	text: string,
@@ -27,8 +27,9 @@ export default class Form extends Block {
 		const formItems = this.props.content;
 
 		formItems.formElements.map((element: object) => {
-			let component;
-			for (let key: string in element) {
+			// let component;
+			let key: string;
+			for (key in element) {
 				if (key == 'button'){
 					let component: ButtonInt = new Button({
 						text: element[key]['text'],

@@ -1,7 +1,6 @@
-import EventBus from './event-bus.ts';
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import compileTemplate from './button.pug';
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+const compileTemplate  = require('./button.pug');
 
 export default class Button extends Block {
   constructor(props: object) {

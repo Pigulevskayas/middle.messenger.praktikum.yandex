@@ -1,9 +1,6 @@
-import EventBus from './event-bus.ts';
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-// import Input from '../../components/input/index.ts';
-// import Button from '../../components/button/index.ts';
-import compileTemplate from './chats-list.pug';
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+const compileTemplate  = require('./chats-list.pug');
 
 // interface ButtonInt {
 // 	text: string,

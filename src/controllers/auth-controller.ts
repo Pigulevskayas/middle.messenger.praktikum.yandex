@@ -1,7 +1,7 @@
-import AuthAPI from '../api/auth-api.ts';
-import { LoginData, RegData, UserData } from '../api/auth-api.ts';
-import { store } from '../store/index.ts';
-import { setUser, deleteUser, setError } from '../store/user.ts';
+import AuthAPI from '../api/auth-api';
+import { LoginData, RegData, UserData } from '../api/auth-api';
+import { store } from '../store/index';
+import { setUser, deleteUser, setError } from '../store/user';
 
 class AuthController {
 	private api: AuthAPI;

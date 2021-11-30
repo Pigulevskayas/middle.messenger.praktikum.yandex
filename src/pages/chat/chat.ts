@@ -1,26 +1,26 @@
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import NavButton from '../../components/nav-btn/index.ts';
-import Modal from '../../blocks/modal-user/index.ts';
-import Input from '../../components/input/index.ts';
-import Search from '../../components/search/index.ts';
-import Chatslist from '../../blocks/chats-list/index.ts';
-import ChatHeader from '../../components/chat-header/index.ts';
-import Link from '../../components/link/index.ts';
-import DropdownLink from '../../components/dropdown-link/index.ts';
-import ChatMessages from '../../blocks/chat-messages/index.ts';
-import NewMessage from '../../components/new-message/index.ts';
-import compileTemplate from './chat.pug';
-import inputHandler from '../../utils/form-inputs-handler.ts';
-import buttonHandler from '../../utils/form-submit-handler.ts';
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+import NavButton from '../../components/nav-btn/index';
+import Modal from '../../blocks/modal-user/index';
+// import Input from '../../components/input/index';
+import Search from '../../components/search/index';
+import Chatslist from '../../blocks/chats-list/index';
+import ChatHeader from '../../components/chat-header/index';
+import Link from '../../components/link/index';
+import DropdownLink from '../../components/dropdown-link/index';
+import ChatMessages from '../../blocks/chat-messages/index';
+import NewMessage from '../../components/new-message/index';
+const compileTemplate  = require('./chat.pug');
+import inputHandler from '../../utils/form-inputs-handler';
+import buttonHandler from '../../utils/form-submit-handler';
 
 import '../../pages/chat/chat.css';
 import '../../components/chat-item/chat-item.css';
 import '../../components/search/search.css';
 import '../../components/form-field/form-field.css';
 
-import ProfileController from '../../controllers/profile-controller.ts';
-import ChatsController from '../../controllers/chat-controller.ts';
+import ProfileController from '../../controllers/profile-controller';
+import ChatsController from '../../controllers/chat-controller';
 
 
 interface NavButtonInt {
@@ -48,6 +48,18 @@ interface searchValueInt {
 	login: null | string;
 }
 
+interface ModalInt {
+	id: string;
+	modalTitle: string;
+	btnText: string;
+	isVisible: boolean; 
+	isError: boolean; 
+	inputName:  string;
+	inputLabel:  string;
+	inputEvent: () => void;
+	buttonEvent: () => void;
+}
+
 
 const messageValue: messageValueInt = {
   message: null
@@ -71,8 +83,8 @@ let chatData = {
   chatId: null
 }
 
-let webSocket;
-let userId;
+let webSocket: any;
+let userId: string;
 
 let selectedChat = {
 	id: null,
@@ -88,7 +100,7 @@ export default class Chat extends Block {
 	protected getStateFromProps() {
     this.state = {
     	chat_visible: false,
-    	onCreate: async (data) => {
+    	onCreate: async (data: string) => {
     		const response = await ChatsController.create(data);
     		try {
     			if(response) {
@@ -104,7 +116,7 @@ export default class Chat extends Block {
     			console.log(e)
     		}
     	},
-    	onDelete: async (data)	=> { 
+    	onDelete: async (data: number)	=> { 
     		const response = await ChatsController.deleteChat(data);
     		try {
 					this.state.onGetChats({
@@ -115,7 +127,7 @@ export default class Chat extends Block {
     			console.log(e);
     		}
     	},
-    	onToken: async (chatId, userId) => {
+    	onToken: async (chatId: number, userId: number) => {
     		if(webSocket) {
     			webSocket.close(1000, "работа закончена");
     			webSocket = undefined;
@@ -132,7 +144,7 @@ export default class Chat extends Block {
     	onSend: async (message: string) => {
     		await ChatsController.send(webSocket, message)
     	},
-    	onGetChats: async (data) => {
+    	onGetChats: async (data: { [key: string]: number; }) => {
     		const chats = await ChatsController.chats(data);
     	},
     	onSearch: async () => {
@@ -140,7 +152,7 @@ export default class Chat extends Block {
 					const result = await ProfileController.search(searchValue);
     		}
       },
-      onGetUserId: async (login) => {
+      onGetUserId: async (login: string) => {
       	const result = await ProfileController.searchUserId({login: login});
       	try {
       		chatData.users.push(result);
@@ -188,7 +200,7 @@ export default class Chat extends Block {
     });
   }
 
-  newChat = (title)	=>	{
+  newChat = (title: string)	=>	{
   	const emptyContent = document.querySelector('.chat_empty');
     emptyContent.classList.add('chat_hide');
 
@@ -228,13 +240,13 @@ export default class Chat extends Block {
     this.state.onToken(chatId, this.props.user.id);
   }
 
-  showModal = (type)	=> {
+  showModal = (type: string)	=> {
   	// this.state[type] = true;
   	const modal = document.getElementById(type);
 	  modal.classList.add('modal_show');
   }
 
-  showChat = (title)	=> {
+  showChat = (title: string)	=> {
   	this.state.chat_visible = true;
   	const titleBlock = document.querySelector('.chat__header-name');
     titleBlock.textContent = title;
@@ -267,11 +279,11 @@ export default class Chat extends Block {
 					value: messageValue.message
 				}
 			},
-		  input: function(e){
+		  input: function(e: any){
 		    messageValue[e.target.name] = e.target.value;
 		  },
-		  focus: (e) => inputHandler(e.target, messageValue),
-		  blur: (e) => inputHandler(e.target, messageValue),
+		  focus: (e: any) => inputHandler(e.target, messageValue),
+		  blur: (e: any) => inputHandler(e.target, messageValue),
 		  click: () => {
 		  	buttonHandler(messageValue);
 		  	this.state.onSend(messageValue.message);
@@ -299,8 +311,8 @@ export default class Chat extends Block {
 				name: 'login'
 			},
 			events: {
-				input: (e) => searchValue.login = e.target.value,
-				change: (e) => this.state.onSearch(),
+				input: (e: any) => searchValue.login = e.target.value,
+				change: () => this.state.onSearch(),
 				// blur: () => {
 			 //  	buttonHandler(e.target.value);
 			 //  }
@@ -311,7 +323,7 @@ export default class Chat extends Block {
 			type: 'edit-chat', 
 			to: '/settings',
 			events: {
-        click: (e) => {
+        click: (e: any) => {
           e.preventDefault();
           window.location = e.target.getAttribute('to')
         },
@@ -322,7 +334,7 @@ export default class Chat extends Block {
 			type: 'add-chat', 
 			// to: '/settings',
 			events: {
-        click: (e) => {
+        click: (e: any) => {
           e.preventDefault();
           this.showModal('add-chat');
          //  const modalAdd = document.getElementById('add-chat');
@@ -337,9 +349,9 @@ export default class Chat extends Block {
 				`${this.props.user[0]['first_name']} ${this.props.user[0]['second_name']}` ,
       to: this.props.user[0]['id'],
       events: {
-      	click: (e) => {
+      	click: (e: any) => {
       		e.preventDefault();
-					const modalAdd = document.getElementById('add-chat');
+					const modalAdd: HTMLElement = document.getElementById('add-chat');
 		      modalAdd.classList.add('modal_show');
       		// this.newChatOnSearch(e.target);
       	}
@@ -350,7 +362,7 @@ export default class Chat extends Block {
 			userChats: this.props.chats,
 			selectedChat: selectedChat.id,
 			events: {
-      	click: (e) => { 
+      	click: (e: any) => { 
       		this.openChat(e.target);
       		// this.showChat();
       	}
@@ -361,7 +373,7 @@ export default class Chat extends Block {
 			type: 'add',
 			text: 'Добавить пользователя',
 			events: {
-				click: (e) => {
+				click: (e: any) => {
 	        e.preventDefault();
 	        this.showModal('modal_add');
 	      }
@@ -372,7 +384,7 @@ export default class Chat extends Block {
 			type: 'delete',
 			text: 'Удалить пользователя',
 			events: {
-				click: (e) => {
+				click: (e: any) => {
 	        e.preventDefault();
 	        this.showModal('modal_delete');
 	      }
@@ -383,7 +395,7 @@ export default class Chat extends Block {
 			type: 'delete',
 			text: 'Удалить чат',
 			events: {
-				click: (e) => {
+				click: (e: any) => {
 	        e.preventDefault();
 	        const chatId = document.querySelector('.chat-item_active').getAttribute('chat-id');
 	        this.state.onDelete({
@@ -394,7 +406,6 @@ export default class Chat extends Block {
 		});
 
 		const modalDelete: ModalInt = new Modal({
-			isVisible: this.state.modal_delete,
 			id: "modal_delete",
 			modalTitle: "Удалить пользователя",
 			btnText: "Удалить",
@@ -407,7 +418,6 @@ export default class Chat extends Block {
 		});
 
 		const modalAdd: ModalInt = new Modal({
-			isVisible: this.state.modal_add,
 			id: "modal_add",
 			modalTitle: "Добавить пользователя",
 			btnText: "Добавить",
@@ -420,7 +430,6 @@ export default class Chat extends Block {
 		});
 
 		const modalAddChat: ModalInt = new Modal({
-			isVisible: this.state.modal_add_chat,
 			id: "add-chat",
 			modalTitle: "Новый чат",
 			btnText: "Создать",

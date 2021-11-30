@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { nanoid } from 'nanoid/non-secure';
-import EventBus from './event-bus.ts';
+import EventBus from './event-bus';
 
 
 export default class Block<P = any> {
@@ -184,7 +184,8 @@ export default class Block<P = any> {
       resultElement.classList.add(classname);
     }
 
-    for (let key: string in attributes) {
+    let key:string; 
+    for (key in attributes) {
       resultElement.setAttribute(key, attributes[key]);
       if(key === 'value') {
         resultElement.value = attributes.value;

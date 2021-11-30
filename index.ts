@@ -1,12 +1,14 @@
-import Router from './src/modules/router.ts';
-import AuthController from './src/controllers/auth-controller.ts';
-import Error404Page from './src/pages/error/error404/error404.ts';
-import Error500Page from './src/pages/error/error500/error500.ts';
-import LoginPage from './src/pages/auth/login';
-import RegPage from './src/pages/auth/registration';
-import ProfilePage from './src/pages/profile';
-import ChatPage from './src/pages/chat';
+import Router from './src/modules/router';
+import AuthController from './src/controllers/auth-controller';
+import Error404Page from './src/pages/error/error404/error404';
+import Error500Page from './src/pages/error/error500/error500';
+import LoginPage from './src/pages/auth/login/login';
+import RegPage from './src/pages/auth/registration/registration';
+import ProfilePage from './src/pages/profile/profile';
+import ChatPage from './src/pages/chat/chat';
+// import EventBus from './modules/event-bus.ts';
 
+import './src/index.css';
 
 AuthController.getUserData()
   .then(() => {

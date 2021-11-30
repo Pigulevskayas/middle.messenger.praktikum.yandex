@@ -32,7 +32,7 @@ export default class HTTPTransport {
     this.endpoint = `${URL}${endpoint}`;
   }
 
-	get = (path: string, options: RequestOptions = {}) => {
+	get = (path: string, options: RequestOptions = {}): Promise<any> => {
     let strdata = options?.data?.length > 0 ? queryStringify(options.data) : '';
 		let newUrl = `${path}${strdata}`;
 		return this.request(`${this.endpoint}${newUrl}`, {
@@ -47,7 +47,7 @@ export default class HTTPTransport {
 	};
 
 	// PUT, POST, DELETE
-  post = (path: string, options: RequestOptions = {}) => {	 
+  post = (path: string, options: RequestOptions = {}): Promise<any> => {	 
 		return this.request(`${this.endpoint}${path}`, {
       ...options, 
       method: METHODS.POST,
@@ -59,7 +59,7 @@ export default class HTTPTransport {
     }, options.timeout);
 	};
 
-  put = (path: string, options: RequestOptions = {}) => {	 
+  put = (path: string, options: RequestOptions = {}): Promise<any> => {	 
 		return this.request(`${this.endpoint}${path}`, {
       ...options, 
       method: METHODS.PUT,
@@ -71,7 +71,7 @@ export default class HTTPTransport {
     }, options.timeout);
 	};
 
-  delete = (path: string, options: RequestOptions = {}) => {	 
+  delete = (path: string, options: RequestOptions = {}): Promise<any> => {	 
 		return this.request(`${this.endpoint}${path}`, {
       ...options, 
       method: METHODS.DELETE,
@@ -84,7 +84,7 @@ export default class HTTPTransport {
 	};
 
 
-	request = (url: string, options: Record<string, any>, timeout: number = 5000) => {
+	request = (url: string, options: Record<string, any>, timeout: number = 5000): Promise<any> => {
     const { method, data, headers } = options;
     
     return new Promise((resolve, reject) => {

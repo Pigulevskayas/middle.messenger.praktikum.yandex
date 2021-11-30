@@ -1,17 +1,16 @@
-import validate from './validate.ts';
-import collectData from './collect-data.ts';
+import validate from './validate';
 
 export default function buttonHandler(state: object) {
-	console.log('state', state);
-	for (let key: string in state) {
-		let message = validate(state[key], key);
-		let element = document.querySelector(`input[name="${key}"]`);
+	let key: string;
+	for (key in state) {
+		let message: string = validate(state[key], key);
+		let element: HTMLElement = document.querySelector(`input[name="${key}"]`);
 
-		let clean = state[key].replaceAll('<', '&lt;');
+		let clean: string = state[key].replaceAll('<', '&lt;');
 		clean = clean.replaceAll('>', '&gt;');
 		state[key] = clean;
 
-		if(message){
+		if (message) {
 			console.log('message', message);
 			element.nextSibling.textContent = message;
 		} else {
@@ -19,6 +18,4 @@ export default function buttonHandler(state: object) {
 			return state;
 		}
 	}
-	
-	
 };

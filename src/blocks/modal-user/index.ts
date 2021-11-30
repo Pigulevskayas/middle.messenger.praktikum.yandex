@@ -1,12 +1,9 @@
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import Input from '../../components/input/index.ts';
-import Button from '../../components/button/index.ts';
-import CloseModal from '../../components/close-modal/index.ts';
-import compileTemplate from './modal-user.pug';
-
-import ChatsController from '../../controllers/profile-controller.ts';
-
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+import Input from '../../components/input/index';
+import Button from '../../components/button/index';
+import CloseModal from '../../components/close-modal/index';
+const compileTemplate  = require('./modal-user.pug');
 
 export default class Modal extends Block {
 	constructor(props) {
@@ -30,7 +27,7 @@ export default class Modal extends Block {
 				placeholder: this.props.inputLabel,
 			},
 			events: {
-				blur: (e) => this.props.inputEvent(e.target.value)
+				blur: (e: any) => this.props.inputEvent(e.target.value)
 			}
 		});
 
@@ -43,7 +40,7 @@ export default class Modal extends Block {
 
 		const close = new CloseModal({
 			events: {
-				click: (e) => {
+				click: (e: any) => {
           			e.preventDefault();
 					this.closeModal();
 				}

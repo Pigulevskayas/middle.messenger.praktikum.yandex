@@ -1,6 +1,6 @@
-import Profile from './profile.ts';
-import { connect } from '../../store/index.ts';
-import { withRouter } from '../../modules/router.ts';
+import Profile from './profile';
+import { connect } from '../../store/index';
+import { withRouter } from '../../modules/router';
 
 export default withRouter(connect((state: any) => ({
   user: state.user

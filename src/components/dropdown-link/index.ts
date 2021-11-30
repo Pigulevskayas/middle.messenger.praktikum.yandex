@@ -1,7 +1,6 @@
-import EventBus from './event-bus.ts';
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import compileTemplate from './dropdown-link.pug';
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+const compileTemplate  = require('./dropdown-link.pug');
 
 export default class DropdownLink extends Block {
   constructor(props: object) {

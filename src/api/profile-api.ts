@@ -1,4 +1,5 @@
-import BaseAPI from './base-api.ts';
+import BaseAPI from './base-api';
+import UserData from './auth-api';
 
 export interface ProfileData {
 	first_name: string;
@@ -45,7 +46,7 @@ export default class ProfileAPI extends BaseAPI {
         });
 	} 
 
-	avatar(data) {
+	avatar(data: FormData) {
 		return this.http.put('/profile/avatar', { 
         	headers: {
         		'content-type': 'multipart/form-data',
@@ -64,7 +65,8 @@ export default class ProfileAPI extends BaseAPI {
         });
 	}
 
-	delete: undefined;
-	create: undefined;
-	update: undefined;
+	// delete: undefined;
+	// create: undefined;
+	// update: undefined;
+	// request: undefined;
 }

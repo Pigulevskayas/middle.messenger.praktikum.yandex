@@ -1,12 +1,12 @@
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import Form from '../../blocks/profile_form/profile_form.ts';
-import NavButton from '../../components/nav-btn/index.ts';
-import Modal from '../../blocks/modal-avatar/index.ts';
-import Avatar from '../../components/avatar/index.ts';
-import compileTemplate from './profile.pug';
-import inputHandler from '../../utils/form-inputs-handler.ts';
-import buttonHandler from '../../utils/form-submit-handler.ts';
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+import Form from '../../blocks/profile_form/profile_form';
+import NavButton from '../../components/nav-btn/index';
+import Modal from '../../blocks/modal-avatar/index';
+import Avatar from '../../components/avatar/index';
+const compileTemplate  = require('./profile.pug');
+import inputHandler from '../../utils/form-inputs-handler';
+import buttonHandler from '../../utils/form-submit-handler';
 
 import '../../components/nav/nav.css';
 import '../../components/nav-btn/nav-btn.css';
@@ -15,24 +15,24 @@ import '../../pages/profile/profile.css';
 import '../../blocks/modal-avatar/modal-avatar.css';
 import '../../components/form-field/form-field.css';
 
-import AuthController from '../../controllers/auth-controller.ts';
-import ProfileController from '../../controllers/profile-controller.ts';
+import AuthController from '../../controllers/auth-controller';
+import ProfileController from '../../controllers/profile-controller';
 
 
-interface FormElementInt {
-  email?: Object<string>;
-  login?: Object<string>;
-  first_name?: Object<string>;
-  second_name?: Object<string>;
-  display_name?: Object<string>;
-  phone?: Object<string>;
-  oldPassword?: Object<string>; 
-  newPassword?: Object<string>; 
-  repeatNewPassword?: Object<string>; 
-  button: object;
-}
+// interface FormElementInt {
+//   email?: Object<string>;
+//   login?: Object<string>;
+//   first_name?: Object<string>;
+//   second_name?: Object<string>;
+//   display_name?: Object<string>;
+//   phone?: Object<string>;
+//   oldPassword?: Object<string>; 
+//   newPassword?: Object<string>; 
+//   repeatNewPassword?: Object<string>; 
+//   button: object;
+// }
 
-interface FormElementsInt extends Array<FormElementInt>{}
+// interface FormElementsInt extends Array<FormElementInt>{}
 
 interface NavButtonInt {
   type: string;
@@ -41,7 +41,7 @@ interface NavButtonInt {
 }
 
 interface AvatarInt {
-	imgurl: string | null;
+	imgurl?: string | null;
 }
 
 // interface ModalInt {
@@ -76,13 +76,13 @@ export default class Profile extends Block {
 
 	protected getStateFromProps() {
     this.state = {
-    	onProfile: async (data) => {
+    	onProfile: async (data: any) => {
         await ProfileController.profile(data);
       },
-      onLogout: async (data) => {
+      onLogout: async () => {
         await AuthController.logout();
       },
-      onPassword: async (data) => {
+      onPassword: async (data: any) => {
         await ProfileController.password(data);
       }
       
@@ -95,27 +95,27 @@ export default class Profile extends Block {
     	input.removeAttribute('disabled');
     });
 
-    let nav = document.querySelector('.profile__links');
+    let nav: HTMLElement = document.querySelector('.profile__links')!;
     nav.classList.add('profile__links_hidden');
 
-    let closeNav = document.querySelector('.profile__close');
+    let closeNav: HTMLElement = document.querySelector('.profile__close')!;
   	closeNav.style.display = 'block';
 
-    let submit = document.querySelector('.profile__submit');
+    let submit: HTMLElement = document.querySelector('.profile__submit')!;
     submit.classList.remove('profile__submit_hidden');
   }
 
   editPasswordForm = (): void => {
-  	let nav = document.querySelector('.profile__links');
+  	let nav: HTMLElement = document.querySelector('.profile__links')!;
     nav.classList.add('profile__links_hidden');
 
-  	let dataForm = document.querySelector('.user-info_data');
+  	let dataForm : HTMLElement= document.querySelector('.user-info_data')!;
   	dataForm.classList.add('user-info_hidden');
 
-  	let closeNav = document.querySelector('.profile__close');
+  	let closeNav: HTMLElement = document.querySelector('.profile__close')!;
   	closeNav.style.display = 'block';
 
-  	let passwordForm = document.querySelector('.user-info_password');
+  	let passwordForm: HTMLElement = document.querySelector('.user-info_password')!;
   	passwordForm.classList.remove('user-info_hidden');
   }
 
@@ -125,26 +125,26 @@ export default class Profile extends Block {
     	input.setAttribute('disabled', 'disabled');
     });
 
-    let nav = document.querySelector('.profile__links');
+    let nav: HTMLElement = document.querySelector('.profile__links')!;
     nav.classList.remove('profile__links_hidden');
 
-    let closeNav = document.querySelector('.profile__close');
+    let closeNav: HTMLElement = document.querySelector('.profile__close')!;
   	closeNav.style.display = 'none';
 
-  	let submit = document.querySelector('.profile__submit');
+  	let submit: HTMLElement = document.querySelector('.profile__submit')!;
     submit.classList.add('profile__submit_hidden');
 
-    let editPassword = document.querySelector('.user-info_password');
+    let editPassword: HTMLElement = document.querySelector('.user-info_password')!;
   	if(!editPassword.classList.contains('user-info_hidden')){
   		editPassword.classList.add('user-info_hidden');
 
-  		let editProfile = document.querySelector('.user-info_data');
+  		let editProfile: HTMLElement = document.querySelector('.user-info_data')!;
   		editProfile.classList.remove('user-info_hidden');
     }
   }
 
   showModal = (): void	=> {
-  	let modal = document.querySelector('.modal');
+  	let modal: HTMLElement = document.querySelector('.modal')!;
   	modal.classList.add('modal_show');
   }
 
@@ -246,11 +246,11 @@ export default class Profile extends Block {
 					}
 				}
 			],
-			input: function(e){
+			input: function(e: any){
 				profileValues[e.target.name] = e.target.value;
 			},
-			focus: (e) => inputHandler(e.target, profileValues),
-			blur: (e) => inputHandler(e.target, profileValues)
+			focus: (e: any) => inputHandler(e.target, profileValues),
+			blur: (e: any) => inputHandler(e.target, profileValues)
 		}
 
 		const configPassword = {
@@ -290,11 +290,11 @@ export default class Profile extends Block {
 					}
 				}
 			],
-			input: function(e){
+			input: function(e: any){
 				profileValues[e.target.name] = e.target.value;
 			},
-			focus: (e) => inputHandler(e.target, profileValues),
-			blur: (e) => inputHandler(e.target, profileValues)
+			focus: (e: any) => inputHandler(e.target, profileValues),
+			blur: (e: any) => inputHandler(e.target, profileValues)
 		}
 
 		const content = {
@@ -337,7 +337,7 @@ export default class Profile extends Block {
 			type: 'back', 
 			to: "/messenger",
 			events: {
-        click: (e) => {
+        click: (e: any) => {
           e.preventDefault();
           window.location = e.target.getAttribute('to')
         },
@@ -348,7 +348,7 @@ export default class Profile extends Block {
 			type: 'exit', 
 			to: "/",
 			events: {
-        click: (e) => {
+        click: (e: any) => {
         	e.preventDefault();
 			    this.state.onLogout();
         },
@@ -358,7 +358,7 @@ export default class Profile extends Block {
 		const btnEdit: NavButtonInt = new NavButton({
 			type: 'edit',
 			events: {
-				click: (e)	=> {
+				click: (e: any)	=> {
 					e.preventDefault();
 					this.editUserForm();
 				}
@@ -368,7 +368,7 @@ export default class Profile extends Block {
 		const btnClose: NavButtonInt = new NavButton({
 			type: 'close',
 			events: {
-				click: (e)	=> {
+				click: (e: any)	=> {
 					e.preventDefault();
 					this.closeEdit();
 				}
@@ -378,7 +378,7 @@ export default class Profile extends Block {
 		const passwordEdit: NavButtonInt = new NavButton({
 			type: 'password',
 			events: {
-				click: (e)	=> {
+				click: (e: any)	=> {
 					e.preventDefault();
 					this.editPasswordForm();
 				}
@@ -390,7 +390,7 @@ export default class Profile extends Block {
 		const avatar: AvatarInt = new Avatar({
 			imgurl: this.props.user.profile.avatar ? this.props.user.profile.avatar : null,
 			events: {
-				click: (e)	=> {
+				click: ()	=> {
 					this.showModal();
 				}
 			}

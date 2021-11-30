@@ -1,6 +1,6 @@
-// import HTTPTransport from '../../../modules/fetch.ts';
-import BaseAPI from '../../../api/base-api.ts';
-import { store } from '../../../modules/store.ts';
+// import HTTPTransport from '../../../modules/fetch';
+import BaseAPI from '../../../api/base-api';
+// import { store } from '../../../modules/store';
 
 // const host = 'https://ya-praktikum.tech';
 
@@ -13,7 +13,6 @@ interface LoginData {
 
 export default class RegAPI extends BaseAPI {
     create(data: LoginData) {
-        console.log('data', data)
 		var result;
         return loginAPIInstance.post('/auth/signin',{ 
         	headers: {
@@ -26,8 +25,7 @@ export default class RegAPI extends BaseAPI {
         	result = res; 
         	console.log('final result', result); 
         	// return result;
-        }).catch(e => {
-            console.log('e', store);
+        }).catch(() => {
             // store;
         });
 

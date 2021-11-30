@@ -3,42 +3,47 @@
   "version": "1.0.0",
   "description": "------",
   "dependencies": {
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.27.1",
+    "css-loader": "^6.5.1",
     "nanoid": "^3.1.25"
   },
   "devDependencies": {
-    "@parcel/config-default": "^2.0.0-nightly.843",
-    "@parcel/transformer-sass": "^2.0.0-rc.0",
     "@types/chai": "^4.2.22",
     "@types/jsdom": "^16.2.13",
     "@types/mocha": "^9.0.0",
+    "@types/pug": "^2.0.5",
     "@types/sinon": "^10.0.4",
     "chai": "^4.3.4",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.25.3",
     "express": "^4.17.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "ignore-styles": "^5.0.1",
     "jsdom": "^18.0.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^9.1.2",
-    "parcel": "^2.0.0-rc.0",
-    "parcel-transformer-pug-precompile": "^1.0.6",
+    "node-sass": "^6.0.1",
     "pug": "^3.0.2",
+    "pug-loader": "^2.4.0",
+    "sass": "^1.43.5",
+    "sass-loader": "^12.3.0",
+    "simple-pug-loader": "^0.2.1",
     "sinon": "^11.1.2",
+    "style-loader": "^3.3.1",
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^22.0.0",
+    "ts-loader": "^9.2.6",
     "ts-node": "^10.3.0",
-    "typescript": "^4.4.3"
+    "typescript": "^4.5.2",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.6.0"
   },
   "scripts": {
-    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --require ts-node/register --require ignore-styles 'src/**/*.spec.ts'",
-    "start": "parcel index.html --open -p 3000 --log-level verbose",
-    "build": "parcel build index.html",
-    "linter": "node_modules/.bin/eslint . --ext js,ts"
+    "build": "webpack",
+    "start": "webpack serve"
   },
-  "default": "dist/index.html",
   "targets": {
     "default": {
       "includeNodeModules": [
@@ -51,7 +56,7 @@
     "url": "git+https://github.com/Pigulevskayas/middle.messenger.praktikum.yandex.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alexandra Pigulevskaya",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Pigulevskayas/middle.messenger.praktikum.yandex/issues"

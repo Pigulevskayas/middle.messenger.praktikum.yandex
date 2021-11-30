@@ -1,5 +1,5 @@
 // @ts-nocheck
-import Block from './block.ts';
+import Block from './block';
 
 export default function compile(tmpl: (ctx: Record<string, any>) => string, props: Record<string, any>): DocumentFragment {
 	const fragment = document.createElement('template');
