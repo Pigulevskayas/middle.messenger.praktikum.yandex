@@ -7,7 +7,7 @@ export default class CloseModal extends Block {
     super("span", props);
   }
 
-  render(): string {
+  render(): DocumentFragment {
   	return compile(compileTemplate, {
       events: () => this.props.events.click()
   	});

@@ -81,14 +81,14 @@ const config: FormElementInt = {
 }
 
 export default class Login extends Block {
-	constructor(props: object) {
+	constructor(props?: any) {
 	  super('div', props);
 	}
 
   protected getStateFromProps() {
     this.state = {
       onLogin: async (data) => {
-        const res = await AuthController.login(data);
+        await AuthController.login(data);
       }
     }
   }

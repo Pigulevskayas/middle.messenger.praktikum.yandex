@@ -16,7 +16,7 @@ export default class Error500 extends Block {
   }
 
   render(): DocumentFragment {
-  	const link: DocumentFragment = new Link({
+  	const link: any = new Link({
 			text: 'Назад к чатам',
       to: '/messenger',
       events: {

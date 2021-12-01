@@ -58,9 +58,9 @@ class ChatsController {
 	    }
 	}
 
-	async token(chatId: string, userId: string): Promise<UserData | void> {
+	async token(chatId: string, userId: string): any {
 	    try {
-	      	const tokenResponse = await this.api.token(chatId);
+	      	const tokenResponse: any = await this.api.token(chatId);
 			const socket = websocketConnection(userId, chatId, tokenResponse.token);
 			socket.onopen = async () => {
 				socket.send(JSON.stringify({
@@ -82,7 +82,7 @@ class ChatsController {
 	    }
 	}
 
-	async send(webSocket: object, message: string): Promise<UserData | void> {
+	async send(webSocket: any, message: string): Promise<UserData | void> {
 	    try {
 	      	await webSocket.send(JSON.stringify({
     			content: message,

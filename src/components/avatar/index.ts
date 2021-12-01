@@ -7,7 +7,7 @@ export default class Avatar extends Block {
     super('div', props);
   }
 
-  render(): string {
+  render(): DocumentFragment {
   	return compile(compileTemplate, {
       imgurl: this.props.imgurl,
       events: () => this.props.events.click()

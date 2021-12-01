@@ -5,14 +5,14 @@ import Button from '../../components/button/index';
 const compileTemplate  = require('./profile_form.pug');
 
 interface ButtonInt {
-	text: string,
-	events: () => void
+	text: string;
+	events: () => void;
 }
 
 interface InputInt {
-	type: string,
-	name: string,
-	label: string
+	classname: string;
+	attrubutes: string;
+	events: object;
 }
 
 export default class ProfileForm extends Block {
