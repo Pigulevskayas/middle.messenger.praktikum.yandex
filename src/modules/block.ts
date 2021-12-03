@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { nanoid } from 'nanoid/non-secure';
-import EventBus from './event-bus';
+import EventBus from './event-bus.ts';
 
 
 export default class Block<P = any> {
@@ -72,10 +72,11 @@ export default class Block<P = any> {
     // this.eventBus().emit(Block.EVENTS.FLOW_CDU);
   }
 
-	// Может переопределять пользователь, необязательно трогать
+  // Может переопределять пользователь, необязательно трогать
   componentDidMount(props: P) {}
 
   _componentDidUpdate(oldProps: P, newProps: P) {
+    
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -83,7 +84,7 @@ export default class Block<P = any> {
     this._render();
   }
 
-	// Может переопределять пользователь, необязательно трогать
+  // Может переопределять пользователь, необязательно трогать
   componentDidUpdate(oldProps: P, newProps: P) {
     return true;
   }
@@ -184,8 +185,7 @@ export default class Block<P = any> {
       resultElement.classList.add(classname);
     }
 
-    let key:string; 
-    for (key in attributes) {
+    for (let key: string in attributes) {
       resultElement.setAttribute(key, attributes[key]);
       if(key === 'value') {
         resultElement.value = attributes.value;

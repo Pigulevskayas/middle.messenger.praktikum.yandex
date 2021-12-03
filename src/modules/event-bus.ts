@@ -1,5 +1,6 @@
-// @ts-nocheck
 export default class EventBus {
+    public listeners: Ilistener;
+    
     constructor() {
         this.listeners = {};
     }
@@ -9,7 +10,7 @@ export default class EventBus {
           this.listeners[event] = [];
         }
 
-        this.listeners[event].push(callback);
+        this.listeners[event]!.push(callback);
     }
 
     off(event, callback) {
@@ -28,7 +29,7 @@ export default class EventBus {
           // throw new Error(`Нет события: ${event}`);
         }
 
-        this.listeners[event].forEach(function(listener) {
+        this.listeners[event]!.forEach(function(listener) {
           listener(...args);
         });
     }

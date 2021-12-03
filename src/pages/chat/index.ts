@@ -1,4 +1,4 @@
-import Chat from './chat';
+import { Chat } from './chat';
 import { connect } from '../../store/index';
 import { withRouter } from '../../modules/router';
 

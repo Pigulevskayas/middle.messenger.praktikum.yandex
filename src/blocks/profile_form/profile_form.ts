@@ -36,7 +36,7 @@ export default class ProfileForm extends Block {
 				} else {
 					let component: InputInt = new Input({
 						classname: element[key]['classname'],
-						attrubutes: element[key]['attributes'],
+						attributes: element[key]['attributes'],
 						events: formItems.inputEvent
 					});
 					renderFields[key] = component;

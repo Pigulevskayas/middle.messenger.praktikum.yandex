@@ -41,8 +41,10 @@
     "webpack-dev-server": "^4.6.0"
   },
   "scripts": {
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --require ts-node/register --require ignore-styles 'src/**/*.spec.ts'",
+    "start": "webpack serve --open",
     "build": "webpack",
-    "start": "webpack serve --open"
+    "linter": "node_modules/.bin/eslint . --ext js,ts"
   },
   "targets": {
     "default": {

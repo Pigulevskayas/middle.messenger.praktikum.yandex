@@ -10,7 +10,7 @@ class AuthController {
 	    this.api = new AuthAPI();
 	}
 
-	async registration(data: RegData) {
+	async registration(data: RegData): Promise<{id: number}> {
 		try {
 			await this.api.registration(data);
 			await this.getUserData();
@@ -19,16 +19,19 @@ class AuthController {
 		}
 	}
 
-	async login(data: LoginData) {
+	async login(data: LoginData): Promise<void> {
 	    try {
-	      await this.api.login(data);
-	      await this.getUserData();
+	      let res = await this.api.login(data);
+	      console.log('res',res)
+	      let res2 =await this.getUserData();
+	      console.log('res2',res2)
 	    } catch (e) {
+	    	console.log('res e',e)
 	      	store.dispatch(setError(e as { reason: string }));
 	    }
 	}
 
-	async logout() {
+	async logout(): Promise<void> {
 	    try {
 	      await this.api.logout();
 	      store.dispatch(deleteUser());
@@ -37,10 +40,11 @@ class AuthController {
 	    }
 	}
 
-	async getUserData(): Promise<UserData | void> {
+	async getUserData(): Promise<UserData> {
 	    try {
 	      const user = await this.api.read();
 	      store.dispatch(setUser(user));
+	      console.log('disp store', store)
 	      return user;
 	    } catch (e) {
 	      store.dispatch(deleteUser());

@@ -7,32 +7,15 @@ import Avatar from '../../components/avatar/index';
 const compileTemplate  = require('./profile.pug');
 import inputHandler from '../../utils/form-inputs-handler';
 import buttonHandler from '../../utils/form-submit-handler';
-
 import '../../components/nav/nav.css';
 import '../../components/nav-btn/nav-btn.css';
 import '../../components/user-info/user-info.css';
 import '../../pages/profile/profile.css';
 import '../../blocks/modal-avatar/modal-avatar.css';
 import '../../components/form-field/form-field.css';
-
 import AuthController from '../../controllers/auth-controller';
 import ProfileController from '../../controllers/profile-controller';
 
-
-// interface FormElementInt {
-//   email?: Object<string>;
-//   login?: Object<string>;
-//   first_name?: Object<string>;
-//   second_name?: Object<string>;
-//   display_name?: Object<string>;
-//   phone?: Object<string>;
-//   oldPassword?: Object<string>; 
-//   newPassword?: Object<string>; 
-//   repeatNewPassword?: Object<string>; 
-//   button: object;
-// }
-
-// interface FormElementsInt extends Array<FormElementInt>{}
 
 interface NavButtonInt {
   type: string;
@@ -43,11 +26,6 @@ interface NavButtonInt {
 interface AvatarInt {
 	imgurl?: string | null;
 }
-
-// interface ModalInt {
-// 	isVisible: boolean, 
-// 	isError: boolean 
-// }
 
 interface profileValuesInt {
 	email: string | null;
@@ -69,7 +47,7 @@ const profileValues: profileValuesInt = {
   phone: null,
 }
 
-export default class Profile extends Block {
+export class Profile extends Block {
 	constructor(props) {
 	  super('div', props);
 	}
@@ -85,7 +63,6 @@ export default class Profile extends Block {
       onPassword: async (data: any) => {
         await ProfileController.password(data);
       }
-      
     }
   }
 
@@ -149,7 +126,8 @@ export default class Profile extends Block {
   }
 
   componentDidMount(): void {
-    if (this.props.user.profile) {
+  	console.log('this.props.user PROFILE', this.state)
+    if (this.props.user?.profile) {
     	let inputs = document.querySelectorAll('.user-info_data .input');
     	inputs.forEach((input: HTMLElement):void => {
     		input.setAttribute('disabled', 'disabled');
@@ -162,7 +140,6 @@ export default class Profile extends Block {
       profileValues.display_name = userObj.display_name;
       profileValues.login = userObj.login;
       profileValues.phone = userObj.phone;
-
     }
   }
 
@@ -187,7 +164,7 @@ export default class Profile extends Block {
 							placeholder: "Почта", 
 							type: "email", 
 							name: "email", 
-							value: this.props.user.profile.email
+							value: this.props.user?.profile?.email
 						}
 					}
 				}, {
@@ -197,7 +174,7 @@ export default class Profile extends Block {
 							placeholder: "Логин", 
 							type: "text", 
 							name: "login", 
-							value: this.props.user.profile.login
+							value: this.props.user?.profile?.login
 						}
 					} 
 				}, {
@@ -207,7 +184,7 @@ export default class Profile extends Block {
 							placeholder: "Имя", 
 							type: "text", 
 							name: "first_name", 
-							value: this.props.user.profile.first_name
+							value: this.props.user?.profile?.first_name
 						}
 					}
 				}, {
@@ -217,7 +194,7 @@ export default class Profile extends Block {
 							placeholder: "Фамилия", 
 							type: "text", 
 							name: "second_name", 
-							value: this.props.user.profile.second_name
+							value: this.props.user?.profile?.second_name
 						}
 					}
 				}, {
@@ -227,7 +204,7 @@ export default class Profile extends Block {
 							placeholder: "Имя в чате", 
 							type: "text", 
 							name: "display_name", 
-							value: this.props.user.profile.display_name ? this.props.user.profile.display_name : ''
+							value: this.props.user?.profile?.display_name ? this.props.user.profile.display_name : ''
 						}
 					}
 				}, {
@@ -237,7 +214,7 @@ export default class Profile extends Block {
 							placeholder: "Телефон", 
 							type: "text", 
 							name: "phone", 
-							value: this.props.user.profile.phone
+							value: this.props.user?.profile?.phone
 						}
 					}
 				}, {
@@ -388,7 +365,7 @@ export default class Profile extends Block {
 		const modal: ModalInt = new Modal();
 
 		const avatar: AvatarInt = new Avatar({
-			imgurl: this.props.user.profile.avatar ? this.props.user.profile.avatar : null,
+			imgurl: this.props.user?.profile.avatar ? this.props.user.profile.avatar : null,
 			events: {
 				click: ()	=> {
 					this.showModal();
@@ -398,7 +375,7 @@ export default class Profile extends Block {
 
 		const fragment = compile(compileTemplate, {
 			avatar: avatar,
-			name: this.props.user.profile.first_name,
+			name: this.props.user?.profile.first_name,
 			userform: profileForm,
 			back: btnBack,
 			exit: btnExit,

@@ -3,6 +3,6 @@ WORKDIR var/www
 COPY ./package.json ./
 RUN npm install --legacy-peer-deps
 COPY . .
-RUN npm run start
+RUN npm run build
 CMD node server.js
 EXPOSE 3000

@@ -5,15 +5,6 @@ export interface LoginData {
     password: string;
 }
 
-// export interface RegData {
-//     first_name: string;
-//     second_name: string;
-//     login: string;
-//     email: string;
-//     phone: string;
-//     password: string;
-// }
-
 export interface UserData {
 	first_name: string;
     second_name: string;
@@ -29,7 +20,7 @@ export type RegData = Omit<UserData, 'avatar' | 'display_name'>
 
 export default class AuthAPI extends BaseAPI {
 	constructor(){
-		super('/auth')
+		super('/auth');
 	}
 
 	login(data: LoginData): Promise<void> {

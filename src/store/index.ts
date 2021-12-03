@@ -1,7 +1,7 @@
 import user from './user';
 import chats from './chats';
 import messages from './messages';
-import Store from '../utils/store';
+import { Store } from '../utils/store';
 import Block from '../modules/Block';
 
 export const store = new Store({
@@ -13,7 +13,7 @@ export const store = new Store({
 export function connect(stateToProps: (state: any) => any, Component: typeof Block) {
   return class WithStore extends Component {
     constructor(props: any) {
-      super({...props, ...stateToProps(store.getState())});
+      super({ ...props, ...stateToProps(store.getState()) });
     }
 
     componentDidMount(props: any) {

@@ -92,7 +92,7 @@ let selectedChat = {
 };
 
 
-export default class Chat extends Block {
+export class Chat extends Block {
 	constructor(props) {
 	  super('div', props);
 	}

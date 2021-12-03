@@ -132,7 +132,7 @@ const config: FormElementsInt = {
 	// let data = buttonHandler(regState);}
 }
 
-export default class Regisatration extends Block {
+export class Registration extends Block {
 	constructor(props) {
 		super('div', props);
 	}
@@ -198,5 +198,4 @@ export default class Regisatration extends Block {
 
 		return fragment;
 	}
-
 }

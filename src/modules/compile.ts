@@ -1,4 +1,3 @@
-// @ts-nocheck
 import Block from './block';
 
 export default function compile(tmpl: (ctx: Record<string, any>) => string, props: Record<string, any>): DocumentFragment {
@@ -6,6 +5,7 @@ export default function compile(tmpl: (ctx: Record<string, any>) => string, prop
 	const components: Record<string, Block> = {}
 
 	Object.entries(props).forEach(([name, value]) => {
+		// @ts-ignore
 		if(value instanceof Block) {
 			components[value.id] = value;
 

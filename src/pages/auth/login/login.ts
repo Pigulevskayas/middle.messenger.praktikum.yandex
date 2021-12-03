@@ -80,20 +80,22 @@ const config: FormElementInt = {
   } 
 }
 
-export default class Login extends Block {
+export class Login extends Block {
 	constructor(props?: any) {
 	  super('div', props);
 	}
 
   protected getStateFromProps() {
     this.state = {
-      onLogin: async (data) => {
+      onLogin: async (data: loginStateInt) => {
+        alert('1')
         await AuthController.login(data);
       }
     }
   }
 
   componentDidMount(): void {
+    console.log('1', this)
     if (this.props.user.profile) {
       this.props.router.go('/messenger')
     }
@@ -108,6 +110,7 @@ export default class Login extends Block {
   }
 
 	render(): DocumentFragment {
+    // console.log(this.props)
 		const content = {
 			formElements: config.formElements, 
 			buttonEvent: {
