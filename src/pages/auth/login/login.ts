@@ -13,11 +13,11 @@ import '../../../components/form-field/form-field.css';
 
 import AuthController from '../../../controllers/auth-controller';
 
-interface LinkInt {
-	text: string; 
-	to: string;
-  events: object;
-}
+// interface LinkInt {
+// 	text: string; 
+// 	to: string;
+//   events: object;
+// }
 
 // interface FormElementInt {
 //   inputLogin: Object<string>; 
@@ -95,7 +95,6 @@ export class Login extends Block {
   }
 
   componentDidMount(): void {
-    console.log('1', this)
     if (this.props.user.profile) {
       this.props.router.go('/messenger')
     }
@@ -110,7 +109,6 @@ export class Login extends Block {
   }
 
 	render(): DocumentFragment {
-    // console.log(this.props)
 		const content = {
 			formElements: config.formElements, 
 			buttonEvent: {
@@ -134,7 +132,7 @@ export class Login extends Block {
 
 		const loginForm = new Form(content);
 
-		const link: LinkInt = new Link({
+		const link = new Link({
 			text: 'Нет аккаунта?',
       to: '/sign-up',
       events: content.linkEvent

@@ -6,7 +6,17 @@ import CloseModal from '../../components/close-modal/index';
 const compileTemplate  = require('./modal-user.pug');
 
 export default class Modal extends Block {
-	constructor(props) {
+	constructor(props:{
+		id: string;
+		modalTitle: string;
+		btnText: string;
+		isVisible: boolean; 
+		isError: boolean; 
+		inputName: string;
+		inputLabel: string;
+		inputEvent: () => void;
+		buttonEvent: () => void;
+	}) {
 	    super("div", props);
 	}
 
@@ -18,7 +28,6 @@ export default class Modal extends Block {
 	}
 
 	render() {
-
 		const input = new Input({
 			classname: 'input',
 			attributes: {

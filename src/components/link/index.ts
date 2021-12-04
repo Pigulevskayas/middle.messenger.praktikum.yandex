@@ -4,7 +4,6 @@ const compileTemplate  = require('./link.pug');
 
 export default class Link extends Block {
   constructor(props: object) {
-  // dom-element button wrapper creation
     super("span", props);
   }
 

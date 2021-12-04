@@ -7,48 +7,44 @@ class AuthController {
 	private api: AuthAPI;
 
 	constructor() {
-	    this.api = new AuthAPI();
+		this.api = new AuthAPI();
 	}
 
-	async registration(data: RegData): Promise<{id: number}> {
+	async registration(data: RegData): Promise < { id: number } > {
 		try {
 			await this.api.registration(data);
 			await this.getUserData();
-		} catch(e) {
+		} catch (e) {
 			store.dispatch(setError(e as { reason: string }));
 		}
 	}
 
-	async login(data: LoginData): Promise<void> {
-	    try {
-	      let res = await this.api.login(data);
-	      console.log('res',res)
-	      let res2 =await this.getUserData();
-	      console.log('res2',res2)
-	    } catch (e) {
-	    	console.log('res e',e)
-	      	store.dispatch(setError(e as { reason: string }));
-	    }
+	async login(data: LoginData): Promise < void > {
+		try {
+			let res = await this.api.login(data);
+			let res2 = await this.getUserData();
+		} catch (e) {
+			store.dispatch(setError(e as { reason: string }));
+		}
 	}
 
-	async logout(): Promise<void> {
-	    try {
-	      await this.api.logout();
-	      store.dispatch(deleteUser());
-	    } catch (e) {
-	      store.dispatch(setError(e as { reason: string }));
-	    }
+	async logout(): Promise < void > {
+		try {
+			await this.api.logout();
+			store.dispatch(deleteUser());
+		} catch (e) {
+			store.dispatch(setError(e as { reason: string }));
+		}
 	}
 
-	async getUserData(): Promise<UserData> {
-	    try {
-	      const user = await this.api.read();
-	      store.dispatch(setUser(user));
-	      console.log('disp store', store)
-	      return user;
-	    } catch (e) {
-	      store.dispatch(deleteUser());
-	    }
+	async getUserData(): Promise < UserData > {
+		try {
+			const user = await this.api.read();
+			store.dispatch(setUser(user));
+			return user;
+		} catch (e) {
+			store.dispatch(deleteUser());
+		}
 	}
 }
 

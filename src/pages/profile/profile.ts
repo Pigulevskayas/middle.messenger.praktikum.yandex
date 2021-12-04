@@ -17,11 +17,11 @@ import AuthController from '../../controllers/auth-controller';
 import ProfileController from '../../controllers/profile-controller';
 
 
-interface NavButtonInt {
-  type: string;
-  to: string;
-	events: object;
-}
+// interface NavButtonInt {
+//   type: string;
+//   to: string;
+// 	events: object;
+// }
 
 interface AvatarInt {
 	imgurl?: string | null;
@@ -126,7 +126,6 @@ export class Profile extends Block {
   }
 
   componentDidMount(): void {
-  	console.log('this.props.user PROFILE', this.state)
     if (this.props.user?.profile) {
     	let inputs = document.querySelectorAll('.user-info_data .input');
     	inputs.forEach((input: HTMLElement):void => {
@@ -310,7 +309,7 @@ export class Profile extends Block {
 		// Password change form
 		const passwordForm = new Form(contentPassword);
 
-		const btnBack: NavButtonInt = new NavButton({
+		const btnBack = new NavButton({
 			type: 'back', 
 			to: "/messenger",
 			events: {
@@ -321,7 +320,7 @@ export class Profile extends Block {
       }
 		});
 
-		const btnExit: NavButtonInt = new NavButton({
+		const btnExit = new NavButton({
 			type: 'exit', 
 			to: "/",
 			events: {
@@ -332,7 +331,7 @@ export class Profile extends Block {
       }
 		});
 
-		const btnEdit: NavButtonInt = new NavButton({
+		const btnEdit = new NavButton({
 			type: 'edit',
 			events: {
 				click: (e: any)	=> {
@@ -342,7 +341,7 @@ export class Profile extends Block {
 			}
 		});
 
-		const btnClose: NavButtonInt = new NavButton({
+		const btnClose = new NavButton({
 			type: 'close',
 			events: {
 				click: (e: any)	=> {
@@ -352,7 +351,7 @@ export class Profile extends Block {
 			}
 		});
 
-		const passwordEdit: NavButtonInt = new NavButton({
+		const passwordEdit = new NavButton({
 			type: 'password',
 			events: {
 				click: (e: any)	=> {
@@ -362,7 +361,7 @@ export class Profile extends Block {
 			}
 		});
 
-		const modal: ModalInt = new Modal();
+		const modal = new Modal();
 
 		const avatar: AvatarInt = new Avatar({
 			imgurl: this.props.user?.profile.avatar ? this.props.user.profile.avatar : null,

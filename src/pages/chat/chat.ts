@@ -23,10 +23,10 @@ import ProfileController from '../../controllers/profile-controller';
 import ChatsController from '../../controllers/chat-controller';
 
 
-interface NavButtonInt {
-  type: string;
-  link: string;
-}
+// interface NavButtonInt {
+//   type: string;
+//   link: string;
+// }
 
 interface ChatHeaderInt {
 	username: string
@@ -48,17 +48,17 @@ interface searchValueInt {
 	login: null | string;
 }
 
-interface ModalInt {
-	id: string;
-	modalTitle: string;
-	btnText: string;
-	isVisible: boolean; 
-	isError: boolean; 
-	inputName:  string;
-	inputLabel:  string;
-	inputEvent: () => void;
-	buttonEvent: () => void;
-}
+// interface ModalInt {
+// 	id: string;
+// 	modalTitle: string;
+// 	btnText: string;
+// 	isVisible: boolean; 
+// 	isError: boolean; 
+// 	inputName:  string;
+// 	inputLabel:  string;
+// 	inputEvent: () => void;
+// 	buttonEvent: () => void;
+// }
 
 
 const messageValue: messageValueInt = {
@@ -319,7 +319,7 @@ export class Chat extends Block {
 			}
 		});
 
-		const edit: NavButtonInt = new NavButton({
+		const edit = new NavButton({
 			type: 'edit-chat', 
 			to: '/settings',
 			events: {
@@ -330,7 +330,7 @@ export class Chat extends Block {
       }
 		});
 
-		const addChat: NavButtonInt = new NavButton({
+		const addChat = new NavButton({
 			type: 'add-chat', 
 			// to: '/settings',
 			events: {
@@ -405,7 +405,7 @@ export class Chat extends Block {
 	    }
 		});
 
-		const modalDelete: ModalInt = new Modal({
+		const modalDelete = new Modal({
 			id: "modal_delete",
 			modalTitle: "Удалить пользователя",
 			btnText: "Удалить",
@@ -417,7 +417,7 @@ export class Chat extends Block {
 			buttonEvent: this.state.onDeleteUser
 		});
 
-		const modalAdd: ModalInt = new Modal({
+		const modalAdd = new Modal({
 			id: "modal_add",
 			modalTitle: "Добавить пользователя",
 			btnText: "Добавить",
@@ -429,7 +429,7 @@ export class Chat extends Block {
 			buttonEvent: this.state.onAddUser
 		});
 
-		const modalAddChat: ModalInt = new Modal({
+		const modalAddChat = new Modal({
 			id: "add-chat",
 			modalTitle: "Новый чат",
 			btnText: "Создать",

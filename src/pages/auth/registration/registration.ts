@@ -22,11 +22,11 @@ interface regStateInt {
 	repassword: null | string;
 }
 
-interface LinkInt {
-	text: string;
-	to: string;
-	events: object;
-}
+// interface LinkInt {
+// 	text: string;
+// 	to: string;
+// 	events: object;
+// }
 
 interface FormElementInt {
 	inputEmail: Object < string > ;
@@ -129,7 +129,6 @@ const config: FormElementsInt = {
 	focus: (e: any) => inputHandler(e.target, regState),
 	blur: (e: any) => inputHandler(e.target, regState),
 	click: () => buttonHandler(regState)
-	// let data = buttonHandler(regState);}
 }
 
 export class Registration extends Block {
@@ -141,7 +140,6 @@ export class Registration extends Block {
 		this.state = {
 			onRegister: async (data: any) => {
 				await AuthController.registration(data);
-				// const res = await AuthController.registration(data);
 			}
 		}
 	}
@@ -160,7 +158,6 @@ export class Registration extends Block {
 	}
 
 	render(): DocumentFragment {
-		// console.log('registration', this.registration)
 		const content = {
 			formElements: config.formElements,
 			buttonEvent: {
@@ -184,7 +181,7 @@ export class Registration extends Block {
 
 		const regForm = new Form(content);
 
-		const link: LinkInt = new Link({
+		const link = new Link({
 			text: 'Войти',
 			to: "/",
 			events: content.linkEvent

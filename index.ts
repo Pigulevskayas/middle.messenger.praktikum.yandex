@@ -6,8 +6,6 @@ import LoginPage from './src/pages/auth/login/index';
 import RegPage from './src/pages/auth/registration/index';
 import ProfilePage from './src/pages/profile/index';
 import ChatPage from './src/pages/chat/index';
-// import EventBus from './modules/event-bus.ts';
-
 import './src/index.css';
 
 AuthController.getUserData()

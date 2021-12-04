@@ -39,12 +39,9 @@ class Route {
     render() {
         if (!this._block) {
             this._block = new this._blockClass();
-            // this._block = this._blockClass;
             render(this._props.rootQuery, this._block);
             return;
         }
-
-        // this._block.show();
     }
 }
 
@@ -57,17 +54,13 @@ export default class Router {
         this.routes = [];
         this.history = window.history;
         this._currentRoute = null;
-        // this._rootQuery = rootQuery;
 
         Router.__instance = this;
     }
 
     use(pathname: string, block: typeof Block) {
         const route = new Route(pathname, block, {rootQuery: ".app"});
-        // const route = new Route(pathname, block, {rootQuery: this._rootQuery});
-
         this.routes.push(route);
-
         return this;
     }
 
@@ -75,7 +68,6 @@ export default class Router {
         window.onpopstate = ((event: PopStateEvent) => {
             this._onRoute(event.currentTarget.location.pathname);
         }).bind(this);
-
         this._onRoute(window.location.pathname);
     }
 
@@ -117,9 +109,7 @@ export function withRouter(Component: typeof Block) {
   return class WithRouter extends Component {
     constructor(props: any) {
       const router = new Router();
-
       super({...props, router: router});
-
     }
   }
 }

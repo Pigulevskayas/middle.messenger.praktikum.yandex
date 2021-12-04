@@ -3,20 +3,13 @@ import compile from '../../modules/compile';
 const compileTemplate  = require('./chat-header.pug');
 import NavButton from '../../components/nav-btn/index';
 
-interface NavButtonInt {
-  type: string;
-  events: object;
-  to?: string;
-}
-
 export default class ChatHeader extends Block {
-  constructor(props: object) {
-	// dom-element button wrapper creation
+  constructor(props?: object) {
     super("div", props);
   }
 
   render(): DocumentFragment {
-    const toggler: NavButtonInt = new NavButton({
+    const toggler = new NavButton({
       type: 'toggler',
       events: {
         click: (e: any) => {

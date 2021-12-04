@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
     "ignore-styles": "^5.0.1",
     "jsdom": "^18.0.0",
     "jsdom-global": "^3.0.2",
@@ -45,6 +46,11 @@
     "start": "webpack serve --open",
     "build": "webpack",
     "linter": "node_modules/.bin/eslint . --ext js,ts"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm-run-all test linter"
+    }
   },
   "targets": {
     "default": {
