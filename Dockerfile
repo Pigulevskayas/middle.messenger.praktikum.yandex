@@ -1,8 +1,8 @@
-FROM node:latest
+FROM node:12-alpine
 WORKDIR var/www
 COPY ./package.json ./
 RUN npm install --legacy-peer-deps
 COPY . .
 RUN npm run build
-CMD node server.js
 EXPOSE 3000
+CMD node server.js
