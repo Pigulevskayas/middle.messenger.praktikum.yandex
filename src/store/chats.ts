@@ -28,4 +28,4 @@ export default (state = { chats: null, error: null, success: true }, action: Act
     default:
       return state;
   }
-}
+};

@@ -2,22 +2,12 @@ import Block from '../../modules/block';
 import compile from '../../modules/compile';
 import Input from '../../components/input/index';
 import Button from '../../components/button/index';
-const compileTemplate  = require('./profile_form.pug');
 
-// interface ButtonInt {
-// 	text: string;
-// 	events: () => void;
-// }
-
-// interface InputInt {
-// 	classname: string;
-// 	attrubutes: string;
-// 	events: object;
-// }
+const compileTemplate = require('./profile_form.pug');
 
 export default class ProfileForm extends Block {
 	constructor(props: object) {
-	    super("div", {content: props});
+		super('div', { content: props });
 	}
 
 	render() {
@@ -26,17 +16,17 @@ export default class ProfileForm extends Block {
 		formItems.formElements.map((element: object) => {
 			let key:string;
 			for (key in element) {
-				if (key == 'button'){
-					let component = new Button({
-						text: element[key]['text'],
-						events: formItems.buttonEvent
+				if (key == 'button') {
+					const component = new Button({
+						text: element[key].text,
+						events: formItems.buttonEvent,
 					});
 					renderFields[key] = component;
 				} else {
-					let component = new Input({
-						classname: element[key]['classname'],
-						attributes: element[key]['attributes'],
-						events: formItems.inputEvent
+					const component = new Input({
+						classname: element[key].classname,
+						attributes: element[key].attributes,
+						events: formItems.inputEvent,
 					});
 					renderFields[key] = component;
 				}

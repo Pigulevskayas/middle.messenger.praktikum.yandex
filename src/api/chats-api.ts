@@ -6,71 +6,64 @@ export interface newChatData {
 }
 
 export interface usersChatData {
-  users: Array<number>;
-  chatId: number;
+    users: Array<number>;
+    chatId: number;
 }
 
 export interface сhatData {
-  chatId: number;
+    chatId: number;
 }
 
-
 export default class ChatsAPI extends BaseAPI {
-	constructor(){
-		super('/chats')
-	}
+    constructor() {
+        super('/chats');
+    }
 
-	create(data: newChatData): Promise<void> {
-		return this.http.post('', { 
-        	headers: {
-  				'mode': 'cors',
-        	},
-        	data: data
+    create(data: newChatData): Promise<void> {
+        return this.http.post('', {
+            headers: {
+                mode: 'cors',
+            },
+            data,
         });
-	}
+    }
 
-	deleteChat(data: сhatData): Promise<void> {
-		return this.http.delete('', { 
-        	headers: {
-  				'mode': 'cors',
-        	},
-        	data: data
+    deleteChat(data: сhatData): Promise<void> {
+        return this.http.delete('', {
+            headers: {
+                mode: 'cors',
+            },
+            data,
         });
-	}
+    }
 
-	addUsers(data: usersChatData): Promise<void> {
-		return this.http.put('/users', { 
-        	headers: {
-  				'mode': 'cors',
-        	},
-        	data: data
+    addUsers(data: usersChatData): Promise<void> {
+        return this.http.put('/users', {
+            headers: {
+                mode: 'cors',
+            },
+            data,
         });
-	}
+    }
 
-	deleteUsers(data: usersChatData): Promise<void> {
-		return this.http.delete('/users', { 
-        	headers: {
-  				'mode': 'cors',
-        	},
-        	data: data
+    deleteUsers(data: usersChatData): Promise<void> {
+        return this.http.delete('/users', {
+            headers: {
+                mode: 'cors',
+            },
+            data,
         });
-	}
+    }
 
-	chats(params: any): Promise<UserData> {
-		return this.http.get('', params);
-	}
+    chats(params: any): Promise<UserData> {
+        return this.http.get('', params);
+    }
 
-	token(chatId: number ): Promise<void> {
-		return this.http.post(`/token/${chatId}`, { 
-        	headers: {
-  				'mode': 'cors',
-        	}
+    token(chatId: number): Promise<void> {
+        return this.http.post(`/token/${chatId}`, {
+            headers: {
+                mode: 'cors',
+            },
         });
-	}
-
-
-	// delete: undefined;
-	// create: undefined;
-	// update: undefined;
-	// request: undefined;
+    }
 }

@@ -7,7 +7,7 @@ import Block from '../modules/Block';
 export const store = new Store({
   user,
   chats,
-  messages
+  messages,
 });
 
 export function connect(stateToProps: (state: any) => any, Component: typeof Block) {
@@ -21,7 +21,7 @@ export function connect(stateToProps: (state: any) => any, Component: typeof Blo
       store.on('changed', () => {
         this.setProps({
           ...this.props,
-          ...stateToProps(store.getState())
+          ...stateToProps(store.getState()),
         });
       });
     }

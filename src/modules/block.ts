@@ -1,21 +1,23 @@
 // @ts-nocheck
 import { nanoid } from 'nanoid/non-secure';
-import EventBus from './event-bus.ts';
+import EventBus from './event-bus';
 
 export default class Block < P = any > {
   static EVENTS = {
-    INIT: "init",
-    FLOW_CDM: "flow:component-did-mount",
-    FLOW_RENDER: "flow:render",
-    FLOW_CDU: "flow:component-did-update"
+    INIT: 'init',
+    FLOW_CDM: 'flow:component-did-mount',
+    FLOW_RENDER: 'flow:render',
+    FLOW_CDU: 'flow:component-did-update',
   };
 
   id = nanoid(6);
 
   _element = null;
+
   _meta = null;
 
   protected state: any = {};
+
   protected refs: {
     [key: string]: HTMLElement } = {};
 
@@ -25,11 +27,11 @@ export default class Block < P = any > {
    *
    * @returns {void}
    */
-  constructor(tagName = "div", props = {}) {
+  constructor(tagName = 'div', props = {}) {
     const eventBus = new EventBus();
     this._meta = {
       tagName,
-      props
+      props,
     };
 
     this.getStateFromProps(props);
@@ -74,7 +76,6 @@ export default class Block < P = any > {
   componentDidMount(props: P) {}
 
   _componentDidUpdate(oldProps: P, newProps: P) {
-
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -87,7 +88,7 @@ export default class Block < P = any > {
     return true;
   }
 
-  setProps = nextProps => {
+  setProps = (nextProps) => {
     if (!nextProps) {
       return;
     }
@@ -154,11 +155,10 @@ export default class Block < P = any > {
       },
       deleteProperty: (obj, prop) => {
         throw new Error('Нет доступа');
-      }
+      },
     });
 
     return proxyProps;
-
   }
 
   _createDocumentElement(tagName, classname = undefined, attrubutes = undefined) {
@@ -169,7 +169,7 @@ export default class Block < P = any > {
       resultElement.classList.add(classname);
     }
 
-    for (let key: string in attrubutes) {
+    for (const key: string in attrubutes) {
       resultElement.setAttribute(key, attrubutes[key]);
       if (key === 'value') {
         resultElement.value = attrubutes.value;
@@ -185,8 +185,8 @@ export default class Block < P = any > {
     const { events = {} } = this.props;
 
     for (const [event, listener] of Object.entries(
-        events as Record < string, EventListener >
-      )) {
+        events as Record < string, EventListener >,
+    )) {
       this.element.removeEventListener(event, listener);
     }
   }
@@ -199,10 +199,9 @@ export default class Block < P = any > {
     const { events = {} } = this.props;
 
     for (const [event, listener] of Object.entries(
-        events as Record < string, EventListener >
-      )) {
+        events as Record < string, EventListener >,
+    )) {
       this.element.addEventListener(event, listener);
     }
   }
-
 }

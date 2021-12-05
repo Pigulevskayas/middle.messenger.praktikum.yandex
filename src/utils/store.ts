@@ -11,6 +11,7 @@ type Indexed = {
 
 export class Store extends EventBus {
   private state: Indexed = {};
+
   private reducer: Reducer;
 
   constructor(reducers: Indexed) {
@@ -35,6 +36,6 @@ export class Store extends EventBus {
         newState[key] = reducer(this.state[key], action);
       });
       return newState;
-    }
+    };
   }
 }

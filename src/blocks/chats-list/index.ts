@@ -1,6 +1,7 @@
 import Block from '../../modules/block';
 import compile from '../../modules/compile';
-const compileTemplate  = require('./chats-list.pug');
+
+const compileTemplate = require('./chats-list.pug');
 
 // interface ButtonInt {
 // 	text: string,
@@ -14,15 +15,15 @@ const compileTemplate  = require('./chats-list.pug');
 // }
 
 export default class ChatsList extends Block {
-	constructor(props: object) {
-		super("div", props);
-	}
+  constructor(props: object) {
+    super('div', props);
+  }
 
-	render(): DocumentFragment {
-		return compile(compileTemplate, {
-			selectedChat: this.props.selectedChat,
-			userLink: this.props.userLink,
-			userChats: this.props.userChats.chats ? this.props.userChats.chats : [],
-		});
-	}
+  render(): DocumentFragment {
+    return compile(compileTemplate, {
+      selectedChat: this.props.selectedChat,
+      userLink: this.props.userLink,
+      userChats: this.props.userChats.chats ? this.props.userChats.chats : [],
+    });
+  }
 }

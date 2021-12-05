@@ -1,17 +1,17 @@
 import Block from '../../modules/block';
 import compile from '../../modules/compile';
-const compileTemplate  = require('./avatar.pug');
+
+const compileTemplate = require('./avatar.pug');
 
 export default class Avatar extends Block {
-  constructor(props: object) {
-    super('div', props);
-  }
+    constructor(props: object) {
+        super('div', props);
+    }
 
-  render(): DocumentFragment {
-  	return compile(compileTemplate, {
-      imgurl: this.props.imgurl,
-      events: () => this.props.events.click()
-  	});
-  }
-
+    render(): DocumentFragment {
+        return compile(compileTemplate, {
+            imgurl: this.props.imgurl,
+            events: () => this.props.events.click(),
+        });
+    }
 }

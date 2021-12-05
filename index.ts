@@ -12,11 +12,11 @@ AuthController.getUserData()
   .then(() => {
     const router = new Router();
     router
-      .use("/", LoginPage)
-      .use("/sign-up", RegPage)
-      .use("/messenger", ChatPage)
-      .use("/settings", ProfilePage)
-      .use("/error-404", Error404Page)
-      .use("/error", Error500Page)
+      .use('/', LoginPage)
+      .use('/sign-up', RegPage)
+      .use('/messenger', ChatPage)
+      .use('/settings', ProfilePage)
+      .use('/error-404', Error404Page)
+      .use('/error', Error500Page)
       .start();
   });

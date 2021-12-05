@@ -1,7 +1,67 @@
 {
-  "extends": "airbnb",
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "extends": [
+    "eslint-config-airbnb-base",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
   "rules": {
-    "max-len": [2, 100],
-    "max-params": [2, 3]
+    "import/no-unresolved": "error",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+   ],
+    "no-tabs": 0,
+    "allowIndentationTabs": 0,
+    "indent": "off",
+    "default-param-last" : "off",
+    "class-methods-use-this": "off",
+    "no-underscore-dangle": "off",
+    "no-constructor-return": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "no-param-reassign": "off",
+    "consistent-return": "off",
+    "guard-for-in": "off",
+    "no-return-assign": "off",
+    "import/prefer-default-export": "off",
+    "camelcase": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "import/no-extraneous-dependencies": "off",
+    "@typescript-eslint/ban-types": "off",
+    "max-classes-per-file": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-this-alias": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "import/no-unresolved": "off",
+    "no-restricted-syntax": "off",
+    "no-mixed-spaces-and-tabs": "off",
+    "max-len": [2, 200],
+    "max-params": [2, 3],
+    "no-unused-expressions": "off",
+    "array-callback-return": "off",
+    "eqeqeq": "off",
+    "no-shadow": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+      }
     }
+  }
 }

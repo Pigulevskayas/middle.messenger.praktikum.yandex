@@ -2,7 +2,6 @@ import Block from '../../../modules/block';
 import compile from '../../../modules/compile';
 import Form from '../../../blocks/auth-form/auth-form';
 import Link from '../../../components/link/index';
-const compileTemplate  = require('./login.pug');
 import inputHandler from '../../../utils/form-inputs-handler';
 import buttonHandler from '../../../utils/form-submit-handler';
 import '../auth.css';
@@ -11,14 +10,16 @@ import '../../../components/input/input.css';
 import '../../../components/form-field/form-field.css';
 import AuthController from '../../../controllers/auth-controller';
 
+const compileTemplate = require('./login.pug');
+
 // interface LinkInt {
-// 	text: string; 
+// 	text: string;
 // 	to: string;
 //   events: object;
 // }
 
 // interface FormElementInt {
-//   inputLogin: Object<string>; 
+//   inputLogin: Object<string>;
 //   inputPassword: Object<string>;
 //   button: object;
 //   input: () => void;
@@ -37,37 +38,37 @@ interface loginStateInt {
 // Loginpage configuration
 const loginState: loginStateInt = {
   login: null,
-  password: null
-}
+  password: null,
+};
 
 const config = {
   formElements: [{
-      inputLogin: {
-        classname: 'input',
-        attributes: {
-          type: 'text',
-          name: 'login',
-          placeholder: 'Логин',
-          value: loginState.login
-        }
-      }
-    },{
-      inputPassword: {
-        classname: 'input',
-        attributes: {
-          type: 'password',
-          name: 'password',
-          placeholder: 'Пароль',
-          value: loginState.password
-        }
-      }
-    }, {
-      button: {
-        text: 'Вход'
-      }
-    }
+    inputLogin: {
+      classname: 'input',
+      attributes: {
+        type: 'text',
+        name: 'login',
+        placeholder: 'Логин',
+        value: loginState.login,
+      },
+    },
+  }, {
+    inputPassword: {
+      classname: 'input',
+      attributes: {
+        type: 'password',
+        name: 'password',
+        placeholder: 'Пароль',
+        value: loginState.password,
+      },
+    },
+  }, {
+    button: {
+      text: 'Вход',
+    },
+  },
   ],
-  input: function(e: any){
+  input(e: any) {
     loginState[e.target.name] = e.target.value;
   },
   focus: (e: any) => inputHandler(e.target, loginState),
@@ -75,25 +76,25 @@ const config = {
   click: () => {
     // let data = buttonHandler(loginState);
     // this.state.onLogin(data);
-  } 
-}
+  },
+};
 
 export class Login extends Block {
-	constructor(props?: any) {
-	  super('div', props);
-	}
+  constructor(props?: any) {
+    super('div', props);
+  }
 
   protected getStateFromProps() {
     this.state = {
       onLogin: async (data: loginStateInt) => {
         await AuthController.login(data);
-      }
-    }
+      },
+    };
   }
 
   componentDidMount(): void {
     if (this.props.user.profile) {
-      this.props.router.go('/messenger')
+      this.props.router.go('/messenger');
     }
   }
 
@@ -105,42 +106,42 @@ export class Login extends Block {
     return true;
   }
 
-	render(): DocumentFragment {
-		const content = {
-			formElements: config.formElements, 
-			buttonEvent: {
-				click: () => {
-          let data = buttonHandler(loginState);
+  render(): DocumentFragment {
+    const content = {
+      formElements: config.formElements,
+      buttonEvent: {
+        click: () => {
+          const data = buttonHandler(loginState);
           this.state.onLogin(data);
-        }
-			},
-			inputEvent: {
-				input: config.input,
+        },
+      },
+      inputEvent: {
+        input: config.input,
         focus: config.focus,
-        blur: config.blur
-			},
+        blur: config.blur,
+      },
       linkEvent: {
         click: (e: any) => {
           e.preventDefault();
-          window.location = e.target.getAttribute('to')
+          window.location = e.target.getAttribute('to');
         },
-      }
-		}
+      },
+    };
 
-		const loginForm = new Form(content);
+    const loginForm = new Form(content);
 
-		const link = new Link({
-			text: 'Нет аккаунта?',
+    const link = new Link({
+      text: 'Нет аккаунта?',
       to: '/sign-up',
-      events: content.linkEvent
-		});
+      events: content.linkEvent,
+    });
 
-		const fragment = compile(compileTemplate, {
+    const fragment = compile(compileTemplate, {
       error: this.props.user?.error?.reason,
-			form: loginForm,
-			link: link
-		});
+      form: loginForm,
+      link,
+    });
 
-		return fragment;
-	}
+    return fragment;
+  }
 }

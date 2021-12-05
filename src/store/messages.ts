@@ -23,4 +23,4 @@ export default (state = { messages: null, error: null, success: true }, action: 
     default:
       return state;
   }
-}
+};

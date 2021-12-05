@@ -30,4 +30,4 @@ export default (state = { profile: null, error: null, success: true }, action: A
     default:
       return state;
   }
-}
+};

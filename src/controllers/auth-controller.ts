@@ -1,5 +1,4 @@
-import AuthAPI from '../api/auth-api';
-import { LoginData, RegData, UserData } from '../api/auth-api';
+import AuthAPI, { LoginData, RegData, UserData } from '../api/auth-api';
 import { store } from '../store/index';
 import { setUser, deleteUser, setError } from '../store/user';
 
@@ -21,8 +20,8 @@ class AuthController {
 
 	async login(data: LoginData): Promise < void > {
 		try {
-			let res = await this.api.login(data);
-			let res2 = await this.getUserData();
+			const res = await this.api.login(data);
+			const res2 = await this.getUserData();
 		} catch (e) {
 			store.dispatch(setError(e as { reason: string }));
 		}

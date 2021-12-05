@@ -1,18 +1,18 @@
 import Block from '../../modules/block';
-const compileTemplate  = require('./chat-item.pug');
+
+const compileTemplate = require('./chat-item.pug');
 
 export default class ChatItem extends Block {
-  constructor(props: object) {
-	// dom-element button wrapper creation
-    super("div", props);
-  }
+    constructor(props: object) {
+        super('div', props);
+    }
 
-  render(): string {
-  	return compileTemplate({
-      username: this.props.username,
-      quote: this.props.quote,
-      time: this.props.time,
-      count: this.props.count
-    });
-  }
+    render(): string {
+        return compileTemplate({
+            username: this.props.username,
+            quote: this.props.quote,
+            time: this.props.time,
+            count: this.props.count,
+        });
+    }
 }

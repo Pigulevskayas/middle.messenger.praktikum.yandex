@@ -17,6 +17,8 @@
     "chai": "^4.3.4",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.3",
     "express": "^4.17.1",
     "file-loader": "^6.2.0",
@@ -47,11 +49,11 @@
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --require ts-node/register --require ignore-styles 'src/**/*.spec.ts'",
     "start": "webpack serve --open",
     "build": "webpack",
-    "linter": "eslint . --fix"
+    "linters": "stylelint src/*.css && eslint src",
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm-run-all test linter"
+      "pre-commit": "npm-run-all test linters"
     }
   },
   "targets": {
