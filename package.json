@@ -12,6 +12,8 @@
     "@types/mocha": "^9.0.0",
     "@types/pug": "^2.0.5",
     "@types/sinon": "^10.0.4",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
     "chai": "^4.3.4",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
@@ -45,7 +47,7 @@
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --require ts-node/register --require ignore-styles 'src/**/*.spec.ts'",
     "start": "webpack serve --open",
     "build": "webpack",
-    "linter": "node_modules/.bin/eslint . --ext js,ts"
+    "linter": "eslint . --fix"
   },
   "husky": {
     "hooks": {

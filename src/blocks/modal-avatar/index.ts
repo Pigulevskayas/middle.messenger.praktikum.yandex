@@ -4,11 +4,10 @@ import Input from '../../components/input/index';
 import Button from '../../components/button/index';
 import CloseModal from '../../components/close-modal/index';
 const compileTemplate  = require('./modal-avatar.pug');
-import AuthController from '../../controllers/auth-controller';
 import ProfileController from '../../controllers/profile-controller';
 
 export default class Modal extends Block {
-	constructor(props) {
+	constructor(props: any) {
 	    super("div", props);
 	}
 
@@ -16,9 +15,9 @@ export default class Modal extends Block {
 	    this.state = {
 	    	onAvatar: async () => {
 	    		let file: HTMLInputElement = document.querySelector('input[name="avatar"]')!;
-	    		if(file.files[0]) {
+	    		if(file.files![0]) {
 	    			let data = new FormData();
-	    			data.append('avatar', file.files[0]);
+	    			data.append('avatar', file.files![0]);
 		        	await ProfileController.avatar(data);
 	    		} else {
 	    			let emptyFile: HTMLElement = document.querySelector('.modal__notice')!;

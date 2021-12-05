@@ -11,7 +11,6 @@ import './src/index.css';
 AuthController.getUserData()
   .then(() => {
     const router = new Router();
-
     router
       .use("/", LoginPage)
       .use("/sign-up", RegPage)

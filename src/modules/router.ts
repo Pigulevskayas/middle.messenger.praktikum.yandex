@@ -1,5 +1,5 @@
 // @ts-nocheck
-import Block from './Block';
+import Block from './block';
 
 function isEqual(lhs: string, rhs: string) {
   return lhs === rhs;

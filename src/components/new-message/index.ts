@@ -12,7 +12,7 @@ export default class NewMessage extends Block {
   render(): DocumentFragment {
     const input = new Input({
       classname: this.props.content.inputMessage.classname,
-      attrubutes: this.props.content.inputMessage.attributes,
+      attrubutes: this.props.content.inputMessage.attrubutes,
       events: this.props.content.inputEvent
     });
 

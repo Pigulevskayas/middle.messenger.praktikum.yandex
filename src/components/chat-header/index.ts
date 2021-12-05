@@ -15,7 +15,7 @@ export default class ChatHeader extends Block {
         click: (e: any) => {
           e.preventDefault();
           const dropdown = document.querySelector('.dropdown__menu');
-          dropdown.classList.toggle('dropdown__menu_show');
+          dropdown!.classList.toggle('dropdown__menu_show');
         },
       }
     });

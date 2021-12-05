@@ -53,8 +53,8 @@ export default class Block < P = any > {
   _createResources() {
     const { tagName } = this._meta;
     const classname = this._meta.props?.classname;
-    const attributes = this._meta.props?.attributes;
-    this._element = this._createDocumentElement(tagName, classname, attributes);
+    const attrubutes = this._meta.props?.attrubutes;
+    this._element = this._createDocumentElement(tagName, classname, attrubutes);
   }
 
   protected getStateFromProps(props: any): void {
@@ -161,7 +161,7 @@ export default class Block < P = any > {
 
   }
 
-  _createDocumentElement(tagName, classname = undefined, attributes = undefined) {
+  _createDocumentElement(tagName, classname = undefined, attrubutes = undefined) {
     // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     const resultElement = document.createElement(tagName);
 
@@ -169,10 +169,10 @@ export default class Block < P = any > {
       resultElement.classList.add(classname);
     }
 
-    for (let key: string in attributes) {
-      resultElement.setAttribute(key, attributes[key]);
+    for (let key: string in attrubutes) {
+      resultElement.setAttribute(key, attrubutes[key]);
       if (key === 'value') {
-        resultElement.value = attributes.value;
+        resultElement.value = attrubutes.value;
       }
     }
 

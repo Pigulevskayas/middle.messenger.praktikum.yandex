@@ -4,19 +4,14 @@ import Link from '../../../components/link/index';
 import compile from '../../../modules/compile';
 import '../error.css';
 
-interface ErrorInt {
-	code: string;
-	text: string;
-}
-
 export default class Error404 extends Block {
-  constructor(props: object) {
+  constructor(props?: object) {
 	// dom-element button wrapper creation
     super("div", props);
   }
 
   render(): DocumentFragment {
-  	const link: LinkInt = new Link({
+  	const link = new Link({
 			text: 'Назад к чатам',
       to: '/messenger',
       events: {
@@ -27,7 +22,7 @@ export default class Error404 extends Block {
       }
 		});
 
-  	const errorPage404: ErrorInt = {
+  	const errorPage404 = {
 			code: '404',
 			text: 'Не туда попали',
 			link: link
@@ -35,8 +30,5 @@ export default class Error404 extends Block {
 
 		const fragment = compile(compileTemplate, errorPage404);
 		return fragment;
-
-  // 	const html = compileTemplate(errorPage404);
-		// return pug.render(html);
   }
 }

@@ -5,15 +5,14 @@ import Input from '../../components/input/index';
 import Button from '../../components/button/index';
 const compileTemplate  = require('./auth-form.pug');
 
-// interface ButtonInt {
-// 	text: string;
-// 	events: Record<string, (e?: Event) => void>;
-// }
-
-// interface InputInt {
-// 	classname: string;
-// 	attributes: Record<string, any>;
-// 	events: Record<string, (e?: Event) => void>;
+// interface FormElementInt {
+//   inputLogin: Object<string>; 
+//   inputPassword: Object<string>;
+//   button: object;
+//   input: () => void;
+//   focus: () => void;
+//   blur: () => void;
+//   click: () => void;
 // }
 
 export default class Form extends Block {
@@ -22,8 +21,8 @@ export default class Form extends Block {
 	}
 
 	render(): DocumentFragment {
-		const renderFields = {};
-		const formItems = this.props.content;
+		const renderFields: any = {};
+		const formItems = this.props?.content;
 
 		formItems.formElements.map((element: object) => {
 			let key: string;

@@ -2,7 +2,6 @@ import Block from '../../modules/block';
 import compile from '../../modules/compile';
 import NavButton from '../../components/nav-btn/index';
 import Modal from '../../blocks/modal-user/index';
-// import Input from '../../components/input/index';
 import Search from '../../components/search/index';
 import Chatslist from '../../blocks/chats-list/index';
 import ChatHeader from '../../components/chat-header/index';
@@ -28,44 +27,39 @@ import ChatsController from '../../controllers/chat-controller';
 //   link: string;
 // }
 
-interface ChatHeaderInt {
-	username: string
-}
-
-interface chatConfigInt {
-	inputMessage: Object<string>;
-	input: () => void;
-  onfocus: () => void;
-  onblur: () => void;
-  click: () => void;
-}
-
-interface messageValueInt {
-  message: null | string;
-}
-
-interface searchValueInt {
-	login: null | string;
-}
-
-// interface ModalInt {
-// 	id: string;
-// 	modalTitle: string;
-// 	btnText: string;
-// 	isVisible: boolean; 
-// 	isError: boolean; 
-// 	inputName:  string;
-// 	inputLabel:  string;
-// 	inputEvent: () => void;
-// 	buttonEvent: () => void;
+// interface ChatHeaderInt {
+// 	username: string
 // }
 
+// interface chatConfigInt {
+// 	inputMessage: {
+// 		classname: string;
+// 		attributes: {
+// 			type: string;
+// 			name: string;
+// 			label: string;
+// 			value: null | messageValue.message
+// 		};
+// 	};
+// 	input: () => void;
+//   onfocus: () => void;
+//   onblur: () => void;
+//   click: () => void;
+// }
+
+// interface messageValueInt {
+//   message: null | string;
+// }
+
+// interface searchValueInt {
+// 	login: null | string;
+// }
 
 const messageValue: messageValueInt = {
   message: null
 }
 
-const searchValue: searchValueInt = {
+const searchValue: string | null = {
   login: null
 }
 
@@ -100,7 +94,7 @@ export class Chat extends Block {
 	protected getStateFromProps() {
     this.state = {
     	chat_visible: false,
-    	onCreate: async (data: string) => {
+    	onCreate: async (data: any) => {
     		const response = await ChatsController.create(data);
     		try {
     			if(response) {
@@ -109,7 +103,7 @@ export class Chat extends Block {
 						});
     				chatData.chatId = response.id;
     				const modal = document.querySelector('.modal.modal_show');
-	  				modal.classList.remove('modal_show');
+	  				modal!.classList.remove('modal_show');
     				this.showChat(data.title);
     			}
     		} catch(e) {
@@ -164,7 +158,7 @@ export class Chat extends Block {
      		const response = await ChatsController.add(chatData);
      		try{
      			const modal = document.querySelector('.modal.modal_show');
-	  			modal.classList.remove('modal_show');
+	  			modal!.classList.remove('modal_show');
     			chatData.chatId = null;
      			chatData.users = [];
      		} catch(e) {
@@ -175,7 +169,7 @@ export class Chat extends Block {
      		const response = await ChatsController.delete(chatData);
      		try{
      			const modal = document.querySelector('.modal.modal_show');
-    			modal.classList.remove('modal_show');
+    			modal!.classList.remove('modal_show');
     			chatData.chatId = null;
      			chatData.users = [];
      		} catch(e) {
@@ -187,13 +181,13 @@ export class Chat extends Block {
 
   newChatOnSearch = (target)	=> {
   	const chatTitle = document.querySelector('.chat__header-name');
-    chatTitle.textContent = target.textContent;
+    chatTitle!.textContent = target.textContent;
 
   	const emptyContent = document.querySelector('.chat_empty');
-    emptyContent.classList.add('chat_hide');
+    emptyContent!.classList.add('chat_hide');
 
     const chatContent = document.querySelector('.chat__content');
-    chatContent.classList.remove('chat_hide');
+    chatContent!.classList.remove('chat_hide');
 
     this.state.onCreate({
     	title: target.textContent
@@ -202,10 +196,10 @@ export class Chat extends Block {
 
   newChat = (title: string)	=>	{
   	const emptyContent = document.querySelector('.chat_empty');
-    emptyContent.classList.add('chat_hide');
+    emptyContent!.classList.add('chat_hide');
 
     const chatContent = document.querySelector('.chat__content');
-    chatContent.classList.remove('chat_hide');
+    chatContent!.classList.remove('chat_hide');
 
     this.state.onCreate(newChatData);
   }
@@ -243,13 +237,13 @@ export class Chat extends Block {
   showModal = (type: string)	=> {
   	// this.state[type] = true;
   	const modal = document.getElementById(type);
-	  modal.classList.add('modal_show');
+	  modal!.classList.add('modal_show');
   }
 
   showChat = (title: string)	=> {
   	this.state.chat_visible = true;
   	const titleBlock = document.querySelector('.chat__header-name');
-    titleBlock.textContent = title;
+    titleBlock!.textContent = title;
   }
 
   hideChat = ()	=> {
@@ -268,11 +262,10 @@ export class Chat extends Block {
   }
 
 	render(): DocumentFragment {	
-		console.log('this.props.messages', this.props.messages)	
-		const config: chatConfigInt = {
+		const config = {
 			inputMessage: {
 				classname: 'chat__input',
-				attributes: {
+				attrubutes: {
 					type: 'text',
 					name: 'message',
 					label: 'Сообщение',
@@ -281,15 +274,16 @@ export class Chat extends Block {
 			},
 		  input: function(e: any){
 		    messageValue[e.target.name] = e.target.value;
+		    inputHandler(e.target, messageValue);
 		  },
 		  focus: (e: any) => inputHandler(e.target, messageValue),
 		  blur: (e: any) => inputHandler(e.target, messageValue),
 		  click: () => {
 		  	buttonHandler(messageValue);
 		  	this.state.onSend(messageValue.message);
+		  	messageValue.message = '';
 		  }
 		}
-
 
 		const content = {
 			inputMessage: config.inputMessage,
@@ -352,7 +346,7 @@ export class Chat extends Block {
       	click: (e: any) => {
       		e.preventDefault();
 					const modalAdd: HTMLElement = document.getElementById('add-chat');
-		      modalAdd.classList.add('modal_show');
+		      modalAdd!.classList.add('modal_show');
       		// this.newChatOnSearch(e.target);
       	}
       }

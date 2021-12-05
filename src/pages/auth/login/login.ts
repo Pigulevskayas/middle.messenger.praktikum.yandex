@@ -5,12 +5,10 @@ import Link from '../../../components/link/index';
 const compileTemplate  = require('./login.pug');
 import inputHandler from '../../../utils/form-inputs-handler';
 import buttonHandler from '../../../utils/form-submit-handler';
-
 import '../auth.css';
 import '../../../components/button/button.css';
 import '../../../components/input/input.css';
 import '../../../components/form-field/form-field.css';
-
 import AuthController from '../../../controllers/auth-controller';
 
 // interface LinkInt {
@@ -42,7 +40,7 @@ const loginState: loginStateInt = {
   password: null
 }
 
-const config: FormElementInt = {
+const config = {
   formElements: [{
       inputLogin: {
         classname: 'input',
@@ -88,7 +86,6 @@ export class Login extends Block {
   protected getStateFromProps() {
     this.state = {
       onLogin: async (data: loginStateInt) => {
-        alert('1')
         await AuthController.login(data);
       }
     }

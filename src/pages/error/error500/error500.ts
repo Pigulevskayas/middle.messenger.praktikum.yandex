@@ -4,19 +4,13 @@ import Link from '../../../components/link/index';
 import compile from '../../../modules/compile';
 import '../error.css';
 
-interface ErrorInt {
-	code: string;
-	text: string;
-	link: any;
-}
-
 export default class Error500 extends Block {
-  constructor(props: object) {
+  constructor(props?: object) {
     super("div", props);
   }
 
   render(): DocumentFragment {
-  	const link: any = new Link({
+  	const link = new Link({
 			text: 'Назад к чатам',
       to: '/messenger',
       events: {
@@ -27,7 +21,7 @@ export default class Error500 extends Block {
       }
 		});
 		
-		const errorPage500: ErrorInt = {
+		const errorPage500 = {
 			code: '500',
 			text: 'Мы уже фиксим',
 			link: link
