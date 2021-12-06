@@ -1,331 +1,307 @@
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import Form from '../../blocks/profile_form/profile_form.ts';
-import NavButton from '../../components/nav-btn/index.ts';
-import Modal from '../../blocks/modal-avatar/index.ts';
-import Avatar from '../../components/avatar/index.ts';
-import compileTemplate from './profile.pug';
-import inputHandler from '../../utils/form-inputs-handler.ts';
-import buttonHandler from '../../utils/form-submit-handler.ts';
-
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+import Form from '../../blocks/profile_form/profile_form';
+import NavButton from '../../components/nav-btn/index';
+import Modal from '../../blocks/modal-avatar/index';
+import Avatar from '../../components/avatar/index';
+import inputHandler from '../../utils/form-inputs-handler';
+import buttonHandler from '../../utils/form-submit-handler';
 import '../../components/nav/nav.css';
 import '../../components/nav-btn/nav-btn.css';
 import '../../components/user-info/user-info.css';
-import '../../pages/profile/profile.css';
+import './profile.css';
 import '../../blocks/modal-avatar/modal-avatar.css';
 import '../../components/form-field/form-field.css';
+import AuthController from '../../controllers/auth-controller';
+import ProfileController from '../../controllers/profile-controller';
 
-import AuthController from '../../controllers/auth-controller.ts';
-import ProfileController from '../../controllers/profile-controller.ts';
+const compileTemplate = require('./profile.pug');
 
-
-interface FormElementInt {
-  email?: Object<string>;
-  login?: Object<string>;
-  first_name?: Object<string>;
-  second_name?: Object<string>;
-  display_name?: Object<string>;
-  phone?: Object<string>;
-  oldPassword?: Object<string>; 
-  newPassword?: Object<string>; 
-  repeatNewPassword?: Object<string>; 
-  button: object;
-}
-
-interface FormElementsInt extends Array<FormElementInt>{}
-
-interface NavButtonInt {
-  type: string;
-  to: string;
-	events: object;
-}
+// interface NavButtonInt {
+//   type: string;
+//   to: string;
+// 	events: object;
+// }
 
 interface AvatarInt {
-	imgurl: string | null;
+	imgurl?: string | null;
 }
-
-// interface ModalInt {
-// 	isVisible: boolean, 
-// 	isError: boolean 
-// }
 
 interface profileValuesInt {
 	email: string | null;
-  login: string | null;
-  first_name: string | null;
-  second_name: string | null;
-  display_name: string | null;
-  password: string | null;
-  phone: string | null;
+	login: string | null;
+	first_name: string | null;
+	second_name: string | null;
+	display_name: string | null;
+	password: string | null;
+	phone: string | null;
 }
 
 const profileValues: profileValuesInt = {
-  email: null,
-  login: null,
-  first_name: null,
-  second_name: null,
-  display_name: null,
-  password: null,
-  phone: null,
-}
+	email: null,
+	login: null,
+	first_name: null,
+	second_name: null,
+	display_name: null,
+	password: null,
+	phone: null,
+};
 
-export default class Profile extends Block {
+export class Profile extends Block {
 	constructor(props) {
-	  super('div', props);
+		super('div', props);
 	}
 
 	protected getStateFromProps() {
-    this.state = {
-    	onProfile: async (data) => {
-        await ProfileController.profile(data);
-      },
-      onLogout: async (data) => {
-        await AuthController.logout();
-      },
-      onPassword: async (data) => {
-        await ProfileController.password(data);
-      }
-      
-    }
-  }
+		this.state = {
+			onProfile: async (data: any) => {
+				await ProfileController.profile(data);
+			},
+			onLogout: async () => {
+				await AuthController.logout();
+			},
+			onPassword: async (data: any) => {
+				await ProfileController.password(data);
+			},
+		};
+	}
 
-  editUserForm = (): void => {
-  	let inputs = document.querySelectorAll('.user-info_data .input');
-    inputs.forEach((input: HTMLElement): void => {
-    	input.removeAttribute('disabled');
-    });
+	editUserForm = (): void => {
+		const inputs = document.querySelectorAll('.user-info_data .input');
+		inputs.forEach((input: HTMLElement): void => {
+			input.removeAttribute('disabled');
+		});
 
-    let nav = document.querySelector('.profile__links');
-    nav.classList.add('profile__links_hidden');
+		const nav: HTMLElement = document.querySelector('.profile__links')!;
+		nav.classList.add('profile__links_hidden');
 
-    let closeNav = document.querySelector('.profile__close');
-  	closeNav.style.display = 'block';
+		const closeNav: HTMLElement = document.querySelector('.profile__close')!;
+		closeNav.style.display = 'block';
 
-    let submit = document.querySelector('.profile__submit');
-    submit.classList.remove('profile__submit_hidden');
-  }
+		const submit: HTMLElement = document.querySelector('.profile__submit')!;
+		submit.classList.remove('profile__submit_hidden');
+	}
 
-  editPasswordForm = (): void => {
-  	let nav = document.querySelector('.profile__links');
-    nav.classList.add('profile__links_hidden');
+	editPasswordForm = (): void => {
+		const nav: HTMLElement = document.querySelector('.profile__links')!;
+		nav.classList.add('profile__links_hidden');
 
-  	let dataForm = document.querySelector('.user-info_data');
-  	dataForm.classList.add('user-info_hidden');
+		const dataForm : HTMLElement = document.querySelector('.user-info_data')!;
+		dataForm.classList.add('user-info_hidden');
 
-  	let closeNav = document.querySelector('.profile__close');
-  	closeNav.style.display = 'block';
+		const closeNav: HTMLElement = document.querySelector('.profile__close')!;
+		closeNav.style.display = 'block';
 
-  	let passwordForm = document.querySelector('.user-info_password');
-  	passwordForm.classList.remove('user-info_hidden');
-  }
+		const passwordForm: HTMLElement = document.querySelector('.user-info_password')!;
+		passwordForm.classList.remove('user-info_hidden');
+	}
 
-  closeEdit = (): void	=> {
-  	let inputs = document.querySelectorAll('.user-info_data .input');
-    inputs.forEach((input: HTMLElement): void => {
-    	input.setAttribute('disabled', 'disabled');
-    });
+	closeEdit = (): void	=> {
+		const inputs = document.querySelectorAll('.user-info_data .input');
+		inputs.forEach((input: HTMLElement): void => {
+			input.setAttribute('disabled', 'disabled');
+		});
 
-    let nav = document.querySelector('.profile__links');
-    nav.classList.remove('profile__links_hidden');
+		const nav: HTMLElement = document.querySelector('.profile__links')!;
+		nav.classList.remove('profile__links_hidden');
 
-    let closeNav = document.querySelector('.profile__close');
-  	closeNav.style.display = 'none';
+		const closeNav: HTMLElement = document.querySelector('.profile__close')!;
+		closeNav.style.display = 'none';
 
-  	let submit = document.querySelector('.profile__submit');
-    submit.classList.add('profile__submit_hidden');
+		const submit: HTMLElement = document.querySelector('.profile__submit')!;
+		submit.classList.add('profile__submit_hidden');
 
-    let editPassword = document.querySelector('.user-info_password');
-  	if(!editPassword.classList.contains('user-info_hidden')){
-  		editPassword.classList.add('user-info_hidden');
+		const editPassword: HTMLElement = document.querySelector('.user-info_password')!;
+		if (!editPassword.classList.contains('user-info_hidden')) {
+			editPassword.classList.add('user-info_hidden');
 
-  		let editProfile = document.querySelector('.user-info_data');
-  		editProfile.classList.remove('user-info_hidden');
-    }
-  }
+			const editProfile: HTMLElement = document.querySelector('.user-info_data')!;
+			editProfile.classList.remove('user-info_hidden');
+		}
+	}
 
-  showModal = (): void	=> {
-  	let modal = document.querySelector('.modal');
-  	modal.classList.add('modal_show');
-  }
+	showModal = (): void	=> {
+		const modal: HTMLElement = document.querySelector('.modal')!;
+		modal.classList.add('modal_show');
+	}
 
-  componentDidMount(): void {
-    if (this.props.user.profile) {
-    	let inputs = document.querySelectorAll('.user-info_data .input');
-    	inputs.forEach((input: HTMLElement):void => {
-    		input.setAttribute('disabled', 'disabled');
-    	});
+	componentDidMount(): void {
+		if (this.props.user?.profile) {
+			const inputs = document.querySelectorAll('.user-info_data .input');
+			inputs.forEach((input: HTMLElement):void => {
+				input.setAttribute('disabled', 'disabled');
+			});
 
-    	let userObj = this.props.user.profile;
-      profileValues.email = userObj.email;
-      profileValues.first_name = userObj.first_name;
-      profileValues.second_name = userObj.second_name;
-      profileValues.display_name = userObj.display_name;
-      profileValues.login = userObj.login;
-      profileValues.phone = userObj.phone;
+			const userObj = this.props.user.profile;
+			profileValues.email = userObj.email;
+			profileValues.first_name = userObj.first_name;
+			profileValues.second_name = userObj.second_name;
+			profileValues.display_name = userObj.display_name;
+			profileValues.login = userObj.login;
+			profileValues.phone = userObj.phone;
+		}
+	}
 
-    }
-  }
+	componentDidUpdate() {
+		if (!this.props.user.profile && !this.props.user.error) {
+			this.props.router.go('/');
+		}
 
-  componentDidUpdate() {
-    if (!this.props.user.profile && !this.props.user.error) {
-      this.props.router.go('/');
-    }
+		if (this.props.user.error === 500) {
+			this.props.router.go('/error');
+		}
 
-    if (this.props.user.error === 500) {
-      this.props.router.go('/error');
-    }
-
-    return true;
-  }
+		return true;
+	}
 
 	render(): DocumentFragment {
 		const config = {
-		  formElements: [{
-					email: {
-						classname: 'input',
-		      	attributes: {
-							placeholder: "Почта", 
-							type: "email", 
-							name: "email", 
-							value: this.props.user.profile.email
-						}
-					}
-				}, {
-					login: {
-						classname: 'input',
-			      attributes: {
-							placeholder: "Логин", 
-							type: "text", 
-							name: "login", 
-							value: this.props.user.profile.login
-						}
-					} 
-				}, {
-					first_name: {
-						classname: 'input',
-			      attributes: {
-							placeholder: "Имя", 
-							type: "text", 
-							name: "first_name", 
-							value: this.props.user.profile.first_name
-						}
-					}
-				}, {
-					second_name: {
-						classname: 'input',
-			      attributes: {
-							placeholder: "Фамилия", 
-							type: "text", 
-							name: "second_name", 
-							value: this.props.user.profile.second_name
-						}
-					}
-				}, {
-					display_name: {
-						classname: 'input',
-			      attributes: {
-							placeholder: "Имя в чате", 
-							type: "text", 
-							name: "display_name", 
-							value: this.props.user.profile.display_name ? this.props.user.profile.display_name : ''
-						}
-					}
-				}, {
-					phone: {
-						classname: 'input',
-			      attributes: {
-							placeholder: "Телефон", 
-							type: "text", 
-							name: "phone", 
-							value: this.props.user.profile.phone
-						}
-					}
-				}, {
-					button: {
-						text: 'Сохранить'
-					}
-				}
+			formElements: [{
+				email: {
+					classname: 'input',
+					attributes: {
+						placeholder: 'Почта',
+						type: 'email',
+						name: 'email',
+						value: this.props.user?.profile?.email,
+					},
+				},
+			}, {
+				login: {
+					classname: 'input',
+					attributes: {
+						placeholder: 'Логин',
+						type: 'text',
+						name: 'login',
+						value: this.props.user?.profile?.login,
+					},
+				},
+			}, {
+				first_name: {
+					classname: 'input',
+					attributes: {
+						placeholder: 'Имя',
+						type: 'text',
+						name: 'first_name',
+						value: this.props.user?.profile?.first_name,
+					},
+				},
+			}, {
+				second_name: {
+					classname: 'input',
+					attributes: {
+						placeholder: 'Фамилия',
+						type: 'text',
+						name: 'second_name',
+						value: this.props.user?.profile?.second_name,
+					},
+				},
+			}, {
+				display_name: {
+					classname: 'input',
+					attributes: {
+						placeholder: 'Имя в чате',
+						type: 'text',
+						name: 'display_name',
+						value: this.props.user?.profile?.display_name ? this.props.user.profile.display_name : '',
+					},
+				},
+			}, {
+				phone: {
+					classname: 'input',
+					attributes: {
+						placeholder: 'Телефон',
+						type: 'text',
+						name: 'phone',
+						value: this.props.user?.profile?.phone,
+					},
+				},
+			}, {
+				button: {
+					text: 'Сохранить',
+				},
+			},
 			],
-			input: function(e){
+			input(e: any) {
 				profileValues[e.target.name] = e.target.value;
 			},
-			focus: (e) => inputHandler(e.target, profileValues),
-			blur: (e) => inputHandler(e.target, profileValues)
-		}
+			focus: (e: any) => inputHandler(e.target, profileValues),
+			blur: (e: any) => inputHandler(e.target, profileValues),
+		};
 
 		const configPassword = {
-		  formElements: [{
-					oldPassword: {
-						classname: 'input',
-		      	attributes: {
-							placeholder: "Старый пароль", 
-							type: "password", 
-							name: "oldPassword", 
-							value: ""
-						}
-					}
-				}, {
-					newPassword: {
-						classname: 'input',
-			      attributes: {
-							placeholder: "Новый пароль", 
-							type: "password", 
-							name: "newPassword", 
-							value: ""
-						}
-					} 
-				}, {
-					repeatNewPassword: {
-						classname: 'input',
-			      attributes: {
-							placeholder: "Повторите новый пароль", 
-							type: "password", 
-							name: "repeatNewPassword", 
-							value: ""
-						}
-					}
-				}, {
-					button: {
-						text: 'Сохранить'
-					}
-				}
+			formElements: [{
+				oldPassword: {
+					classname: 'input',
+					attributes: {
+						placeholder: 'Старый пароль',
+						type: 'password',
+						name: 'oldPassword',
+						value: '',
+					},
+				},
+			}, {
+				newPassword: {
+					classname: 'input',
+					attributes: {
+						placeholder: 'Новый пароль',
+						type: 'password',
+						name: 'newPassword',
+						value: '',
+					},
+				},
+			}, {
+				repeatNewPassword: {
+					classname: 'input',
+					attributes: {
+						placeholder: 'Повторите новый пароль',
+						type: 'password',
+						name: 'repeatNewPassword',
+						value: '',
+					},
+				},
+			}, {
+				button: {
+					text: 'Сохранить',
+				},
+			},
 			],
-			input: function(e){
+			input(e: any) {
 				profileValues[e.target.name] = e.target.value;
 			},
-			focus: (e) => inputHandler(e.target, profileValues),
-			blur: (e) => inputHandler(e.target, profileValues)
-		}
+			focus: (e: any) => inputHandler(e.target, profileValues),
+			blur: (e: any) => inputHandler(e.target, profileValues),
+		};
 
 		const content = {
-			formElements: config.formElements, 
+			formElements: config.formElements,
 			buttonEvent: {
 				click: () => {
-          let data = buttonHandler(profileValues);
-          this.state.onProfile(data);
-        }
+					const data = buttonHandler(profileValues);
+					this.state.onProfile(data);
+				},
 			},
 			inputEvent: {
 				input: config.input,
 				focus: config.focus,
-        blur: config.blur
-			}
-		}
+				blur: config.blur,
+			},
+		};
 
 		const contentPassword = {
 			formElements: configPassword.formElements,
-		  buttonEvent: {
+			buttonEvent: {
 				click: () => {
-          let data = buttonHandler(profileValues);
-          this.state.onPassword(data);
-        }
+					const data = buttonHandler(profileValues);
+					this.state.onPassword(data);
+				},
 			},
 			inputEvent: {
 				input: configPassword.input,
 				focus: configPassword.focus,
-        blur: configPassword.blur
-			}
-		}
+				blur: configPassword.blur,
+			},
+		};
 
 		// Userdata form
 		const profileForm = new Form(content);
@@ -333,72 +309,72 @@ export default class Profile extends Block {
 		// Password change form
 		const passwordForm = new Form(contentPassword);
 
-		const btnBack: NavButtonInt = new NavButton({
-			type: 'back', 
-			to: "/messenger",
+		const btnBack = new NavButton({
+			type: 'back',
+			to: '/messenger',
 			events: {
-        click: (e) => {
-          e.preventDefault();
-          window.location = e.target.getAttribute('to')
-        },
-      }
+				click: (e: any) => {
+					e.preventDefault();
+					window.location = e.target.getAttribute('to');
+				},
+			},
 		});
 
-		const btnExit: NavButtonInt = new NavButton({
-			type: 'exit', 
-			to: "/",
+		const btnExit = new NavButton({
+			type: 'exit',
+			to: '/',
 			events: {
-        click: (e) => {
-        	e.preventDefault();
-			    this.state.onLogout();
-        },
-      }
+				click: (e: any) => {
+					e.preventDefault();
+					this.state.onLogout();
+				},
+			},
 		});
 
-		const btnEdit: NavButtonInt = new NavButton({
+		const btnEdit = new NavButton({
 			type: 'edit',
 			events: {
-				click: (e)	=> {
+				click: (e: any)	=> {
 					e.preventDefault();
 					this.editUserForm();
-				}
-			}
+				},
+			},
 		});
 
-		const btnClose: NavButtonInt = new NavButton({
+		const btnClose = new NavButton({
 			type: 'close',
 			events: {
-				click: (e)	=> {
+				click: (e: any)	=> {
 					e.preventDefault();
 					this.closeEdit();
-				}
-			}
+				},
+			},
 		});
 
-		const passwordEdit: NavButtonInt = new NavButton({
+		const passwordEdit = new NavButton({
 			type: 'password',
 			events: {
-				click: (e)	=> {
+				click: (e: any)	=> {
 					e.preventDefault();
 					this.editPasswordForm();
-				}
-			}
+				},
+			},
 		});
 
-		const modal: ModalInt = new Modal();
+		const modal = new Modal();
 
 		const avatar: AvatarInt = new Avatar({
-			imgurl: this.props.user.profile.avatar ? this.props.user.profile.avatar : null,
+			imgurl: this.props.user?.profile.avatar ? this.props.user.profile.avatar : null,
 			events: {
-				click: (e)	=> {
+				click: ()	=> {
 					this.showModal();
-				}
-			}
+				},
+			},
 		});
 
 		const fragment = compile(compileTemplate, {
-			avatar: avatar,
-			name: this.props.user.profile.first_name,
+			avatar,
+			name: this.props.user?.profile.first_name,
 			userform: profileForm,
 			back: btnBack,
 			exit: btnExit,
@@ -406,12 +382,9 @@ export default class Profile extends Block {
 			close: btnClose,
 			password: passwordEdit,
 			passwordform: passwordForm,
-			modal: modal
+			modal,
 		});
 
 		return fragment;
 	}
-
 }
-
-

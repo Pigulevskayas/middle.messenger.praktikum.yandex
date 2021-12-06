@@ -1,32 +1,31 @@
-import ProfileAPI from '../api/profile-api.ts';
-import { ProfileData, SearchData, PasswordData } from '../api/profile-api.ts';
-import { store } from '../store/index.ts';
-import { setUser, deleteUser, setError } from '../store/user.ts';
+import ProfileAPI, { ProfileData, SearchData, PasswordData } from '../api/profile-api';
+import UserData from '../api/auth-api';
+import { store } from '../store/index';
+import { setUser, deleteUser, setError } from '../store/user';
 
 class ProfileController {
 	private api: ProfileAPI;
 
 	constructor() {
-	    this.api = new ProfileAPI();
+		this.api = new ProfileAPI();
 	}
 
 	async profile(data: ProfileData): Promise<UserData | void> {
 		try {
-			const result = await this.api.profile(JSON.stringify(data));
+			const result = await this.api.profile(data);
 			store.dispatch(setUser(result));
-		} catch(e) {
+		} catch (e) {
 			store.dispatch(setError(e as { reason: string }));
 		}
 	}
 
 	async password(data: PasswordData): Promise<UserData | void> {
 		try {
-			const result = await this.api.password(JSON.stringify(data));
-			if(result){
+			const result = await this.api.password(data);
+			if (result) {
 				store.dispatch(setUser(result));
 			}
-		} catch(e) {
-			console.log(e);
+		} catch (e) {
 			store.dispatch(setError(e as { reason: string }));
 		}
 	}
@@ -35,44 +34,38 @@ class ProfileController {
 		try {
 			const result = await this.api.avatar(data);
 			store.dispatch(setUser(result));
-		} catch(e) {
-			console.log(e);
+		} catch (e) {
 			store.dispatch(setError(e));
 		}
 	}
 
 	async search(data: SearchData) {
-	    try {
-	      const result = await this.api.search(JSON.stringify(data));
-	      store.dispatch(setUser(result));
-	      return result;
-	    } catch (e) {
-	    	console.log(e)
-	      	store.dispatch(setError(e as { reason: string }));
-	      	console.log(store.getState())
-	    }
+		try {
+			const result = await this.api.search(data);
+			store.dispatch(setUser(result));
+			return result;
+		} catch (e) {
+			store.dispatch(setError(e as { reason: string }));
+		}
 	}
 
 	async searchUserId(data: SearchData) {
-	    try {
-	      const result = await this.api.search(JSON.stringify(data));
-	      console.log('searchUserId result', result)
-	      return result[0]['id'];
-	    } catch (e) {
-	    	console.log(e)
-	      	store.dispatch(setError(e as { reason: string }));
-	      	console.log(store.getState())
-	    }
+		try {
+			const result = await this.api.search(data);
+			return result[0].id;
+		} catch (e) {
+			store.dispatch(setError(e as { reason: string }));
+		}
 	}
 
 	async getUserData(): Promise<UserData | void> {
-	    try {
-	      const user = await this.api.read();
-	      store.dispatch(setUser(user));
-	      return user;
-	    } catch (e) {
-	      store.dispatch(deleteUser());
-	    }
+		try {
+			const user = await this.api.read();
+			store.dispatch(setUser(user));
+			return user;
+		} catch (e) {
+			store.dispatch(deleteUser());
+		}
 	}
 }
 

@@ -1,51 +1,50 @@
-import EventBus from './event-bus.ts';
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-import Input from '../../components/input/index.ts';
-import Button from '../../components/button/index.ts';
-import compileTemplate from './auth-form.pug';
+// @ts-ignore
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+import Input from '../../components/input/index';
+import Button from '../../components/button/index';
 
-interface ButtonInt {
-	text: string,
-	events: () => void
-}
+const compileTemplate = require('./auth-form.pug');
 
-interface InputInt {
-	type: string,
-	name: string,
-	label: string
-}
+// interface FormElementInt {
+//   inputLogin: Object<string>;
+//   inputPassword: Object<string>;
+//   button: object;
+//   input: () => void;
+//   focus: () => void;
+//   blur: () => void;
+//   click: () => void;
+// }
 
 export default class Form extends Block {
-	constructor(props: object) {
-		super("div", {content: props});
-	}
+  constructor(props?: object) {
+    super('div', { content: props });
+  }
 
-	render(): string {
-		const renderFields = {};
+  render(): DocumentFragment {
+    const renderFields: any = {};
+    const formItems = this.props?.content;
 
-		const formItems = this.props.content;
+    formItems.formElements.map((element: object) => {
+      let key: string;
+      for (key in element) {
+        if (key == 'button') {
+          const component = new Button({
+            text: element[key].text,
+            events: formItems.buttonEvent,
+          });
+          renderFields[key] = component;
+        } else {
+          const component = new Input({
+            classname: element[key].classname,
+            attributes: element[key].attributes,
+            events: formItems.inputEvent,
+          });
+          renderFields[key] = component;
+        }
+      }
+    });
 
-		formItems.formElements.map((element: object) => {
-			let component;
-			for (let key: string in element) {
-				if (key == 'button'){
-					let component: ButtonInt = new Button({
-						text: element[key]['text'],
-						events: formItems.buttonEvent
-					});
-					renderFields[key] = component;
-				} else {
-					let component: InputInt = new Input({
-						classname: element[key]['classname'],
-						attributes: element[key]['attributes'],
-						events: formItems.inputEvent
-					});
-					renderFields[key] = component;
-				}
-			}
-		});
-
-		return compile(compileTemplate, renderFields);
-	}
+    return compile(compileTemplate, renderFields);
+  }
 }

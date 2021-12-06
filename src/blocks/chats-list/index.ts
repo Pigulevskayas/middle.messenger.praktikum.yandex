@@ -1,9 +1,7 @@
-import EventBus from './event-bus.ts';
-import Block from '../../modules/block.ts';
-import compile from '../../modules/compile.ts';
-// import Input from '../../components/input/index.ts';
-// import Button from '../../components/button/index.ts';
-import compileTemplate from './chats-list.pug';
+import Block from '../../modules/block';
+import compile from '../../modules/compile';
+
+const compileTemplate = require('./chats-list.pug');
 
 // interface ButtonInt {
 // 	text: string,
@@ -17,15 +15,15 @@ import compileTemplate from './chats-list.pug';
 // }
 
 export default class ChatsList extends Block {
-	constructor(props: object) {
-		super("div", props);
-	}
+  constructor(props: object) {
+    super('div', props);
+  }
 
-	render(): DocumentFragment {
-		return compile(compileTemplate, {
-			selectedChat: this.props.selectedChat,
-			userLink: this.props.userLink,
-			userChats: this.props.userChats.chats ? this.props.userChats.chats : [],
-		});
-	}
+  render(): DocumentFragment {
+    return compile(compileTemplate, {
+      selectedChat: this.props.selectedChat,
+      userLink: this.props.userLink,
+      userChats: this.props.userChats.chats ? this.props.userChats.chats : [],
+    });
+  }
 }

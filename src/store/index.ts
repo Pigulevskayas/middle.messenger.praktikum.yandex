@@ -1,19 +1,19 @@
-import user from './user.ts';
-import chats from './chats.ts';
-import messages from './messages.ts';
-import Store from '../utils/store.ts';
-import Block from '../modules/Block.ts';
+import user from './user';
+import chats from './chats';
+import messages from './messages';
+import { Store } from '../utils/store';
+import Block from '../modules/Block';
 
 export const store = new Store({
   user,
   chats,
-  messages
+  messages,
 });
 
 export function connect(stateToProps: (state: any) => any, Component: typeof Block) {
   return class WithStore extends Component {
     constructor(props: any) {
-      super({...props, ...stateToProps(store.getState())});
+      super({ ...props, ...stateToProps(store.getState()) });
     }
 
     componentDidMount(props: any) {
@@ -21,7 +21,7 @@ export function connect(stateToProps: (state: any) => any, Component: typeof Blo
       store.on('changed', () => {
         this.setProps({
           ...this.props,
-          ...stateToProps(store.getState())
+          ...stateToProps(store.getState()),
         });
       });
     }

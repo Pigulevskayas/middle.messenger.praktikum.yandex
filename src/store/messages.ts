@@ -1,10 +1,10 @@
-import { Action } from '../store/store.ts';
-// import { UserData } from '../api/auth-api.ts';
+import { Action } from '../utils/store';
+// import { UserData } from '../api/auth-api';
 
 const SET_ERROR = 'chats/SET_ERROR';
 const SET_MESSAGES = 'chats/SET_MESSAGES';
 
-export const setMessages = (messages) => ({
+export const setMessages = (messages: any) => ({
   type: SET_MESSAGES,
   payload: messages,
 });
@@ -23,4 +23,4 @@ export default (state = { messages: null, error: null, success: true }, action: 
     default:
       return state;
   }
-}
+};

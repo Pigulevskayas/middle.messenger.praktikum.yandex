@@ -1,24 +1,20 @@
-import validate from './validate.ts';
-import collectData from './collect-data.ts';
+import validate from './validate';
 
 export default function buttonHandler(state: object) {
-	console.log('state', state);
-	for (let key: string in state) {
-		let message = validate(state[key], key);
-		let element = document.querySelector(`input[name="${key}"]`);
+	let key: string;
+	for (key in state) {
+		const message: any = validate(state[key], key);
+		const element: HTMLElement | null = document.querySelector(`input[name="${key}"]`);
 
-		let clean = state[key].replaceAll('<', '&lt;');
+		let clean: any = state[key].replaceAll('<', '&lt;');
 		clean = clean.replaceAll('>', '&gt;');
-		state[key] = clean;
-
-		if(message){
+		state![key] = clean;
+		if (message) {
 			console.log('message', message);
-			element.nextSibling.textContent = message;
+			element!.nextSibling!.textContent = message;
 		} else {
 			console.log('formdata', state);
 			return state;
 		}
 	}
-	
-	
-};
+}

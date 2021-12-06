@@ -1,13 +1,13 @@
-import Block from '../../modules/block.ts';
-import compileTemplate from './select-chat.pug';
+import Block from '../../modules/block';
+
+const compileTemplate = require('./select-chat.pug');
 
 export default class SelectChat extends Block {
-  constructor(props: object) {
-	// dom-element button wrapper creation
-    super("div");
-  }
+    constructor() {
+        super('div');
+    }
 
-  render(): string {
-  	return compileTemplate();
-  }
+    render(): string {
+        return compileTemplate();
+    }
 }

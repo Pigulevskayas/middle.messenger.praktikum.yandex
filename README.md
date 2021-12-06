@@ -10,6 +10,7 @@
 ------
 
 Домен на Netlify: https://competent-varahamihira-4993c3.netlify.app
+Heroku: https://agp-messenger.herokuapp.com/
 
 ------
 
@@ -49,3 +50,5 @@
 * внедрен typescript
 * добавлена страница Чаты
 * применены stylelint и eslint
+* проект переведён на webpack
+

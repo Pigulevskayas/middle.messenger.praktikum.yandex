@@ -1,13 +1,13 @@
 // @ts-nocheck
-import Block from './Block';
+import Block from './block';
 
 function isEqual(lhs: string, rhs: string) {
-  return lhs === rhs;
+    return lhs === rhs;
 }
 
 function render(query: string, block: typeof Block) {
-  const root: HTMLElement = document.querySelector(query);
-  root.appendChild(block.getContent());
+    const root: HTMLElement = document.querySelector(query);
+    root.appendChild(block.getContent());
     return root;
 }
 
@@ -29,7 +29,6 @@ class Route {
     leave() {
         if (this._block) {
             this._block.getContent().remove();
-            // this._block.hide();
         }
     }
 
@@ -40,12 +39,8 @@ class Route {
     render() {
         if (!this._block) {
             this._block = new this._blockClass();
-            // this._block = this._blockClass;
             render(this._props.rootQuery, this._block);
-            return;
         }
-
-        // this._block.show();
     }
 }
 
@@ -58,34 +53,29 @@ export default class Router {
         this.routes = [];
         this.history = window.history;
         this._currentRoute = null;
-        // this._rootQuery = rootQuery;
 
         Router.__instance = this;
     }
 
     use(pathname: string, block: typeof Block) {
-        const route = new Route(pathname, block, {rootQuery: ".app"});
-        // const route = new Route(pathname, block, {rootQuery: this._rootQuery});
-
+        const route = new Route(pathname, block, { rootQuery: '.app' });
         this.routes.push(route);
-
         return this;
     }
 
     start() {
         window.onpopstate = ((event: PopStateEvent) => {
             this._onRoute(event.currentTarget.location.pathname);
-        }).bind(this);
-
+        });
         this._onRoute(window.location.pathname);
     }
 
     _onRoute(pathname: string) {
         const route = this.getRoute(pathname);
         if (!route) {
-            const error = this.getRoute("/error-404");
-            error.render(error, pathname);
-            return;
+              const error = this.getRoute('/error-404');
+              error.render(error, pathname);
+              return;
         }
 
         if (this._currentRoute && this._currentRoute !== route) {
@@ -115,14 +105,10 @@ export default class Router {
 }
 
 export function withRouter(Component: typeof Block) {
-  return class WithRouter extends Component {
-    constructor(props: any) {
-      const router = new Router();
-
-      super({...props, router: router});
-
-    }
-  }
+    return class WithRouter extends Component {
+        constructor(props: any) {
+          const router = new Router();
+          super({ ...props, router });
+        }
+    };
 }
-
-

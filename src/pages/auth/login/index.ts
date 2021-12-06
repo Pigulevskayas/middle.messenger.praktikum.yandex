@@ -1,6 +1,5 @@
-import Login from './login.ts';
-import { connect } from '../../../store/index.ts';
-import { withRouter } from '../../../modules/router.ts';
-export { Login } from './login';
+import { Login } from './login';
+import { connect } from '../../../store/index';
+import { withRouter } from '../../../modules/router';
 
-export default withRouter(connect(state => ({user: state.user || {}}), Login));
+export default withRouter(connect((state) => ({ user: state.user || {} }), Login));

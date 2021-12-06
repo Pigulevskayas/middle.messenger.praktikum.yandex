@@ -1,6 +1,5 @@
-import Registration from './registration.ts';
-import { connect } from '../../../store/index.ts';
-import { withRouter } from '../../../modules/router.ts';
-export { Registration } from './registration';
+import { Registration } from './registration';
+import { connect } from '../../../store/index';
+import { withRouter } from '../../../modules/router';
 
-export default withRouter(connect((state: any) => ({user: state.user || {}}), Registration));
+export default withRouter(connect((state: any) => ({ user: state.user || {} }), Registration));

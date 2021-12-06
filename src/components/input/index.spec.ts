@@ -7,15 +7,14 @@ describe('Check input component creation', () => {
       classname: 'test-class',
       attrubutes: {
         type: 'text',
-        placeholder: 'Test input'
+        placeholder: 'Test input',
       },
       events: {
-        focus: () => console.log('Push')
-      }
+        focus: () => console.log('Push'),
+      },
     });
-    
+
     expect(checkInput).to.not.be.null;
     expect(checkInput).to.be.a('object');
   });
-
 });
